@@ -9,7 +9,6 @@
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="forgot_password">Forgot password?</string>
-<<<<<<< HEAD
     <string name="profile">Profile</string>
     <string name="order">Order</string>
     <string name="setting">Setting</string>
@@ -21,14 +20,10 @@
     <string name="cart">Cart</string>
     <string name="open">open</string>
     <string name="close">close</string>
-=======
     <string name="login_text">Log \nin</string>
     <string name="signup_text">Sign \nup</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="create_account">Create Account</string>
-<<<<<<< HEAD
->>>>>>> 93d35d5a8c1a9c8c61fb56370583529f2181e53a
-=======
     <string name="dont_worry">Don\'t \nWorry!</string>
     <string name="enter_your_email_address_to_get_reset_password_link">Enter your email address to get \nreset password link</string>
     <string name="resend_link">Resend Link</string>
@@ -37,5 +32,8 @@
     <string name="no_history_yet">No history yet</string>
     <string name="swipe_on_an_item_to_delete">Swipe on an item to delete</string>
     <string name="order_history">Order History</string>
->>>>>>> 426ea71b86ba37f1869d4d180c6a064f85fc3986
+    <string name="text_home_page">A good coffee is\na good day</string>
+    <string name="favorite_product">Favorite product</string>
+    <string name="see_more">See more</string>
+    <string name="promo_for_you">Promo for you</string>
 </resources>
