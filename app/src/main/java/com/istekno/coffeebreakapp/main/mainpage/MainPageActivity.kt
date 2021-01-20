@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainPageBinding
+import com.istekno.coffeebreakapp.main.login.LoginActivity
 
 class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
@@ -27,6 +28,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
         }
         binding?.btnLogin?.setOnClickListener {
             Toast.makeText(this, "Selected Login", Toast.LENGTH_LONG).show()
+            intent<LoginActivity>(this)
         }
     }
 }
