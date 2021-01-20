@@ -9,6 +9,7 @@
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="forgot_password">Forgot password?</string>
+<<<<<<< HEAD
     <string name="profile">Profile</string>
     <string name="order">Order</string>
     <string name="setting">Setting</string>
@@ -20,4 +21,10 @@
     <string name="cart">Cart</string>
     <string name="open">open</string>
     <string name="close">close</string>
+=======
+    <string name="login_text">Log \nin</string>
+    <string name="signup_text">Sign \nup</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="create_account">Create Account</string>
+>>>>>>> 93d35d5a8c1a9c8c61fb56370583529f2181e53a
 </resources>
