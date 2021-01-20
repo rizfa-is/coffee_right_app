@@ -6,4 +6,7 @@
     <string name="main_page_desc">Get a cup of coffee for free only \nfor new user</string>
     <string name="login">Login</string>
     <string name="create_new_account">Create New Account</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="forgot_password">Forgot password?</string>
 </resources>
