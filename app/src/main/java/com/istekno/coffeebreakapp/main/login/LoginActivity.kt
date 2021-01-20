@@ -7,6 +7,7 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityLoginBinding
 import com.istekno.coffeebreakapp.main.forgotpassword.ForgotPasswordActivity
+import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -24,6 +25,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun viewListener() {
         binding?.tvForgotPassword?.setOnClickListener {
             intent<ForgotPasswordActivity>(this)
+        }
+
+        binding?.btnLogin?.setOnClickListener {
+            intent<OrderHistoryActivity>(this)
         }
     }
 }
