@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Coffee Break App</string>
+    <string name="welcome_page">Coffee for \nEveryone</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome">Welcome!</string>
+    <string name="main_page_desc">Get a cup of coffee for free only \nfor new user</string>
+    <string name="login">Login</string>
+    <string name="create_new_account">Create New Account</string>
+</resources>
