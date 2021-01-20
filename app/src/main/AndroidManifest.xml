@@ -10,10 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".main.maincontent.MainContentActivity" />
 =======
         <activity android:name=".main.signup.SignupActivity"></activity>
 >>>>>>> 93d35d5a8c1a9c8c61fb56370583529f2181e53a
+=======
+        <activity android:name=".main.orderhistory.OrderHistoryActivity"></activity>
+        <activity android:name=".main.forgotpassword.ForgotPasswordActivity" />
+        <activity android:name=".main.signup.SignupActivity" />
+>>>>>>> 426ea71b86ba37f1869d4d180c6a064f85fc3986
         <activity android:name=".main.login.LoginActivity" />
         <activity android:name=".main.mainpage.MainPageActivity"/>
         <activity android:name=".main.welcomepage.WelcomePageActivity">

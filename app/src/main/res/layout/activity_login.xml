@@ -67,7 +67,7 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:hint="@string/enter_your_password"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="5dp">
 
                 <EditText
                     android:id="@+id/et_password"
