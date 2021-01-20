@@ -13,4 +13,7 @@
     <string name="signup_text">Sign \nup</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="create_account">Create Account</string>
+    <string name="dont_worry">Don\'t \nWorry!</string>
+    <string name="enter_your_email_address_to_get_reset_password_link">Enter your email address to get \nreset password link</string>
+    <string name="resend_link">Resend Link</string>
 </resources>

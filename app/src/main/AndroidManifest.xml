@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_coffe_right_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp">
-        <activity android:name=".main.signup.SignupActivity"></activity>
+        <activity android:name=".main.forgotpassword.ForgotPasswordActivity"></activity>
+        <activity android:name=".main.signup.SignupActivity" />
         <activity android:name=".main.login.LoginActivity" />
         <activity android:name=".main.mainpage.MainPageActivity" />
         <activity android:name=".main.welcomepage.WelcomePageActivity">
