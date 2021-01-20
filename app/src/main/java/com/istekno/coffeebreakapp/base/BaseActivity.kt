@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity<ActivityBinding: ViewDataBinding?>: AppCompatActivity() {
-    protected var binding: ActivityBinding? = null
+abstract class BaseActivity<ActivityBinding: ViewDataBinding>: AppCompatActivity() {
+    protected lateinit var binding: ActivityBinding
     protected var setLayout = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView<ActivityBinding>(this, setLayout)
+        binding = DataBindingUtil.setContentView(this, setLayout)
     }
 
     protected inline fun <reified ActivityClass> intent(context: Context) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
     <style name="text_item">
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
@@ -9,11 +8,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">15dp</item>
         <item name="cornerSizeBottomRight">15dp</item>
-=======
+    </style>
+    
     <style name="radius_image">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
->>>>>>> 426ea71b86ba37f1869d4d180c6a064f85fc3986
     </style>
 
     <style name="rounded_image">
