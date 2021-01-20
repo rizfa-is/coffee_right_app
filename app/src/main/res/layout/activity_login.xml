@@ -67,7 +67,7 @@
                 app:endIconMode="password_toggle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:hint="@string/enter_your_password"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="5dp">
 
                 <EditText
                     android:id="@+id/et_password"
@@ -94,6 +94,7 @@
                 />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:text="@string/login"
