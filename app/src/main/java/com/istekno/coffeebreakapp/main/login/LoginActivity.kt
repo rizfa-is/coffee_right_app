@@ -6,6 +6,7 @@ import android.view.WindowManager
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityLoginBinding
+import com.istekno.coffeebreakapp.main.forgotpassword.ForgotPasswordActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -17,6 +18,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
         )
+        viewListener()
+    }
 
+    private fun viewListener() {
+        binding?.tvForgotPassword?.setOnClickListener {
+            intent<ForgotPasswordActivity>(this)
+        }
     }
 }
