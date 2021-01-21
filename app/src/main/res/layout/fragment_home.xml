@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".main.maincontent.HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:background="@color/theme_grey">
+
+            <TextView
+                android:id="@+id/tv_home_greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/text_home_page"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_home_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/favorite_product"
+                android:textColor="@color/theme_choco"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_home_greeting"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_greeting" />
+
+            <TextView
+                android:id="@+id/tv_home_seemore1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/see_more"
+                android:textColor="@color/theme_choco"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_home_favorite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_home_favorite" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_favorite"
+                android:layout_width="0dp"
+                android:layout_height="320dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite"
+                tools:listitem="@layout/item_home" />
+
+            <TextView
+                android:id="@+id/tv_home_promo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/promo_for_you"
+                android:textColor="@color/theme_choco"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="@+id/rv_favorite"
+                app:layout_constraintTop_toBottomOf="@+id/rv_favorite" />
+
+            <TextView
+                android:id="@+id/tv_home_seemore2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/see_more"
+                android:textColor="@color/theme_choco"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_home_promo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_home_promo" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_promo"
+                android:layout_width="0dp"
+                android:layout_height="320dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_promo"
+                tools:listitem="@layout/item_home" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

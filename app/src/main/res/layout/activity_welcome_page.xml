@@ -26,10 +26,12 @@
 
         <ImageView
             android:id="@+id/img_welcome_page"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/img_welcome_page"
+            app:layout_constraintBottom_toTopOf="@+id/btn_get_started"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_get_started" />
@@ -41,7 +43,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="50dp"
             android:fontFamily="@font/poppins_extrabold"
-            android:text="@string/create_new_account"
+            android:text="@string/get_started"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:cornerRadius="15dp"

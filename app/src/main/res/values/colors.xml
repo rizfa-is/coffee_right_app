@@ -13,4 +13,6 @@
     <color name="theme_choco_dark">#5A3724</color>
     <color name="theme_yellow">#FFBA33</color>
     <color name="theme_grey">#F2F2F2</color>
+    <color name="icon_home">#ADADAF</color>
+    <color name="bg_appicon">#FEF4E4</color>
 </resources>

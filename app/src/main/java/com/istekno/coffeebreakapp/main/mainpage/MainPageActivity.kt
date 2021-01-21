@@ -6,6 +6,8 @@ import android.widget.Toast
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainPageBinding
+import com.istekno.coffeebreakapp.main.login.LoginActivity
+import com.istekno.coffeebreakapp.main.signup.SignupActivity
 
 class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
@@ -23,10 +25,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     private fun viewListener() {
         binding?.btnCreateAccount?.setOnClickListener {
-            Toast.makeText(this, "Selected Create New Account", Toast.LENGTH_LONG).show()
+            intent<SignupActivity>(this)
         }
         binding?.btnLogin?.setOnClickListener {
-            Toast.makeText(this, "Selected Login", Toast.LENGTH_LONG).show()
+            intent<LoginActivity>(this)
         }
     }
 }

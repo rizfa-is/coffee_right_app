@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:sliderType="slide"
+        tools:openDrawer="start"
+        tools:context=".main.maincontent.MainContentActivity">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_menu_maincontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="center|center_horizontal"
+                    android:background="@color/theme_grey"
+                    app:menu="@menu/menu_toolbar"
+                    app:navigationIcon="@drawable/ic_menu"
+                    app:title=" " />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/theme_choco"
+                android:fontFamily="@font/poppins_bold"
+                app:layout_anchor="@+id/appBarLayout"
+                app:layout_anchorGravity="center" />
+
+            <FrameLayout
+                android:id="@+id/fl_maincontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/theme_grey"
+                android:fadeScrollbars="true"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            style="@style/Widget.Design.NavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            android:background="@drawable/shape_bg_nav_drawer"
+            app:headerLayout="@layout/header_nav_drawer"
+            app:itemTextAppearance="@style/text_item"
+            app:itemIconTint="@color/theme_choco"
+            app:itemTextColor="@color/theme_choco"
+            app:menu="@menu/menu_maincontent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/btn_sign_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="@string/sign_out"
+                    android:textColor="@color/theme_choco"
+                    android:fontFamily="@font/poppins_bold"
+                    android:drawablePadding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:drawableEndCompat="@drawable/ic_signout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
