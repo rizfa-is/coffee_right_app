@@ -53,12 +53,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="320dp"
                 android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite"
-                tools:listitem="@layout/item_home"/>
+                tools:listitem="@layout/item_home" />
 
             <TextView
                 android:id="@+id/tv_home_promo"
@@ -86,11 +87,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_promo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="320dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_promo"
                 tools:listitem="@layout/item_home" />

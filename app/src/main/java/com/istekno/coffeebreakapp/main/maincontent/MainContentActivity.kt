@@ -1,15 +1,12 @@
 package com.istekno.coffeebreakapp.main.maincontent
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
@@ -23,18 +20,18 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
         super.onCreate(savedInstanceState)
-        setSupportActionBar(binding?.tbMenuMaincontent)
-        drawer = binding?.drawerLayout!!
+        setSupportActionBar(binding.tbMenuMaincontent)
+        drawer = binding.drawerLayout
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mToggle = ActionBarDrawerToggle(this, drawer, binding?.tbMenuMaincontent,
+        mToggle = ActionBarDrawerToggle(this, drawer, binding.tbMenuMaincontent,
             R.string.open,
             R.string.close
         )
 
-        binding?.navView?.setNavigationItemSelectedListener(this)
-        fragmentProperties(HomeFragment())
+        binding.navView.setNavigationItemSelectedListener(this)
+        initialHomePage()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,23 +57,33 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val toolbar = binding.tbMenuMaincontent
+        val title = binding.toolbarTitle
+
         when (item.itemId) {
             R.id.nav_home -> {
-                fragmentProperties(HomeFragment())
+                fragmentProperties(HomeFragment(toolbar, title))
             }
 
             R.id.nav_profile -> {
-                fragmentProperties(ProfileFragment())
+                fragmentProperties(ProfileFragment(toolbar, title))
             }
 
             R.id.nav_order -> {
-                fragmentProperties(OrderFragment())
+                fragmentProperties(OrderFragment(toolbar, title))
             }
 
             R.id.nav_setting -> {
-                fragmentProperties(SettingFragment())
+                fragmentProperties(SettingFragment(toolbar, title))
             }
         }
         return false
+    }
+
+    private fun initialHomePage() {
+        val toolbar = binding.tbMenuMaincontent
+        val title = binding.toolbarTitle
+
+        fragmentProperties(HomeFragment(toolbar, title))
     }
 }

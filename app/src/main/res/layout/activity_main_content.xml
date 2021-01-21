@@ -18,21 +18,32 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:liftOnScroll="true">
+                app:elevation="0dp">
 
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/tb_menu_maincontent"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="center|center_horizontal"
                     android:background="@color/theme_grey"
-                    app:title=" "
                     app:menu="@menu/menu_toolbar"
                     app:navigationIcon="@drawable/ic_menu"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                    app:title=" " />
 
             </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/theme_choco"
+                android:fontFamily="@font/poppins_bold"
+                app:layout_anchor="@+id/appBarLayout"
+                app:layout_anchorGravity="center" />
 
             <FrameLayout
                 android:id="@+id/fl_maincontent"
