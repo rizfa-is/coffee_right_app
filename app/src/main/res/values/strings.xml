@@ -36,4 +36,6 @@
     <string name="favorite_product">Favorite product</string>
     <string name="see_more">See more</string>
     <string name="promo_for_you">Promo for you</string>
+    <string name="no_orders_yet">No orders yet</string>
+    <string name="save">Save</string>
 </resources>
