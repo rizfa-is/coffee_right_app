@@ -13,10 +13,5 @@ class OrderHistoryActivity : BaseActivityViewModel<ActivityOrderHistoryBinding, 
         setLayout = R.layout.activity_order_history
         setViewModel = ViewModelProvider(this).get(OrderHistoryViewModel::class.java)
         super.onCreate(savedInstanceState)
-
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
     }
 }

@@ -27,6 +27,7 @@
                     android:id="@+id/tb_menu_maincontent"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    android:paddingHorizontal="8dp"
                     android:layout_gravity="center|center_horizontal"
                     android:background="@color/theme_grey"
                     app:menu="@menu/menu_toolbar"

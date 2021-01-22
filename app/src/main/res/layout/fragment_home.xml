@@ -12,13 +12,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
             android:background="@color/theme_grey">
 
             <TextView
                 android:id="@+id/tv_home_greeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/text_home_page"
@@ -43,6 +43,7 @@
                 android:id="@+id/tv_home_seemore1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/see_more"
                 android:textColor="@color/theme_choco"
@@ -54,10 +55,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite"
                 android:layout_width="0dp"
-                android:layout_height="320dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite"
                 tools:listitem="@layout/item_home" />
 
@@ -70,13 +71,14 @@
                 android:text="@string/promo_for_you"
                 android:textColor="@color/theme_choco"
                 android:textSize="17sp"
-                app:layout_constraintStart_toStartOf="@+id/rv_favorite"
+                app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
                 app:layout_constraintTop_toBottomOf="@+id/rv_favorite" />
 
             <TextView
                 android:id="@+id/tv_home_seemore2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/see_more"
                 android:textColor="@color/theme_choco"
@@ -88,12 +90,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_promo"
                 android:layout_width="0dp"
-                android:layout_height="320dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_home_promo"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_promo"
                 tools:listitem="@layout/item_home" />
 

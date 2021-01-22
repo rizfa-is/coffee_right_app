@@ -16,10 +16,6 @@ class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel
         setViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
         viewListener()
     }
 

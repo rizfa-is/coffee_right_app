@@ -1,0 +1,8 @@
+package com.istekno.coffeebreakapp.model
+
+data class SharedPrefModel(
+    var acID: Int? = null,
+    var level: String? = null,
+    var token: String? = null,
+    var isLogin: Boolean? = false
+)
