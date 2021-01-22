@@ -23,6 +23,7 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
         setLayout = R.layout.activity_signup
         setViewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
         super.onCreate(savedInstanceState)
+<<<<<<< HEAD
 
         window.setFlags(
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -73,5 +74,7 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
 
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+=======
+>>>>>>> feature-maincontentUI
     }
 }

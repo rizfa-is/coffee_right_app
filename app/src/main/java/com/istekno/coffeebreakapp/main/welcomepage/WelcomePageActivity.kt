@@ -24,7 +24,7 @@ class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
     }
 
     private fun viewListener() {
-        binding?.btnGetStarted?.setOnClickListener {
+        binding.btnGetStarted.setOnClickListener {
             intent<MainPageActivity>(this)
         }
     }

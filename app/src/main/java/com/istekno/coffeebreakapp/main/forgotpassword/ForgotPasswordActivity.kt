@@ -1,9 +1,11 @@
 package com.istekno.coffeebreakapp.main.forgotpassword
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+<<<<<<< HEAD
 import android.view.WindowManager
 import android.widget.Toast
+=======
+>>>>>>> feature-maincontentUI
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityForgotPasswordBinding
@@ -13,6 +15,7 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_forgot_password
         super.onCreate(savedInstanceState)
+<<<<<<< HEAD
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -44,5 +47,7 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+=======
+>>>>>>> feature-maincontentUI
     }
 }
