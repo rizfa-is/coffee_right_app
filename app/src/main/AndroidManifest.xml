@@ -2,13 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.istekno.coffeebreakapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_coffe_right"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_coffe_right_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CoffeeBreakApp">
+        android:theme="@style/Theme.CoffeeBreakApp"
+        android:usesCleartextTraffic="true">
         <activity android:name=".main.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

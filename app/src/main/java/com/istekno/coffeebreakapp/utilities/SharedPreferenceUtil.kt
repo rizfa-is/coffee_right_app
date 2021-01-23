@@ -19,7 +19,7 @@ class SharedPreferenceUtil(context: Context) {
     fun setPreference(value: SharedPrefModel) {
         val editor = myPreferences.edit()
         value.acID?.let { editor.putInt(ACID, it) }
-        editor.putString(LEVEL, value.level)
+        value.level?.let { editor.putInt(LEVEL, it) }
         editor.putString(TOKEN, value.token)
         value.isLogin?.let { editor.putBoolean(LOGIN, it) }
         editor.apply()
@@ -28,10 +28,16 @@ class SharedPreferenceUtil(context: Context) {
     fun getPreference(): SharedPrefModel {
         val model = SharedPrefModel()
         model.acID = myPreferences.getInt(ACID, -1)
-        model.level = myPreferences.getString(LEVEL, "")
+        model.level = myPreferences.getInt(LEVEL, -1)
         model.token = myPreferences.getString(TOKEN, "")
         model.isLogin = myPreferences.getBoolean(LOGIN, false)
 
         return model
+    }
+
+    fun clear() {
+        myPreferences.edit()
+            .clear()
+            .apply()
     }
 }
