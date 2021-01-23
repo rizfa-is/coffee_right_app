@@ -1,5 +1,7 @@
 package com.istekno.coffeebreakapp.main.maincontent
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,17 +13,21 @@ import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
+import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
+import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var drawer: DrawerLayout
+    private lateinit var sharePref: SharedPreferenceUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.tbMenuMaincontent)
         drawer = binding.drawerLayout
+        sharePref = SharedPreferenceUtil(this)
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -32,6 +38,13 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
 
         binding.navView.setNavigationItemSelectedListener(this)
         initialHomePage()
+        clickListener()
+    }
+
+    private fun clickListener() {
+        binding.btnSignOut.setOnClickListener {
+            showDialogLogout()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -85,5 +98,19 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
         val title = binding.toolbarTitle
 
         fragmentProperties(HomeFragment(toolbar, title))
+    }
+
+    private fun showDialogLogout() {
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Log Out")
+        builder.setMessage("are you sure? Logging out will remove all data from this device.")
+        builder.setPositiveButton("Yes") { dialogInterface : DialogInterface, i : Int ->
+            sharePref.clear()
+            val intent = Intent(this, MainPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton("No") { dialogInterface : DialogInterface, i : Int ->}
+        builder.show()
     }
 }
