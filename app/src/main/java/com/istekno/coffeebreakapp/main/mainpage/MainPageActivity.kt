@@ -2,7 +2,6 @@ package com.istekno.coffeebreakapp.main.mainpage
 
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainPageBinding
