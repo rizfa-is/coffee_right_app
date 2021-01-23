@@ -8,6 +8,7 @@ import kotlin.coroutines.CoroutineContext
 class SignupViewModel: ViewModel(), CoroutineScope {
 
     val isRegister = MutableLiveData<Boolean>()
+    val isMessage = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -35,7 +36,11 @@ class SignupViewModel: ViewModel(), CoroutineScope {
             if (result is SignUpResponse) {
                 if (result.success) {
                     isRegister.value = result.success
+                    isMessage.value = result.message
                 }
+            } else {
+                isRegister.value = false
+                isMessage.value = "Email has been Registered"
             }
         }
     }
