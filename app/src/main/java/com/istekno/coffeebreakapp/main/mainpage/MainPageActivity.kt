@@ -24,10 +24,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     }
 
     private fun viewListener() {
-        binding?.btnCreateAccount?.setOnClickListener {
+        binding.btnCreateAccount.setOnClickListener {
             intent<SignupActivity>(this)
         }
-        binding?.btnLogin?.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             intent<LoginActivity>(this)
         }
     }
