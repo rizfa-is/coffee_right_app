@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.checkout.CheckoutActivity"
+        android:background="@color/theme_grey">
+
+        <View
+            android:background="@drawable/shape_bg_choco_checkout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="35dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:src="@drawable/ic_arrow_left_white"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Checkout"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="18sp"
+                    android:id="@+id/tv_toolbar_checkout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/iv_back"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_back"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_white"
+                android:elevation="10dp"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="20dp">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <EditText
+                    android:id="@+id/et_customer_address"
+                    android:text="Iskandar Street, Jakarta"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:hint="Input your address"
+                    android:background="@drawable/shape_bg_grey_to_blue"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <EditText
+                    android:id="@+id/et_add_delivery_address"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:hint="Input delivery address"
+                    android:background="@drawable/shape_bg_grey_to_blue"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/et_customer_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/iv_add_delivery_address"
+                    android:src="@drawable/ic_plus"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintTop_toTopOf="@id/et_add_delivery_address"
+                    app:layout_constraintBottom_toBottomOf="@id/et_add_delivery_address"
+                    app:layout_constraintEnd_toEndOf="@id/et_add_delivery_address"
+                    android:layout_marginRight="25dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_white"
+                android:elevation="10dp"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="20dp">
+
+                <TextView
+                    android:id="@+id/tv_title_set_delivery_method"
+                    android:text="Delivery and Time"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_dine_in"
+                    android:text="Dine in"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/shape_bg_choco"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:layout_marginTop="20dp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_set_delivery_method"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_door_delivery"
+                    android:text="Door Delivery"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/icon_home"
+                    android:background="@drawable/shape_bg_grey_stroke"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_dine_in"
+                    app:layout_constraintStart_toEndOf="@id/tv_dine_in"
+                    app:layout_constraintEnd_toStartOf="@id/tv_pick_up"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_dine_in"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_pick_up"
+                    android:text="Pick up"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/icon_home"
+                    android:background="@drawable/shape_bg_grey_stroke"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_door_delivery"
+                    app:layout_constraintStart_toEndOf="@id/tv_door_delivery"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_door_delivery"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_now"
+                    android:text="Now"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dine_in"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_yes"
+                    android:text="Yes"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/shape_bg_choco"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_now"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_now"
+                    app:layout_constraintStart_toStartOf="@id/tv_door_delivery"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_no"
+                    android:text="No"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/icon_home"
+                    android:background="@drawable/shape_bg_grey_stroke"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:layout_marginStart="20dp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_now"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_now"
+                    app:layout_constraintStart_toEndOf="@id/tv_yes"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_set_time"
+                    android:text="Set time"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_now"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/et_time_reservation"
+                    android:hint="Enter time for reservation"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/icon_home"
+                    android:background="@drawable/shape_bg_grey_stroke"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="11sp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_set_time"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_set_time"
+                    app:layout_constraintStart_toStartOf="@id/tv_yes"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_white"
+                android:elevation="10dp"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title_cost"
+                    android:text="Cost"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_total_cost"
+                    android:text="IDR 123.000"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:layout_marginTop="15dp"
+                android:id="@+id/btn_confirm_and_pay"
+                android:text="Confirm and Pay"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="17sp"
+                android:paddingVertical="10dp"
+                android:background="@drawable/shape_bg_choco_2"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
