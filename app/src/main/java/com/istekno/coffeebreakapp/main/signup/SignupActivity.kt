@@ -1,13 +1,10 @@
 package com.istekno.coffeebreakapp.main.signup
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
-import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySignupBinding
 
@@ -15,7 +12,7 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
 
     companion object {
         const val FIELD_REQUIRED = "Field must not empty"
-        const val FIELD_IS_NOT_VALID = "Email format is not valid"
+        const val FIELD_IS_NOT_VALID = "Email format is not valid\nRequired '@' and '.' character"
         const val FIELD_LENGTH = "Password min. 8 characters"
     }
 

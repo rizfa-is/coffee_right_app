@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
+import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
 
 class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
