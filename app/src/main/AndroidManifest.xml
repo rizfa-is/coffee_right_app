@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main.payment.PaymentActivity"></activity>
+        <activity android:name=".main.editprofile.EditProfileActivity"></activity>
+        <activity android:name=".main.editpassword.EditPasswordActivity" />
+        <activity android:name=".main.payment.PaymentActivity" />
         <activity android:name=".main.detailproduct.DetailProductActivity" />
         <activity android:name=".main.maincontent.MainContentActivity" />
         <activity android:name=".main.orderhistory.OrderHistoryActivity" />
@@ -22,7 +24,7 @@
         <activity android:name=".main.signup.SignupActivity" />
         <activity android:name=".main.login.LoginActivity" />
         <activity android:name=".main.mainpage.MainPageActivity" />
-        <activity android:name=".main.welcomepage.WelcomePageActivity"/>
+        <activity android:name=".main.welcomepage.WelcomePageActivity" />
         <activity android:name=".main.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
