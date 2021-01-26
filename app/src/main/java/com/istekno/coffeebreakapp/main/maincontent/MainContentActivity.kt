@@ -13,6 +13,8 @@ import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
+import com.istekno.coffeebreakapp.main.cart.CartActivity
+import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -50,6 +52,15 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.toolbar_cart -> {
+                intent<CartActivity>(this)
+            }
+        }
+        return false
     }
 
     override fun onBackPressed() {

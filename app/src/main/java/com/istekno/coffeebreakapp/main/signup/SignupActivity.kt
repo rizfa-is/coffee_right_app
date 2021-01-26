@@ -1,7 +1,6 @@
 package com.istekno.coffeebreakapp.main.signup
 
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,13 +9,12 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySignupBinding
 import com.istekno.coffeebreakapp.main.login.LoginActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
-import retrofit2.create
 
 class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewModel>() {
 
     companion object {
         const val FIELD_REQUIRED = "Field must not empty"
-        const val FIELD_IS_NOT_VALID = "Email format is not valid"
+        const val FIELD_IS_NOT_VALID = "Email format is not valid\nRequired '@' and '.' character"
         const val FIELD_LENGTH = "Password min. 8 characters"
     }
 
@@ -24,17 +22,13 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
         setLayout = R.layout.activity_signup
         setViewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
         super.onCreate(savedInstanceState)
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
+
         val service = ApiClient.getApiClient(this)?.create(SignUpApiService::class.java)
         if (service != null) {
             viewModel.setService(service)
         } else {
             showToast("Something wrong with service...")
         }
-
 
         viewListener()
     }

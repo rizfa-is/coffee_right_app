@@ -33,21 +33,6 @@
             app:layout_constraintRight_toRightOf="parent"
             />
 
-        <TextView
-            android:id="@+id/tv_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/swipe_on_an_item_to_delete"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="44dp"
-            android:drawablePadding="8dp"
-            app:drawableLeftCompat="@drawable/ic_swipe" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_order_history"
             android:layout_width="match_parent"
@@ -57,7 +42,8 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_no_history_yet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_info" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:listitem="@layout/item_order_history"/>
 
         <TextView
             android:id="@+id/tv_no_history_yet"
@@ -127,9 +113,5 @@
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
