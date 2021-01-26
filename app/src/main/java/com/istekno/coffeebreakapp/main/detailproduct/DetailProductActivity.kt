@@ -3,6 +3,7 @@ package com.istekno.coffeebreakapp.main.detailproduct
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
@@ -44,7 +45,7 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(this, {
+        viewModel.isLoading.observe(this) {
             if (it) {
                 binding.scrollView.visibility = View.GONE
                 binding.progressBar.visibility = View.VISIBLE
@@ -52,14 +53,14 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
                 binding.progressBar.visibility = View.GONE
                 binding.scrollView.visibility = View.VISIBLE
             }
-        })
+        }
 
-        viewModel.listData.observe(this, {
+        viewModel.listData.observe(this) {
             binding.model = it[0]
             Glide.with(binding.root).load(img + it[0].productImage)
-                    .placeholder(R.drawable.error)
-                    .error(R.drawable.ic_profile).into(binding.ivProduct)
+                .placeholder(R.drawable.error)
+                .error(R.drawable.ic_profile).into(binding.ivProduct)
 
-        })
+        }
     }
 }
