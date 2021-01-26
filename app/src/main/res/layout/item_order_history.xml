@@ -13,28 +13,26 @@
             android:layout_width="85dp"
             android:layout_height="86dp"
             android:elevation="3dp"
-            android:src="@drawable/img_coffee"
+            android:src="@drawable/ic_bag"
             android:scaleType="centerCrop"
             android:layout_marginLeft="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:shapeAppearance="@style/rounded_image"
-            />
+            app:shapeAppearance="@style/rounded_image" />
 
         <TextView
             android:id="@+id/tv_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hazelnut Latte"
+            android:text="jumlah produk"
             android:textSize="22sp"
             android:textAlignment="center"
             android:lineSpacingExtra="-10dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@id/iv_product"
-            app:layout_constraintStart_toEndOf="@id/iv_product"
             android:layout_marginLeft="30dp"
-            />
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            app:layout_constraintStart_toEndOf="@id/iv_product"/>
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -46,12 +44,11 @@
             android:textColor="@color/theme_choco"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
         <TextView
             android:id="@+id/tv_size_product"
-            android:text="XL (Extra Large)"
+            android:text="tanggal updated"
             android:textSize="12sp"
             android:textColor="@color/theme_choco"
             android:fontFamily="@font/poppins_regular"
