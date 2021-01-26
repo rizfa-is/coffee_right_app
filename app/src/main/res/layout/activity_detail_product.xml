@@ -72,7 +72,7 @@
                     android:id="@+id/tv_price"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:text="@{model.productPrice}"
+                    android:text=""
                     android:background="@drawable/bg_radius_yellow_price"
                     android:textAlignment="center"
                     android:paddingVertical="3dp"
