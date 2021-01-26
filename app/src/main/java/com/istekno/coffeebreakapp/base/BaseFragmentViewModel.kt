@@ -1,5 +1,7 @@
 package com.istekno.coffeebreakapp.base
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +13,8 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseFragmentViewModel<FragmentBinding: ViewDataBinding, FragmentViewModel: ViewModel>: Fragment()  {
 
-    private lateinit var binding: FragmentBinding
-    private lateinit var viewModel: FragmentViewModel
+    lateinit var binding: FragmentBinding
+    lateinit var viewModel: FragmentViewModel
     protected var setLayout = 0
     protected var setViewModel: FragmentViewModel? = null
 
@@ -24,5 +26,9 @@ abstract class BaseFragmentViewModel<FragmentBinding: ViewDataBinding, FragmentV
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = setViewModel!!
+    }
+
+    protected inline fun <reified ActivityClass> intent(context: Context) {
+        context.startActivity(Intent(context, ActivityClass::class.java))
     }
 }

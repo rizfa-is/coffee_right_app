@@ -1,8 +1,8 @@
-package com.istekno.coffeebreakapp.main.maincontent.homepage
+package com.istekno.coffeebreakapp.main.detailproduct
 
 import com.google.gson.annotations.SerializedName
 
-data class HomeResponse(val success: Boolean, val message: String, val data: List<DataProduct>) {
+data class DetailProductResponse(val success: Boolean, val message: String, val data: List<DataProduct>) {
     data class DataProduct(
             @SerializedName("pr_id") val productId: Int,
             @SerializedName("dc_id") val discountId: Int,

@@ -17,4 +17,5 @@
     <color name="theme_grey_to_blue">#F4F4F8</color>
     <color name="icon_home">#ADADAF</color>
     <color name="bg_appicon">#FEF4E4</color>
+    <color name="textEditProfile">#9F9F9F</color>
 </resources>

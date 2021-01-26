@@ -38,4 +38,8 @@
     <string name="promo_for_you">Promo for you</string>
     <string name="no_orders_yet">No orders yet</string>
     <string name="save">Save</string>
+    <string name="hint_current_password">Enter your current password</string>
+    <string name="hint_new_password">Enter your new password</string>
+    <string name="hint_confirm_new_password">Confirm your new password</string>
+    <string name="btn_change_password">Change Password</string>
 </resources>

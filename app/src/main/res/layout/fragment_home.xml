@@ -52,11 +52,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_home_favorite" />
 
+            <ProgressBar
+                android:id="@+id/pg_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/theme_yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_favorite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rv_favorite" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite"
@@ -66,7 +76,7 @@
                 android:id="@+id/tv_home_promo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/promo_for_you"
                 android:textColor="@color/theme_choco"
@@ -87,11 +97,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_home_promo" />
 
+            <ProgressBar
+                android:id="@+id/pg_promoe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/theme_yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_promo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rv_promo" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_promo"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

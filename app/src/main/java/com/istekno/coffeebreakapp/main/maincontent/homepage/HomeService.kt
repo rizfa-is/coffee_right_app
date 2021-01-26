@@ -4,6 +4,6 @@ import retrofit2.http.GET
 
 interface HomeService {
 
-    @GET
-    suspend fun getAllProduct(): ProductResponse
+    @GET("product/getAllProduct")
+    suspend fun getAllProduct(): HomeResponse
 }
