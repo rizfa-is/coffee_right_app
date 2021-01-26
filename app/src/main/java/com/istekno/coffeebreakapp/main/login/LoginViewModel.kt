@@ -41,7 +41,7 @@ class LoginViewModel: ViewModel(), CoroutineScope {
 
             if (result is LoginResponse) {
                 if (result.success) {
-                    sharePref.setPreference(SharedPrefModel(result.data?.accountId, result.data?.accountLevel, result.data?.Token, true))
+                    sharePref.setPreference(SharedPrefModel(result.data?.accountId, result.data?.accountLevel, result.data?.token, true))
                     isDataLogin.value = true
                 } else {
                     isDataLogin.value =false
