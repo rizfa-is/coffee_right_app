@@ -1,12 +1,14 @@
 package com.istekno.coffeebreakapp.main.signup
 
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySignupBinding
+import com.istekno.coffeebreakapp.main.login.LoginActivity
+import com.istekno.coffeebreakapp.remote.ApiClient
 
 class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewModel>() {
 
@@ -21,10 +23,10 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
         setViewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
+        val service = ApiClient.getApiClient(this)?.create(SignUpApiService::class.java)
+        if (service != null) {
+            viewModel.setService(service)
+        }
 
         viewListener()
     }
@@ -64,8 +66,24 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
             showToast(FIELD_REQUIRED)
             return
         }
+        viewModel.callSignUpService("", inputEmail, inputPassword, inputPhoneNumber)
+        subscribeLiveData()
 
-        showToast("Register Success")
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.isRegister.observe(this, Observer {
+            if (it) {
+                viewModel.isMessage.observe(this, Observer { it1->
+                    showToast(it1)
+                })
+                intent<LoginActivity>(this)
+            } else {
+                viewModel.isMessage.observe(this, Observer { it1->
+                    showToast(it1)
+                })
+            }
+        })
     }
 
     private fun showToast(msg: String) {
