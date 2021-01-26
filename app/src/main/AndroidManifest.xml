@@ -17,6 +17,7 @@
         <activity android:name=".main.editprofile.EditProfileActivity"></activity>
         <activity android:name=".main.editpassword.EditPasswordActivity" />
         <activity android:name=".main.payment.PaymentActivity" />
+        <activity android:name=".main.cart.CartActivity" />
         <activity android:name=".main.detailproduct.DetailProductActivity" />
         <activity android:name=".main.maincontent.MainContentActivity" />
         <activity android:name=".main.orderhistory.OrderHistoryActivity" />
