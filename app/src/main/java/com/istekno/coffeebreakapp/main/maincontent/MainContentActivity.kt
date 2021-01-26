@@ -15,6 +15,8 @@ import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
+import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
+import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
