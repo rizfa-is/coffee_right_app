@@ -10,6 +10,8 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityDetailProductBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
+import java.text.NumberFormat
+import java.util.*
 
 class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding, DetailProductViewModel>() {
 
@@ -56,7 +58,9 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
         }
 
         viewModel.listData.observe(this) {
+            val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble()).replace("Rp".toRegex(),"IDR ")
             binding.model = it[0]
+            binding.tvPrice.text = price
             Glide.with(binding.root).load(img + it[0].productImage)
                 .placeholder(R.drawable.error)
                 .error(R.drawable.ic_profile).into(binding.ivProduct)
