@@ -19,6 +19,7 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
+import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
@@ -126,6 +127,9 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
         when(item.itemId) {
             R.id.toolbar_cart -> {
                 intent<CartActivity>(this)
+            }
+            R.id.toolbar_search -> {
+                intent<CheckoutActivity>(this)
             }
         }
         return false
