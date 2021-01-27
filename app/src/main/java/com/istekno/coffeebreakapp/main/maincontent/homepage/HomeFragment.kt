@@ -38,6 +38,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
 
         viewModel.setService(service)
         viewModel.getAllProduct()
+
         setRecyclerView(view)
         subscribeLiveData()
         viewListener(view)
@@ -104,7 +105,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
             val mutableFavorite: MutableList<HomeResponse.DataProduct> = data.toMutableList()
             val mutablePromo: MutableList<HomeResponse.DataProduct> = data.toMutableList()
 
-            mutableFavorite.removeIf { it.productCategory != "Favorite" }
+            mutableFavorite.removeIf { it.productFavorite == "N" }
             mutablePromo.removeIf { it.discountId == 0 }
 
             (binding.rvFavorite.adapter as HomeAdapter).setData(mutableFavorite)

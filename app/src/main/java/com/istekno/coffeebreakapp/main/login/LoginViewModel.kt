@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.istekno.coffeebreakapp.model.SharedPrefModel
@@ -40,12 +41,14 @@ class LoginViewModel: ViewModel(), CoroutineScope {
             }
 
             if (result is LoginResponse) {
-                if (result.success) {
-                    sharePref.setPreference(SharedPrefModel(result.data?.accountId, result.data?.accountLevel, result.data?.Token, true))
-                    isDataLogin.value = true
-                } else {
-                    isDataLogin.value =false
+                if (result.data?.accountLevel == 0) {
+                    sharePref.setPreference(SharedPrefModel(result.data.accountId, result.data.customerId, result.data.accountLevel, result.data.token, true))
+                } else if (result.data?.accountLevel == 1) {
+                    sharePref.setPreference(SharedPrefModel(result.data.accountId, result.data.adminId, result.data.accountLevel, result.data.token, true))
                 }
+
+                Log.e("sharedPref", sharePref.getPreference().roleID.toString())
+                isDataLogin.value = true
             }
         }
     }

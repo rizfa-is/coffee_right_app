@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.istekno.coffeebreakapp.main.maincontent.ProfileFragment"
+        android:name="com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.istekno.coffeebreakapp.main.maincontent.ProfileFragment"
+        android:name="com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_order"
-        android:name="com.istekno.coffeebreakapp.main.maincontent.OrderFragment"
+        android:name="com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment"
         android:label="@string/order"
         tools:layout="@layout/fragment_order" />
 

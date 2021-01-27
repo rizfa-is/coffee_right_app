@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.homepage
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
@@ -37,7 +38,7 @@ class HomeViewModel: ViewModel(), CoroutineScope {
 
             if (result is HomeResponse) {
                 val data = result.data.map {
-                    HomeResponse.DataProduct(it.productId, it.discountId, it.productName, it.productSize, it.productDesc, it.productPrice, it.productImage, it.productCategory, it.productCreated, it.productUpdated)
+                    HomeResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice, it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated)
                 }
 
                 listData.value = data

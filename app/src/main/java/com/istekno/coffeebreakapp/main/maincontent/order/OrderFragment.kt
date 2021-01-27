@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.order
 
 import android.annotation.SuppressLint
 import android.os.Bundle
