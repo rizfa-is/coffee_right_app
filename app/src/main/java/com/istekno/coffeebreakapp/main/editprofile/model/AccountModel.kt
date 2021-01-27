@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.editprofile
+package com.istekno.coffeebreakapp.main.editprofile.model
 
 data class AccountModel(
     val acId: Int? = 0,

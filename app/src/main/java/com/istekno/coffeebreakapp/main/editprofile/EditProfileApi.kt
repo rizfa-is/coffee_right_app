@@ -1,10 +1,20 @@
 package com.istekno.coffeebreakapp.main.editprofile
 
+import com.istekno.coffeebreakapp.main.editprofile.model.AccountResponse
+import com.istekno.coffeebreakapp.main.editprofile.model.CustomerResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 
-interface CustomerApi {
+interface EditProfileApi {
+
+    @FormUrlEncoded
+    @PUT("account/{acId}")
+    suspend fun updateAccount(
+        @Path("acId") acId: Int,
+        @Field("ac_name") acName: String,
+        @Field("ac_phone") acPhone: String
+        ): AccountResponse
 
     @Multipart
     @PUT("customer/{csId}")

@@ -7,10 +7,10 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class ProfileViewModel: ViewModel(), CoroutineScope {
+class ProfileViewModel : ViewModel(), CoroutineScope {
 
     val isLoading = MutableLiveData<Boolean>()
-    val listData = MutableLiveData<List<ProfileResponse.Data>>()
+    val listData = MutableLiveData<List<ProfileModel>>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -44,7 +44,17 @@ class ProfileViewModel: ViewModel(), CoroutineScope {
 
             if (result is ProfileResponse) {
                 val list = result.data?.map {
-                    ProfileResponse.Data(it.customerId, it.accountId, it.accountName, it.accountEmail, it.accountPhone, it.accountGender, it.accountBirthday, it.accountAddress, it.accountImage)
+                    ProfileModel(
+                        it.customerId,
+                        it.accountId,
+                        it.accountName,
+                        it.accountEmail,
+                        it.accountPhone,
+                        it.accountGender,
+                        it.accountBirthday,
+                        it.accountAddress,
+                        it.accountImage
+                    )
                 }
 
                 listData.value = list

@@ -9,21 +9,15 @@ import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class EditProfileViewModel: ViewModel(), CoroutineScope {
-    private lateinit var serviceAccount: AccountApi
-    private lateinit var serviceCustomer: CustomerApi
+    private lateinit var service: EditProfileApi
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setServiceAccount(serviceAccount: AccountApi) {
-        this@EditProfileViewModel.serviceAccount = serviceAccount
+    fun setService(serviceEditProfile: EditProfileApi) {
+        this@EditProfileViewModel.service = serviceEditProfile
     }
-    fun setServiceCustomer(serviceCustomer: CustomerApi) {
-        this@EditProfileViewModel.serviceCustomer = serviceCustomer
-    }
-
-
 
     fun updateAPI(
         csId: Int,
@@ -38,12 +32,12 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
     ) {
         launch {
             try {
-                serviceAccount.updateAccount(
+                service.updateAccount(
                     acId = acId,
                     acName = acName,
                     acPhone = acPhone
                 )
-                serviceCustomer.updateCustomer(
+                service.updateCustomer(
                     csId = csId,
                     csGender = csGender,
                     csBirthday = csBirthday,

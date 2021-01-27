@@ -10,7 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/theme_grey"
             tools:context=".activity.customer.profile.EditProfileActivity">
             <ImageView
@@ -21,7 +21,8 @@
                 android:layout_marginTop="50dp"
                 android:src="@drawable/ic_arrow_left_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/arrowback" />
 
             <TextView
                 android:id="@+id/tv_edit_profile"
@@ -31,7 +32,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_back"
@@ -67,7 +68,7 @@
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name :"
+                    android:text="@string/etName"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/textEditProfile"
@@ -91,11 +92,12 @@
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your name"
+                        android:hint="@string/etYourName"
                         android:gravity="left"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
-                        android:background="#00000000" />
+                        android:background="#00000000"
+                        tools:ignore="RtlHardcoded" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,15 +115,15 @@
                         android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        android:text="Female" />
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/female" />
 
                     <RadioButton
                         android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
-                        android:text="Male" />
+                        android:text="@string/male" />
 
                 </RadioGroup>
 
@@ -129,7 +131,7 @@
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email address :"
+                    android:text="@string/tvEmailAddress"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/textEditProfile"
@@ -153,11 +155,12 @@
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your email adress"
+                        android:hint="@string/etYourEmail"
                         android:gravity="left"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
-                        android:background="#00000000" />
+                        android:background="#00000000"
+                        tools:ignore="RtlHardcoded" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,7 +168,7 @@
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone Number :"
+                    android:text="@string/tvPhoneNumber"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/textEditProfile"
@@ -189,11 +192,12 @@
                         android:id="@+id/et_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your Phone Number"
+                        android:hint="@string/etYourNumberPhone"
                         android:gravity="left"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
-                        android:background="#00000000" />
+                        android:background="#00000000"
+                        tools:ignore="RtlHardcoded,TextFields" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,7 +205,7 @@
                     android:id="@+id/dob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date of birth :"
+                    android:text="@string/tvDoB"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/textEditProfile"
@@ -225,11 +229,12 @@
                         android:id="@+id/et_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your Date of birth"
+                        android:hint="@string/etYourDoB"
                         android:gravity="left"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
-                        android:background="#00000000" />
+                        android:background="#00000000"
+                        tools:ignore="RtlHardcoded" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -237,7 +242,7 @@
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Delivery address :"
+                    android:text="@string/tvAddress"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/textEditProfile"
@@ -261,11 +266,12 @@
                         android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your Delivery Address"
+                        android:hint="@string/etAddress"
                         android:gravity="left"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
-                        android:background="#00000000" />
+                        android:background="#00000000"
+                        tools:ignore="RtlHardcoded" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -281,7 +287,7 @@
                     android:layout_marginBottom="50dp"
                     android:backgroundTint="@color/theme_choco"
                     android:fontFamily="@font/poppins_extrabold"
-                    android:text="Save and Update"
+                    android:text="@string/matButtonSaveUpdate"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:cornerRadius="15dp"
