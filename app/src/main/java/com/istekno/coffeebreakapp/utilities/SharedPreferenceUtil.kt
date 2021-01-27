@@ -12,6 +12,7 @@ class SharedPreferenceUtil(context: Context) {
         private const val AC_EMAIL = "acEmail"
         private const val AC_NAME = "acName"
         private const val AC_IMAGE = "acImage"
+        private const val AC_ADDRESS = "acAddress"
         private const val ROLE_ID = "roleID"
         private const val LEVEL = "level"
         private const val TOKEN = "token"
@@ -30,6 +31,7 @@ class SharedPreferenceUtil(context: Context) {
         editor.putString(AC_EMAIL, value.acEmail)
         editor.putString(AC_NAME, value.acName)
         editor.putString(AC_IMAGE, value.acImage)
+        editor.putString(AC_ADDRESS, value.acAddress)
         editor.putString(TOKEN, value.token)
 
         editor.apply()
@@ -40,6 +42,7 @@ class SharedPreferenceUtil(context: Context) {
         model.acID = myPreferences.getInt(AC_ID, -1)
         model.acEmail = myPreferences.getString(AC_EMAIL, "Not set")
         model.acName = myPreferences.getString(AC_NAME, "Not set")
+        model.acAddress = myPreferences.getString(AC_ADDRESS, "Not set")
         model.acImage = myPreferences.getString(AC_IMAGE, "")
         model.roleID = myPreferences.getInt(ROLE_ID, -1)
         model.level = myPreferences.getInt(LEVEL, -1)

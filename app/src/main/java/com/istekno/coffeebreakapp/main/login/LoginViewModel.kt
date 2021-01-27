@@ -45,12 +45,12 @@ class LoginViewModel: ViewModel(), CoroutineScope {
                 if (data?.accountLevel == 0) {
 
                     sharePref.setPreference(SharedPrefModel(data.accountId, data.accountEmail, data.accountName, data.customerImage,
-                        data.customerId, data.accountLevel, data.token, true))
+                        data.customerAddress, data.customerId, data.accountLevel, data.token, true))
 
                 } else if (data?.accountLevel == 1) {
 
                     sharePref.setPreference(SharedPrefModel(data.accountId, data.accountEmail, data.accountName, data.adminImage,
-                        data.adminId, data.accountLevel, data.token, true))
+                        null, data.adminId, data.accountLevel, data.token, true))
                 }
 
                 isDataLogin.value = true
