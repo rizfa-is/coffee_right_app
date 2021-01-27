@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main.orderhistory.detail.DetailOrderHistoryActivity"></activity>
+        <activity android:name=".main.orderhistory.detail.DetailOrderHistoryActivity" />
         <activity android:name=".main.promo.PromoActivity" />
         <activity android:name=".main.favorite.FavoriteActivity" />
         <activity android:name=".main.editprofile.EditProfileActivity" />
