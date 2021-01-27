@@ -84,8 +84,12 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
     private fun initialHomePage() {
         val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
-
-        fragmentProperties(HomeFragment(toolbar, title))
+        val data = intent.getIntExtra("data", -1)
+        if (data == 0) {
+            fragmentProperties(OrderFragment(toolbar, title))
+        } else {
+            fragmentProperties(HomeFragment(toolbar, title))
+        }
     }
 
     private fun showDialogLogout() {
