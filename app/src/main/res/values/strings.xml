@@ -42,4 +42,7 @@
     <string name="hint_new_password">Enter your new password</string>
     <string name="hint_confirm_new_password">Confirm your new password</string>
     <string name="btn_change_password">Change Password</string>
+    <string name="bank_account">Bank Account</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
+    <string name="card">Card</string>
 </resources>
