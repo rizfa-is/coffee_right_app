@@ -28,7 +28,7 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
-        super.onCreate(savedInstanceState)
+        super.onCreate(null)
         setSupportActionBar(binding.tbMenuMaincontent)
         drawer = binding.drawerLayout
         sharePref = SharedPreferenceUtil(this)
@@ -97,10 +97,6 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
 
             R.id.nav_order -> {
                 fragmentProperties(OrderFragment(toolbar, title))
-            }
-
-            R.id.nav_setting -> {
-                fragmentProperties(SettingFragment(toolbar, title))
             }
         }
         return false

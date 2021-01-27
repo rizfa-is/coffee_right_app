@@ -8,14 +8,10 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityEditProfileBinding
 
 class EditProfileActivity : BaseActivityViewModel<ActivityEditProfileBinding, EditProfileViewModel>() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
         setViewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
         super.onCreate(savedInstanceState)
-
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
     }
 }
