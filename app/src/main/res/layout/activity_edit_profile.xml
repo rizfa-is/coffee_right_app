@@ -56,6 +56,7 @@
                     app:layout_constraintRight_toRightOf="parent"/>
 
                 <Button
+                    android:id="@+id/btn_change_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_edit"
@@ -109,14 +110,14 @@
                     app:layout_constraintTop_toBottomOf="@id/input_layout_name">
 
                     <RadioButton
-                        android:id="@+id/java"
+                        android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
                         android:text="Female" />
 
                     <RadioButton
-                        android:id="@+id/kotlin"
+                        android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
@@ -269,7 +270,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_save_update"
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"

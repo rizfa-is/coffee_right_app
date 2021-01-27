@@ -13,18 +13,8 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentProfileBinding
-import com.istekno.coffeebreakapp.main.editpassword.EditPasswordActivity
-import com.istekno.coffeebreakapp.main.editprofile.EditProfileActivity
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
-import com.istekno.coffeebreakapp.remote.ApiClient
-import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class ProfileFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
-
-    companion object {
-        const val img = "http://184.72.105.243:3000/images/"
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setLayout = R.layout.fragment_profile
