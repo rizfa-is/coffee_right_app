@@ -14,7 +14,6 @@ import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentProfileBinding
 import com.istekno.coffeebreakapp.main.editpassword.EditPasswordActivity
 import com.istekno.coffeebreakapp.main.editprofile.EditProfileActivity
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
 import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil

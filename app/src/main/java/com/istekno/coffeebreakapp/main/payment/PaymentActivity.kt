@@ -6,6 +6,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
+import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 
 class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +16,18 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
 
         setImageSlider()
 
+        onClickListener()
+
+    }
+
+    private fun onClickListener() {
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
+        binding.btnPayNow.setOnClickListener {
+//            intent<OrderFragment>(this)
+        }
     }
 
     private fun setImageSlider() {
