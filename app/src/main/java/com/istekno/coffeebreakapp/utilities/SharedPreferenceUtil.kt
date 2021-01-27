@@ -13,6 +13,12 @@ class SharedPreferenceUtil(context: Context) {
         private const val LEVEL = "level"
         private const val TOKEN = "token"
         private const val LOGIN = "isLogin"
+
+        private const val AC_EMAIL = "AC_EMAIL"
+        private const val AC_NAME = "AC_NAME"
+        private const val AC_PHONE = "AC_PHONE"
+        private const val CS_ID = "CS_ID"
+
     }
 
     private val myPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -36,6 +42,23 @@ class SharedPreferenceUtil(context: Context) {
         model.isLogin = myPreferences.getBoolean(LOGIN, false)
 
         return model
+    }
+
+    fun getAccountUser(): HashMap<String, String> {
+        val user: HashMap<String, String> = HashMap()
+        user[AC_NAME] = myPreferences.getString(AC_NAME, "Not set")!!
+        user[AC_EMAIL] = myPreferences.getString(AC_EMAIL, "Not set")!!
+        user[AC_PHONE] = myPreferences.getString(AC_PHONE, "Not set")!!
+        user[TOKEN] = myPreferences.getString(TOKEN, "Not set")!!
+
+        return user
+    }
+
+    fun getIdCustomer(): Int {
+        return myPreferences.getInt(CS_ID, 0)
+    }
+    fun getIdAccount(): Int {
+        return myPreferences.getInt(ACID, 0)
     }
 
     fun clear() {
