@@ -34,10 +34,10 @@ class DetailOrderHistoryActivity : BaseActivityViewModel<ActivityDetailOrderHist
             viewModel.setService(service)
         }
 
-        val id = intent.getStringExtra(ORDER_HISTORY_KEY)
+        val id = intent.getIntExtra(ORDER_HISTORY_KEY, -1)
 
         setRecyclerView()
-        viewModel.callOrderApiService(id!!.toInt())
+        viewModel.callOrderApiService(id)
         subscribeLiveData()
         onClickListener()
 
@@ -62,9 +62,9 @@ class DetailOrderHistoryActivity : BaseActivityViewModel<ActivityDetailOrderHist
 
         viewModel.listData.observe(this) {
             (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(it)
-            binding.tvTax.text = intent.getStringExtra(TAX)
-            binding.tvSubtotal.text = intent.getStringExtra(PRICE_BEFORE_TAX)
-            binding.tvTotal.text = intent.getStringExtra(TOTAL_PRICE)
+            binding.tvTax.text = intent.getIntExtra(TAX,-1).toString()
+            binding.tvSubtotal.text = intent.getIntExtra(PRICE_BEFORE_TAX, -1).toString()
+            binding.tvTotal.text = intent.getIntExtra(TOTAL_PRICE, -1).toString()
         }
     }
 

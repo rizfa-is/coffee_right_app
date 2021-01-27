@@ -1,3 +1,5 @@
+package com.istekno.coffeebreakapp.main.maincontent.profile
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -5,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
 import com.istekno.coffeebreakapp.R
@@ -56,7 +59,7 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
     }
 
     private fun subscribeLiveData(view: View) {
-        viewModel.isLoading.observe(viewLifecycleOwner, {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.pgProfile.visibility = View.VISIBLE
                 binding.svProfile.visibility = View.GONE
@@ -64,14 +67,14 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
                 binding.pgProfile.visibility = View.GONE
                 binding.svProfile.visibility = View.VISIBLE
             }
-        })
+        }
 
-        viewModel.listData.observe(viewLifecycleOwner, {
+        viewModel.listData.observe(viewLifecycleOwner) {
             binding.model = it[0]
 
             Glide.with(view.context).load(img + it[0].accountImage)
                 .placeholder(R.drawable.ic_avatar_en).into(binding.shapeableImageView2)
-        })
+        }
     }
 
     @SuppressLint("SetTextI18n")

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityOrderHistoryBinding
+import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
@@ -52,6 +53,10 @@ class OrderHistoryActivity : BaseActivityViewModel<ActivityOrderHistoryBinding, 
     private fun onClickListener() {
         binding.icBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnStartOrder.setOnClickListener {
+            intent<MainContentActivity>(this)
         }
     }
 
