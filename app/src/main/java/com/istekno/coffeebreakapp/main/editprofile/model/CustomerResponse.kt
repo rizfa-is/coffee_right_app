@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.editprofile
+package com.istekno.coffeebreakapp.main.editprofile.model
 
 import com.google.gson.annotations.SerializedName
 

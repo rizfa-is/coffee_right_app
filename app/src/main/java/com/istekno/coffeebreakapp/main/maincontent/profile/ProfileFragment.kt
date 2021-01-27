@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.maincontent.profile
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,9 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
     }
-    
+
+    private var listData = ArrayList<ProfileModel>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setLayout = R.layout.fragment_profile
         setView()
@@ -47,7 +50,9 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
 
     private fun viewListener(view: View) {
         binding.btnEditProfile.setOnClickListener {
-            intent<EditProfileActivity>(view.context)
+            val intent = Intent(context, EditProfileActivity::class.java)
+            intent.putExtra("Data", listData[0])
+            startActivity(intent)
         }
         binding.btnEditPassword.setOnClickListener {
             intent<EditPasswordActivity>(view.context)
@@ -70,7 +75,7 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
 
         viewModel.listData.observe(viewLifecycleOwner) {
             binding.model = it[0]
-
+            listData.add(it[0])
             Glide.with(view.context).load(img + it[0].accountImage)
                 .placeholder(R.drawable.ic_avatar_en).into(binding.shapeableImageView2)
         }
