@@ -85,6 +85,4 @@ class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
-
-
 }

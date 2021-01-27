@@ -10,7 +10,9 @@ data class LoginResponse(val success: Boolean, val message: String, val data: Da
         @SerializedName("ac_name") val accountName: String,
         @SerializedName("ac_level") val accountLevel: Int,
         @SerializedName("ac_email") val accountEmail: String,
-        @SerializedName("ac_phone") val AccountPhone: String,
+        @SerializedName("ac_phone") val accountPhone: String,
+        @SerializedName("cs_image") val customerImage: String?,
+        @SerializedName("ad_image") val adminImage: String?,
         val token: String
     )
 }

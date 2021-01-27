@@ -44,7 +44,7 @@ class ProfileViewModel: ViewModel(), CoroutineScope {
 
             if (result is ProfileResponse) {
                 val list = result.data?.map {
-                    ProfileResponse.Data(it.customerId, it.accountId, it.accountName, it.accountGender, it.accountBirthday, it.accountAddress, it.accountImage)
+                    ProfileResponse.Data(it.customerId, it.accountId, it.accountName, it.accountEmail, it.accountPhone, it.accountGender, it.accountBirthday, it.accountAddress, it.accountImage)
                 }
 
                 listData.value = list
