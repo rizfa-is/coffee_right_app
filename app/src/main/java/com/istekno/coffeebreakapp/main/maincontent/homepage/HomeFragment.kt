@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -87,7 +88,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(viewLifecycleOwner, {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.rvFavorite.visibility = View.INVISIBLE
                 binding.pgFavorite.visibility = View.VISIBLE
@@ -99,9 +100,9 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
                 binding.rvPromo.visibility = View.VISIBLE
                 binding.pgPromoe.visibility = View.INVISIBLE
             }
-        })
+        }
 
-        viewModel.listData.observe(viewLifecycleOwner, { data ->
+        viewModel.listData.observe(viewLifecycleOwner) { data ->
             val mutableFavorite: MutableList<HomeResponse.DataProduct> = data.toMutableList()
             val mutablePromo: MutableList<HomeResponse.DataProduct> = data.toMutableList()
 
@@ -110,7 +111,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
 
             (binding.rvFavorite.adapter as HomeAdapter).setData(mutableFavorite)
             (binding.rvPromo.adapter as HomeAdapter).setData(mutablePromo)
-        })
+        }
     }
 
     @SuppressLint("SetTextI18n")
