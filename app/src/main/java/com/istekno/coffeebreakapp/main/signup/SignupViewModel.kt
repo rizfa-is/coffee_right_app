@@ -1,9 +1,11 @@
 package com.istekno.coffeebreakapp.main.signup
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.log
 
 class SignupViewModel: ViewModel(), CoroutineScope {
 

@@ -16,6 +16,10 @@ class SharedPreferenceUtil(context: Context) {
         private const val LEVEL = "level"
         private const val TOKEN = "token"
         private const val LOGIN = "isLogin"
+
+        private const val AC_EMAIL = "AC_EMAIL"
+        private const val AC_NAME = "AC_NAME"
+        private const val AC_PHONE = "AC_PHONE"
     }
 
     private val myPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

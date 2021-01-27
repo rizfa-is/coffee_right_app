@@ -58,4 +58,7 @@
     <string name="matButtonSaveUpdate">Save and Update</string>
     <string name="tvAddress">Delivery address :</string>
     <string name="imageviewprofile">imageViewProfile</string>
+    <string name="bank_account">Bank Account</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
+    <string name="card">Card</string>
 </resources>
