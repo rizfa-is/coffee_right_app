@@ -26,6 +26,8 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
         val service = ApiClient.getApiClient(this)?.create(SignUpApiService::class.java)
         if (service != null) {
             viewModel.setService(service)
+        } else {
+            showToast("Something wrong with service...")
         }
 
         viewListener()
