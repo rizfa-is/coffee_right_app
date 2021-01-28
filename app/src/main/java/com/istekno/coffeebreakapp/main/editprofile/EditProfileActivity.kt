@@ -37,8 +37,6 @@ class EditProfileActivity :
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
 
-    private var csId: Int? = null
-    private var acId: Int? = null
     private var pathImage: String? = null
     private var gender: String? = null
 
@@ -57,8 +55,6 @@ class EditProfileActivity :
 
         sharedPref = SharedPreferenceUtil(this)
 
-        csId = intent.getIntExtra("cs_id", 0)
-        acId = intent.getIntExtra("ac_id", 0)
         val data = intent.getParcelableExtra<ProfileModel>("Data")
         binding.etName.setText(data?.accountName)
         binding.etAddress.setText(data?.accountAddress)
@@ -74,8 +70,20 @@ class EditProfileActivity :
             }
             binding.male.id -> {
                 "Male"
-            } else -> {
-                ""
+            }
+            else -> ""
+        }
+
+        when (data.accountGender) {
+            "" -> {
+                binding.male.isChecked = false
+                binding.female.isChecked = false
+            }
+            "Male" -> {
+                binding.male.isChecked = true
+            }
+            else -> {
+                binding.female.isChecked = true
             }
         }
 
@@ -117,36 +125,36 @@ class EditProfileActivity :
                 }
                 binding.male.id -> {
                     "Male"
-                } else -> {
-                    ""
-                }
+                } else -> ""
             }
 
-            if (csId != 0) {
-                if (pathImage == null) {
-                    viewModel.updateAPI(
-                        csId = csId!!,
-                        acId = acId!!,
+            if (sharedPref.getPreference().roleID != 0) {
+                if (pathImage != null) {
+                    viewModel.updateAPIAccount(
+                        acId = sharedPref.getPreference().acID!!,
                         acName = acName,
-                        acPhone = acPhone,
-                        csBirthday = createPartFromString(binding.etDob.text.toString().split('T')[0]),
+                        acPhone = acPhone
+                    )
+                    viewModel.updateAPICustomer(
+                        csId = sharedPref.getPreference().roleID!!,
+                        csBirthday = createPartFromString(binding.etDob.text.toString()),
                         csAddress = createPartFromString(binding.etAddress.text.toString()),
                         csGender = createPartFromString(gender!!),
                         image = createPartFromFile(pathImage!!)
                     )
                 } else {
-                    viewModel.updateAPI(
-                        csId = csId!!,
-                        acId = acId!!,
+                    viewModel.updateAPIAccount(
+                        acId = sharedPref.getPreference().acID!!,
                         acName = acName,
-                        acPhone = acPhone,
-                        csBirthday = createPartFromString(binding.etDob.text.toString().split('T')[0]),
+                        acPhone = acPhone
+                    )
+                    viewModel.updateAPICustomer(
+                        csId = sharedPref.getPreference().roleID!!,
+                        csBirthday = createPartFromString(binding.etDob.text.toString()),
                         csAddress = createPartFromString(binding.etAddress.text.toString()),
-                        csGender = createPartFromString(gender!!),
+                        csGender = createPartFromString(gender!!)
                     )
                 }
-            } else {
-                Toast.makeText(this@EditProfileActivity, "Please select image!", Toast.LENGTH_SHORT).show()
             }
         }
 
