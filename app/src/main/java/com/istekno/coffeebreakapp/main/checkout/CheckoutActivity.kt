@@ -13,6 +13,7 @@ import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityCheckoutBinding
 import com.istekno.coffeebreakapp.main.payment.PaymentActivity
+import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -33,19 +34,10 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         setViewModel = ViewModelProvider(this).get(CheckoutViewModel::class.java)
         super.onCreate(savedInstanceState)
 
-        onClickListener()
-    }
-
-    private fun onClickListener() {
-        binding.ivBack.setOnClickListener {
-            onBackPressed()
-        }
-
-        binding.btnConfirmAndPay.setOnClickListener {
-            intent<PaymentActivity>(this)
-        }
-
+        val service = ApiClient.getApiClient(this)!!.create(CheckoutApiService::class.java)
         sharedPref = SharedPreferenceUtil(this)
+        viewModel.setService(service)
+        viewModel.setSharedPref(sharedPref)
         dialog = Dialog()
         binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
 
@@ -54,6 +46,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
         setInitialChecked()
         viewListener()
+        subscribeLiveData()
     }
 
     @SuppressLint("ResourceType")
@@ -84,6 +77,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 binding.tvNow.visibility = View.VISIBLE
                 binding.cgNow.visibility = View.VISIBLE
             } else {
+                now = "No"
                 binding.tvNow.visibility = View.GONE
                 binding.cgNow.visibility = View.GONE
                 binding.tvSetTime.visibility = View.VISIBLE
@@ -105,9 +99,40 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
             }
         }
 
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+
         binding.btnConfirmAndPay.setOnClickListener {
+            var etTimeReservation = binding.etTimeReservation.text.toString().trim()
+            val setNow = now.map { it }[0].toString()
+            val setDelivery = when (delivery) {
+                "Dine in" -> "DI"
+                "Door Delivery" -> "DD"
+                "Pick up" -> "PU"
+                else -> "null"
+            }
+
+            if (setNow == "N" && etTimeReservation.isEmpty()) {
+                showToast("Time not set yet!")
+                return@setOnClickListener
+            } else if (setNow == "Y") {
+                etTimeReservation = "00:00:00"
+            }
+
+            viewModel.addDelivery(setDelivery, setNow, etTimeReservation)
             intent<PaymentActivity>(this)
         }
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.isError.observe(this, {
+            if (it) {
+                viewModel.isMessage.observe(this, { str ->
+                    showToast(str)
+                })
+            }
+        })
     }
 
     private fun setChipGroup(chipGroup: ChipGroup, list: List<String>, type: Int) {
