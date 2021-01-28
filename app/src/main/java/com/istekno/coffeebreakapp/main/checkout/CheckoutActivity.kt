@@ -75,6 +75,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
             if (id == 10) {
                 if (checkedIdNow == 20) {
+                    now = "Yes"
                     binding.tvSetTime.visibility = View.GONE
                     binding.etTimeReservation.visibility = View.GONE
                 }
