@@ -24,7 +24,7 @@
             android:id="@+id/tv_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="jumlah produk"
+            android:text=""
             android:textSize="22sp"
             android:textAlignment="center"
             android:lineSpacingExtra="-10dp"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/tv_date"
-            android:text=""
+            android:text="Click to see details"
             android:textSize="12sp"
             android:textColor="@color/theme_choco"
             android:fontFamily="@font/poppins_regular"

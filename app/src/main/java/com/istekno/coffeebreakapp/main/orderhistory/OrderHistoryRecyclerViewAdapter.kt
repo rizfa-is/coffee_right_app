@@ -33,8 +33,8 @@ class OrderHistoryRecyclerViewAdapter(private val listOrderHistory: ArrayList<Or
         val date = item.orderUpdated!!.split("T")[0]
         val totalPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice?.toDouble()).replace("Rp".toRegex(),"IDR ")
 
-        holder.binding.tvProductPrice.text = totalPrice
-        holder.binding.tvDate.text = date
+        holder.binding.tvProductPrice.text = date
+        holder.binding.tvProductName.text = totalPrice
 
         holder.itemView.setOnClickListener {
             onListOrderHistoryClickListener.onOrderHistoryItemClicked(position)
