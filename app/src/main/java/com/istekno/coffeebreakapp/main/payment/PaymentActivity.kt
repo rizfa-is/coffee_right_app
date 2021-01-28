@@ -9,21 +9,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.denzcoskun.imageslider.models.SlideModel
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentViewModel>() {
 
-    var listCart = ArrayList<PaymentModel>()
-    var paymentMethod: String = ""
+    private var listCart = ArrayList<PaymentModel>()
+    private var paymentMethod: String = ""
     private lateinit var sharePref: SharedPreferenceUtil
+    val customerId = sharePref.getPreference().roleID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_payment
@@ -38,22 +37,31 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         onRadioButtonClicked(binding.root)
 
         setRecyclerView()
-        viewModel.callApiService()
+        viewModel.callApiService(customerId!!)
         subscribeLiveData()
         onClickListener()
         onClickListener()
 
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        viewModel.deleteDelivery(customerId!!)
+        subscribeDeleteLiveData()
+    }
+
     private fun onClickListener() {
-        binding.ivBack.setOnClickListener {
-            onBackPressed()
+        binding.btnPayNow.setOnClickListener {
+            viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
+            viewModel.updateOrderDetailId(customerId)
+            subscribeSuccessLiveData()
         }
 
-        binding.btnPayNow.setOnClickListener {
-            val intent = Intent(this, MainContentActivity::class.java)
-            intent.putExtra("data", 0)
-            startActivity(intent)
+        binding.ivBack.setOnClickListener {
+            viewModel.deleteDelivery(customerId!!)
+            subscribeDeleteLiveData()
+            onBackPressed()
         }
     }
 
@@ -80,7 +88,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         }
     }
 
-    fun subscribeLiveData() {
+    private fun subscribeLiveData() {
         viewModel.isLoading.observe(this) {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
@@ -102,7 +110,10 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             binding.tvTax.text = tax.toString()
             binding.tvTotal.text = totalPrice.toString()
         }
-        viewModel.isCreateOrderDetail.observe(this) {
+    }
+
+    private fun subscribeSuccessLiveData() {
+        viewModel.isProcessSuccess.observe(this) {
             if (it) {
                 showToast("order processed successfully")
                 val intent = Intent(this, MainContentActivity::class.java)
@@ -110,6 +121,16 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                 startActivity(intent)
             } else {
                 showToast("Failed to process order")
+            }
+        }
+    }
+
+    private fun subscribeDeleteLiveData() {
+        viewModel.isDeleteSuccess.observe(this) {
+            if (it) {
+                showToast("success delete delivery")
+            } else {
+                showToast("failed delete delivery")
             }
         }
     }
