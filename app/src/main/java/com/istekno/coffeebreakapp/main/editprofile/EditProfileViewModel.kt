@@ -19,16 +19,10 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
         this@EditProfileViewModel.service = serviceEditProfile
     }
 
-    fun updateAPI(
-        csId: Int,
+    fun updateAPIAccount(
         acId: Int,
         acName: String,
-        acPhone: String,
-        csGender: RequestBody,
-        csBirthday: RequestBody,
-        csAddress: RequestBody,
-        image: MultipartBody.Part? = null
-
+        acPhone: String
     ) {
         launch {
             try {
@@ -37,11 +31,28 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
                     acName = acName,
                     acPhone = acPhone
                 )
+                onSuccessLiveData.value = true
+            } catch (e: HttpException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun updateAPICustomer(
+        csId: Int,
+        csGender: RequestBody,
+        csBirthday: RequestBody,
+        csAddress: RequestBody? = null,
+        image: MultipartBody.Part? = null
+
+    ) {
+        launch {
+            try {
                 service.updateCustomer(
                     csId = csId,
                     csGender = csGender,
                     csBirthday = csBirthday,
-                    csAddress = csAddress,
+                    csAddress = csAddress!!,
                     image = image
                 )
                 onSuccessLiveData.value = true

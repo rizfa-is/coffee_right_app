@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
@@ -36,8 +37,6 @@ class EditProfileActivity :
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
 
-    private var csId: Int? = 0
-    private var acId: Int? = 0
     private var pathImage: String? = null
     private var gender: String? = null
 
@@ -56,24 +55,38 @@ class EditProfileActivity :
 
         sharedPref = SharedPreferenceUtil(this)
 
-        csId = intent.getIntExtra("cs_id", 0)
-        acId = intent.getIntExtra("ac_id", 0)
         val data = intent.getParcelableExtra<ProfileModel>("Data")
         binding.etName.setText(data?.accountName)
         binding.etAddress.setText(data?.accountAddress)
         binding.etPhone.setText(data?.accountPhone)
-        binding.etDob.setText(data?.accountBirthday)
         binding.etEmail.setText(data?.accountEmail)
         Glide.with(this).load(img + data?.accountImage)
             .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
+        binding.etDob.setText(data?.accountBirthday!!.split('T')[0])
 
-        if (intent.getStringExtra("cs_gender") == "aplikasi mobile") {
-            binding.female.isChecked = true
-        } else {
-            binding.male.isChecked = true
+        gender = when (binding.radioButton.checkedRadioButtonId) {
+            binding.female.id -> {
+                "Female"
+            }
+            binding.male.id -> {
+                "Male"
+            }
+            else -> ""
         }
 
-        setDataFromIntent()
+        when (data.accountGender) {
+            "" -> {
+                binding.male.isChecked = false
+                binding.female.isChecked = false
+            }
+            "Male" -> {
+                binding.male.isChecked = true
+            }
+            else -> {
+                binding.female.isChecked = true
+            }
+        }
+
         myCalendar = Calendar.getInstance()
         deadlineProject()
         setViewModel()
@@ -106,38 +119,43 @@ class EditProfileActivity :
             val acName = binding.etName.text.toString()
             val acPhone = binding.etPhone.text.toString()
 
-            when (binding.radioButton.checkedRadioButtonId) {
+            gender = when (binding.radioButton.checkedRadioButtonId) {
                 binding.female.id -> {
-                    gender = "Female"
+                    "Female"
                 }
                 binding.male.id -> {
-                    gender = "Male"
+                    "Male"
+                } else -> ""
+            }
+
+            if (sharedPref.getPreference().roleID != 0) {
+                if (pathImage != null) {
+                    viewModel.updateAPIAccount(
+                        acId = sharedPref.getPreference().acID!!,
+                        acName = acName,
+                        acPhone = acPhone
+                    )
+                    viewModel.updateAPICustomer(
+                        csId = sharedPref.getPreference().roleID!!,
+                        csBirthday = createPartFromString(binding.etDob.text.toString()),
+                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csGender = createPartFromString(gender!!),
+                        image = createPartFromFile(pathImage!!)
+                    )
+                } else {
+                    viewModel.updateAPIAccount(
+                        acId = sharedPref.getPreference().acID!!,
+                        acName = acName,
+                        acPhone = acPhone
+                    )
+                    viewModel.updateAPICustomer(
+                        csId = sharedPref.getPreference().roleID!!,
+                        csBirthday = createPartFromString(binding.etDob.text.toString()),
+                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csGender = createPartFromString(gender!!)
+                    )
                 }
             }
-
-            if (pathImage != null) {
-                viewModel.updateAPI(
-                    csId = csId!!,
-                    acId = acId!!,
-                    acName = acName,
-                    acPhone = acPhone,
-                    csBirthday = createPartFromString(binding.etDob.text.toString()),
-                    csAddress = createPartFromString(binding.etAddress.text.toString()),
-                    csGender = createPartFromString(gender!!),
-                    image = createPartFromFile(pathImage!!)
-                )
-            } else {
-                viewModel.updateAPI(
-                    csId = csId!!,
-                    acId = acId!!,
-                    acName = acName,
-                    acPhone = acPhone,
-                    csBirthday = createPartFromString(binding.etDob.text.toString()),
-                    csAddress = createPartFromString(binding.etAddress.text.toString()),
-                    csGender = createPartFromString(gender!!),
-                )
-            }
-
         }
 
         binding.ivBack.setOnClickListener {
@@ -210,19 +228,6 @@ class EditProfileActivity :
             }
         }
         return realPath
-    }
-
-
-    private fun setDataFromIntent() {
-        if (csId != 0) {
-            binding.etName.setText(intent.getStringExtra("pj_project_name"))
-            binding.etEmail.setText(intent.getStringExtra("pj_description"))
-            binding.etEmail.setText(intent.getStringExtra("pj_deadline"))
-            binding.etPhone.setText(intent.getStringExtra("pj_deadline"))
-            binding.etDob.setText(intent.getStringExtra("pj_deadline"))
-            binding.etAddress.setText(intent.getStringExtra("pj_deadline"))
-
-        }
     }
 
     private fun deadlineProject() {
