@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityCartBinding
 import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
+import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -123,7 +125,14 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         }
 
         binding.fabGoCheckout.setOnClickListener {
-            intent<CheckoutActivity>(this)
+            val intent = Intent(this, CheckoutActivity::class.java)
+            intent.putExtra("total_price", binding.tvTotal.text)
+            startActivity(intent)
+        }
+
+        binding.btnStartOrder.setOnClickListener {
+            intent<MainContentActivity>(this)
+            finish()
         }
 
     }

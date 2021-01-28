@@ -15,7 +15,7 @@ interface PaymentApiService {
         @Field("odStatus") orderDetailStatus: String
     ) : PaymentResponse.GeneralResponse
 
-    @POST("order/updateOdIdByCsId/{id}")
+    @PUT("order/updateOdIdByCsId/{id}")
     suspend fun updateOrderDetailId(@Path("id") customerId: Int) : PaymentResponse.GeneralResponse
 
     @DELETE("delivery/deleteDeliveryByCsId/{id}")
