@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface EditProfileApi {
 
     @FormUrlEncoded
-    @PUT("account/{acId}")
+    @PUT("account/update/{acId}")
     suspend fun updateAccount(
         @Path("acId") acId: Int,
         @Field("ac_name") acName: String,
@@ -22,7 +22,7 @@ interface EditProfileApi {
         @Path("csId") csId: Int,
         @Part("cs_gender") csGender: RequestBody,
         @Part("cs_birthday") csBirthday: RequestBody,
-        @Part("cs_address") csAddress: RequestBody,
+        @Part("cs_address") csAddress: RequestBody? = null,
         @Part image: MultipartBody.Part? = null
 
     ): CustomerResponse
