@@ -51,9 +51,9 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         }
 
         binding.btnPayNow.setOnClickListener {
-            showToast("Peek-a-Boo")
-//            val id = sharePref.getPreference().roleID
-//            viewModel.createOrderDetailApi(id!!, paymentMethod, "Paid")
+            val intent = Intent(this, MainContentActivity::class.java)
+            intent.putExtra("data", 0)
+            startActivity(intent)
         }
     }
 

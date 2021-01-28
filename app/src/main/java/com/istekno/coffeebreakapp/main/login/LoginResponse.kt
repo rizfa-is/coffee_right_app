@@ -13,6 +13,7 @@ data class LoginResponse(val success: Boolean, val message: String, val data: Da
         @SerializedName("ac_phone") val accountPhone: String,
         @SerializedName("cs_image") val customerImage: String?,
         @SerializedName("ad_image") val adminImage: String?,
+        @SerializedName("cs_address") val customerAddress: String?,
         val token: String
     )
 }

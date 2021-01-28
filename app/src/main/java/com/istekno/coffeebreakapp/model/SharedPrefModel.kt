@@ -5,6 +5,7 @@ data class SharedPrefModel(
     var acEmail: String? = null,
     var acName: String? = null,
     var acImage: String? = null,
+    var acAddress: String? = null,
     var roleID: Int? = null,
     var level: Int? = null,
     var token: String? = null,

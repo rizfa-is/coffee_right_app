@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.profile
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class ProfileResponse(val success: Boolean, val message: String, val data: List<Data>?) {
