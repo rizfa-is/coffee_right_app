@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
-import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
@@ -22,7 +21,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private var listCart = ArrayList<PaymentModel>()
     private var paymentMethod: String = ""
     private lateinit var sharePref: SharedPreferenceUtil
-    val customerId = sharePref.getPreference().roleID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_payment
@@ -36,6 +34,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
 
         onRadioButtonClicked(binding.root)
 
+        val customerId = sharePref.getPreference().roleID
         setRecyclerView()
         viewModel.callApiService(customerId!!)
         subscribeLiveData()
@@ -47,18 +46,21 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
 
     override fun onBackPressed() {
         super.onBackPressed()
+        val customerId = sharePref.getPreference().roleID
         viewModel.deleteDelivery(customerId!!)
         subscribeDeleteLiveData()
     }
 
     private fun onClickListener() {
         binding.btnPayNow.setOnClickListener {
+            val customerId = sharePref.getPreference().roleID
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
             viewModel.updateOrderDetailId(customerId)
             subscribeSuccessLiveData()
         }
 
         binding.ivBack.setOnClickListener {
+            val customerId = sharePref.getPreference().roleID
             viewModel.deleteDelivery(customerId!!)
             subscribeDeleteLiveData()
             onBackPressed()
@@ -119,6 +121,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                 val intent = Intent(this, MainContentActivity::class.java)
                 intent.putExtra("data", 0)
                 startActivity(intent)
+                finish()
             } else {
                 showToast("Failed to process order")
             }

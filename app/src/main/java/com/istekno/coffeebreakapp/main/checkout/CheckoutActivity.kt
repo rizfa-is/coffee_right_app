@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.istekno.coffeebreakapp.R
@@ -53,6 +54,9 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
     private fun setInitialChecked() {
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
+        val totalPrice = intent.getStringExtra("total_price")
+
+        binding.tvTotalCost.text = totalPrice
 
         if (checkedIdDelivery == -1 || checkedIdNow == -1) {
             binding.cgDeliveryMethod.check(10)
