@@ -2,6 +2,7 @@ package com.istekno.coffeebreakapp.main.detailproduct
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.istekno.coffeebreakapp.main.payment.PaymentResponse
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -9,6 +10,7 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
 
     val isLoading = MutableLiveData<Boolean>()
     val listData = MutableLiveData<List<DetailProductResponse.DataProduct>>()
+    val isCreateSuccess = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -41,6 +43,26 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
                 } else {
                     isLoading.value = true
                 }
+            }
+        }
+    }
+
+    fun createOrder(productId: Int, customerId: Int) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.createOrder(productId, customerId)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isCreateSuccess.value = false
+                    }
+                }
+            }
+
+            if (result is PaymentResponse.GeneralResponse) {
+                isCreateSuccess.value = result.success
             }
         }
     }

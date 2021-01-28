@@ -9,6 +9,6 @@ data class PaymentResponse(val success: Boolean, val message: String, val data: 
         @SerializedName("or_price") val price: Int,
         @SerializedName("pr_name") val productName: String
     )
-    data class CreateResponse(val success: Boolean, val message: String)
+    data class GeneralResponse(val success: Boolean, val message: String)
 }
 
