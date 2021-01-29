@@ -3,6 +3,7 @@ package com.istekno.coffeebreakapp.main.maincontent.homepage
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,9 +57,8 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
     }
 
     private fun setRecyclerView(view: View) {
-        val rvAdapter = HomeAdapter()
-
         binding.rvFavorite.apply {
+            val rvAdapter = HomeAdapter()
             rvAdapter.notifyDataSetChanged()
             layoutManager = LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
 
@@ -73,6 +73,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
         }
 
         binding.rvPromo.apply {
+            val rvAdapter = HomeAdapter()
             rvAdapter.notifyDataSetChanged()
             layoutManager = LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
 
@@ -107,7 +108,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
             val mutablePromo: MutableList<HomeResponse.DataProduct> = data.toMutableList()
 
             mutableFavorite.removeIf { it.productFavorite == "N" }
-            mutablePromo.removeIf { it.discountId == 0 }
+            mutablePromo.removeIf { it.discountId == 1 }
 
             (binding.rvFavorite.adapter as HomeAdapter).setData(mutableFavorite)
             (binding.rvPromo.adapter as HomeAdapter).setData(mutablePromo)
