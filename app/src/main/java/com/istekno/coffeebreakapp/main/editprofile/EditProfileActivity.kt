@@ -62,7 +62,7 @@ class EditProfileActivity :
         binding.etEmail.setText(data?.accountEmail)
         Glide.with(this).load(img + data?.accountImage)
             .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
-        binding.etDob.setText(data?.accountBirthday!!.split('T')[0])
+        binding.etDob.setText(data?.accountBirthday?.split('T')?.get(0))
 
         gender = when (binding.radioButton.checkedRadioButtonId) {
             binding.female.id -> {
@@ -74,16 +74,17 @@ class EditProfileActivity :
             else -> ""
         }
 
-        when (data.accountGender) {
-            "" -> {
-                binding.male.isChecked = false
-                binding.female.isChecked = false
+        when (data?.accountGender) {
+            "Female" -> {
+                binding.female.isChecked = true
             }
             "Male" -> {
                 binding.male.isChecked = true
             }
             else -> {
-                binding.female.isChecked = true
+                binding.female.isChecked = false
+                binding.male.isChecked = false
+
             }
         }
 
@@ -118,6 +119,7 @@ class EditProfileActivity :
         binding.btnSaveUpdate.setOnClickListener {
             val acName = binding.etName.text.toString()
             val acPhone = binding.etPhone.text.toString()
+            val acEmail = binding.etEmail.text.toString()
 
             gender = when (binding.radioButton.checkedRadioButtonId) {
                 binding.female.id -> {
@@ -133,6 +135,7 @@ class EditProfileActivity :
                     viewModel.updateAPIAccount(
                         acId = sharedPref.getPreference().acID!!,
                         acName = acName,
+                        acEmail = acEmail,
                         acPhone = acPhone
                     )
                     viewModel.updateAPICustomer(
@@ -146,6 +149,7 @@ class EditProfileActivity :
                     viewModel.updateAPIAccount(
                         acId = sharedPref.getPreference().acID!!,
                         acName = acName,
+                        acEmail = acEmail,
                         acPhone = acPhone
                     )
                     viewModel.updateAPICustomer(
@@ -159,7 +163,7 @@ class EditProfileActivity :
         }
 
         binding.ivBack.setOnClickListener {
-            this.finish()
+            onBackPressed()
         }
 
     }

@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityLoginBinding
-import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
-import com.istekno.coffeebreakapp.main.forgotpassword.ForgotPasswordActivity
 import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.main.signup.SignupActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
@@ -35,7 +33,7 @@ class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel
 
     private fun viewListener() {
         binding.tvForgotPassword.setOnClickListener {
-            intent<ForgotPasswordActivity>(this)
+//            intent<ForgotPasswordActivity>(this)
         }
         binding.btnLogin.setOnClickListener {
             validation()
