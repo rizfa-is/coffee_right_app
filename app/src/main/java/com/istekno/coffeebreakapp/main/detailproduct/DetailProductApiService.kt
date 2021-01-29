@@ -13,4 +13,10 @@ interface DetailProductApiService {
     suspend fun createOrder(@Field("prId") productId: Int,
                             @Field("csId") customerId: Int) : PaymentResponse.GeneralResponse
 
+    @PUT("order/updateOrder/{orderId}")
+    suspend fun updateAmountOrder(@Path("orderId") orderId : Int) : PaymentResponse.GeneralResponse
+
+    @GET("order/statusCart/{csId}")
+    suspend fun getAllOrderByCsIdNCart(@Path("csId") csId : Int) : ListOrderByCsIdResponse
+
 }

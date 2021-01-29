@@ -16,3 +16,13 @@ data class DetailProductResponse(val success: Boolean, val message: String, val 
             @SerializedName("pr_updated_at") val productUpdated: String
     )
 }
+
+data class ListOrderByCsIdResponse(val success: Boolean, val message: String, val data: List<DataOrder>) {
+        data class DataOrder(
+                @SerializedName("or_id") val orderId: Int,
+                @SerializedName("pr_id") val productId: Int,
+                @SerializedName("cs_id") val csId: Int,
+                @SerializedName("or_status") val orStatus: String
+
+                )
+}
