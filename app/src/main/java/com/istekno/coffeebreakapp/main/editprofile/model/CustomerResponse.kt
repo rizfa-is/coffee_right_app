@@ -8,8 +8,8 @@ class CustomerResponse(
     val data: List<EngineerItem>
 ) {
     data class EngineerItem(
-        @SerializedName("en_id")
-        val enId: Int,
+        @SerializedName("cs_id")
+        val csId: Int,
 
         @SerializedName("ac_id")
         val acId: Int,
@@ -17,19 +17,19 @@ class CustomerResponse(
         @SerializedName("ac_name")
         val acName: String,
 
-        @SerializedName("en_job_title")
-        val enJobTitle: String,
+        @SerializedName("ac_email")
+        val acEmail: String,
 
-        @SerializedName("en_job_type")
-        val enJobType: String,
+        @SerializedName("ac_phone")
+        val acPhone: String,
 
-        @SerializedName("en_domicile")
-        val enDomicile: String,
+        @SerializedName("cs_gender")
+        val csGender: String,
 
-        @SerializedName("en_description")
-        val enDescription: String,
+        @SerializedName("cs_birthday")
+        val csBirthday: String,
 
-        @SerializedName("en_profile")
-        val enProfile: String
+        @SerializedName("cs_address")
+        val csAddress: String
     )
 }

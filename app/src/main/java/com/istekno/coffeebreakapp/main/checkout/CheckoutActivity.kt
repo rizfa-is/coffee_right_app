@@ -1,7 +1,6 @@
 package com.istekno.coffeebreakapp.main.checkout
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,7 +9,6 @@ import androidx.lifecycle.observe
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.istekno.coffeebreakapp.R
-import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityCheckoutBinding
 import com.istekno.coffeebreakapp.main.payment.PaymentActivity

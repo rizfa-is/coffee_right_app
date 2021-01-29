@@ -22,6 +22,7 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
     fun updateAPIAccount(
         acId: Int,
         acName: String,
+        acEmail: String,
         acPhone: String
     ) {
         launch {
@@ -29,6 +30,7 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
                 service.updateAccount(
                     acId = acId,
                     acName = acName,
+                    acEmail = acEmail,
                     acPhone = acPhone
                 )
                 onSuccessLiveData.value = true

@@ -12,6 +12,7 @@ interface EditProfileApi {
     @PUT("account/update/{acId}")
     suspend fun updateAccount(
         @Path("acId") acId: Int,
+        @Field("ac_email") acEmail: String,
         @Field("ac_name") acName: String,
         @Field("ac_phone") acPhone: String
         ): AccountResponse
