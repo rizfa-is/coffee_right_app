@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,13 +42,13 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     }
 
     private fun subscribeUpdateLiveData() {
-        viewModel.isUpdateCart.observe(this, Observer {
+        viewModel.isUpdateCart.observe(this, {
             if (it) {
-                viewModel.isMessage.observe(this, Observer { msg->
+                viewModel.isMessage.observe(this, { msg->
                     Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
                 })
             } else {
-                viewModel.isMessage.observe(this, Observer { msg->
+                viewModel.isMessage.observe(this, { msg->
                     Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
                 })
             }
@@ -57,7 +56,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     }
 
     private fun subscribeLoadingLiveData() {
-        viewModel.isLoading.observe(this, Observer {
+        viewModel.isLoading.observe(this, {
             if (it) {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
@@ -67,13 +66,13 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     }
 
     private fun subscribeGetCartLiveData() {
-        viewModel.isGetListCart.observe(this, Observer {
+        viewModel.isGetListCart.observe(this, {
             if (it) {
-                viewModel.listCart.observe(this, Observer { it1->
+                viewModel.listCart.observe(this, { it1->
                     (binding.rvProductCart.adapter as CartAdapter).setData(it1)
                 })
                 binding.rvProductCart.visibility = View.VISIBLE
-                viewModel.totalPriceCart.observe(this, Observer { price->
+                viewModel.totalPriceCart.observe(this, { price->
                     binding.tvTotal.text = price
                 })
                 binding.layoutTotal.visibility = View.VISIBLE
