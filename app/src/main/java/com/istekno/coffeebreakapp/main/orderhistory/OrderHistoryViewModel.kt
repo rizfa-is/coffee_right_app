@@ -2,8 +2,6 @@ package com.istekno.coffeebreakapp.main.orderhistory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.istekno.coffeebreakapp.main.login.LoginApiService
-import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
