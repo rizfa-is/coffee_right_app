@@ -23,7 +23,7 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
     }
 
     private lateinit var sharePref: SharedPreferenceUtil
-    var prID = 0
+    private var prID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_detail_product
@@ -38,6 +38,8 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
 
         prID = intent.getIntExtra(HOME_KEY, -1)
         viewModel.getProductDetail(prID)
+        viewModel.checkProductOnCartApi(prID, sharePref.getPreference().roleID!!)
+
         subscribeLiveData()
         onClickListener()
     }
@@ -53,9 +55,32 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
 
         binding.btnAddCart.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
-            viewModel.createOrder(prID, customerId!!)
+
+            viewModel.isCheckProduct.observe(this, androidx.lifecycle.Observer {
+                if (it) {
+                    viewModel.orderId.observe(this, androidx.lifecycle.Observer { orderId->
+                        viewModel.updateAmountOrderApi(orderId)
+                    })
+                } else {
+                    viewModel.createOrder(prID, customerId!!)
+                }
+            })
+
             subscribeCreateOrder()
+            subscribeUpdateLiveData()
         }
+    }
+
+    private fun subscribeUpdateLiveData() {
+        viewModel.isUpdateSuccess.observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                Toast.makeText(this, "Success add amount of this product!", Toast.LENGTH_SHORT).show()
+                intent<CartActivity>(this)
+                finish()
+            } else {
+                Toast.makeText(this, "Add to cart failed!", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun subscribeLiveData() {
@@ -84,7 +109,9 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
     private fun subscribeCreateOrder() {
         viewModel.isCreateSuccess.observe(this) {
             if (it) {
+                Toast.makeText(this, "Success add to cart!", Toast.LENGTH_SHORT).show()
                 intent<CartActivity>(this)
+                finish()
             } else {
                 Toast.makeText(this, "Add to cart failed", Toast.LENGTH_SHORT).show()
             }

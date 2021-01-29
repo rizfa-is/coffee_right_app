@@ -11,6 +11,9 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
     val isLoading = MutableLiveData<Boolean>()
     val listData = MutableLiveData<List<DetailProductResponse.DataProduct>>()
     val isCreateSuccess = MutableLiveData<Boolean>()
+    val isUpdateSuccess = MutableLiveData<Boolean>()
+    val isCheckProduct = MutableLiveData<Boolean>()
+    val orderId = MutableLiveData<Int>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -64,6 +67,72 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
             if (result is PaymentResponse.GeneralResponse) {
                 isCreateSuccess.value = result.success
             }
+        }
+    }
+
+    fun updateAmountOrderApi(orderId : Int) {
+        launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.updateAmountOrder(orderId)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isUpdateSuccess.value = false
+                    }
+                }
+            }
+
+            if (result is PaymentResponse.GeneralResponse) {
+                if (result.success) {
+                    isUpdateSuccess.value = result.success
+                } else {
+                    isUpdateSuccess.value = result.success
+                }
+            } else {
+                isUpdateSuccess.value = false
+            }
+        }
+    }
+
+    fun checkProductOnCartApi(productId : Int, customerId: Int) {
+        launch {
+            val listProductHasBeenOrder = mutableListOf<Long>()
+            val listOrderIdByCsId = mutableListOf<Long>()
+
+            val result1 = withContext(Dispatchers.IO) {
+                try {
+                    service.getAllOrderByCsIdNCart(customerId)
+                } catch (e:Throwable) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (result1 is ListOrderByCsIdResponse) {
+                result1.data.map {
+                    if (it.csId == customerId) {
+                        listProductHasBeenOrder.add(it.productId.toLong())
+                        listOrderIdByCsId.add(it.orderId.toLong())
+                    }
+                }
+
+                val list = result1.data.map {
+                    ListOrderByCsIdResponse.DataOrder(it.orderId, it.productId, it.csId, it.orStatus)
+                }
+                val mutableList = list.toMutableList()
+                mutableList.removeIf { it.productId != productId }
+                if (!mutableList.isNullOrEmpty()) {
+                    orderId.value = mutableList[0].orderId
+                }
+
+                if (listProductHasBeenOrder.map { it.toString() }.contains(productId.toString())) {
+                    isCheckProduct.value = true
+                } else {
+                    isCheckProduct.value = false
+                }
+            }
+
         }
     }
 }

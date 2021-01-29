@@ -28,7 +28,7 @@ class OrderAdapter(private val listOrder : ArrayList<OrderResponse.Data>,
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = listOrder[position]
         val date = item.orderUpdated.split("T")[0]
-        val totalPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice.toDouble()).replace("Rp".toRegex(), "IDR")
+        val totalPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice.toDouble()).replace("Rp".toRegex(), "IDR ")
 
         holder.binding.tvTotalPrice.text = totalPrice
         holder.binding.tvUpdated.text = date
