@@ -3,7 +3,6 @@ package com.istekno.coffeebreakapp.main.orderhistory
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -28,7 +27,7 @@ class OrderHistoryActivity : BaseActivityViewModel<ActivityOrderHistoryBinding, 
     }
 
     private lateinit var sharedPref: SharedPreferenceUtil
-    var listOrderHistory = ArrayList<OrderHistoryModel>()
+    private var listOrderHistory = ArrayList<OrderHistoryModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_order_history
