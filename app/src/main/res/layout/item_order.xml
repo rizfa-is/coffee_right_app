@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:background="@drawable/bg_white_radius">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_product"
+            android:layout_width="85dp"
+            android:layout_height="86dp"
+            android:elevation="3dp"
+            android:src="@drawable/ic_bag"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:shapeAppearance="@style/rounded_image" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="22sp"
+            android:textAlignment="center"
+            android:lineSpacingExtra="-10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            app:layout_constraintStart_toEndOf="@id/iv_product"/>
+
+        <TextView
+            android:id="@+id/tv_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text=""
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/theme_choco"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="@id/tv_total_price"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
+
+        <TextView
+            android:id="@+id/tv_see_details"
+            android:text="Click to see details"
+            android:textSize="12sp"
+            android:textColor="@color/theme_choco"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_updated"
+            app:layout_constraintStart_toStartOf="@id/tv_updated"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
