@@ -47,13 +47,17 @@ class OrderViewModel: ViewModel(), CoroutineScope {
 
             if (result is OrderResponse) {
                 if (result.success) {
-                    getListData.value = result.success
                     val list = result.data.map {
                         OrderResponse.Data(it.orderDetailId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderDetailStatus, it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
                     }
                     val mutable = list.toMutableList()
                     mutable.removeAll { it.orderDetailStatus == "Done" }
-                    listData.value = mutable
+                    if (!mutable.isNullOrEmpty()) {
+                        getListData.value = result.success
+                        listData.value = mutable
+                    } else {
+                        getListData.value = false
+                    }
                     isLoading.value = false
                 } else {
                     getListData.value = false

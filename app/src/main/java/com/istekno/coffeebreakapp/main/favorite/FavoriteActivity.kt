@@ -33,8 +33,14 @@ class FavoriteActivity : BaseActivityViewModel<ActivityFavoriteBinding, Favorite
         viewModel.getAllProduct()
         setRecyclerView()
         subscribeLiveData()
+        onClickListener()
 
+    }
 
+    private fun onClickListener() {
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setRecyclerView() {
