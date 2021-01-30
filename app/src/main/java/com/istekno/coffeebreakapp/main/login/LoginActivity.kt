@@ -7,17 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityLoginBinding
-<<<<<<< HEAD
-<<<<<<< HEAD
-import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
-=======
 import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.CheckEmailActivity
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
->>>>>>> 1a1a6a1667d805ec5ed70de86534c0a4c292fb46
-=======
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
-import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.CheckEmailActivity
->>>>>>> fix-bug
 import com.istekno.coffeebreakapp.main.signup.SignupActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
