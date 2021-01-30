@@ -2,14 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="model"
+            type="com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse.DataProduct" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp">
+        android:layout_height="220dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="20dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_product"
-            android:layout_width="85dp"
-            android:layout_height="86dp"
+            android:layout_width="125dp"
+            android:layout_height="126dp"
             android:src="@drawable/img_coffee"
             android:scaleType="center"
             android:elevation="1dp"
@@ -20,24 +28,24 @@
 
         <TextView
             android:id="@+id/tv_promo_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="IDR 24.000"
+            android:text="IDR 0"
             android:elevation="2dp"
-            android:textSize="12sp"
+            android:textSize="20sp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="@color/theme_choco"
             android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
             android:background="@drawable/bg_white_radius"
             android:layout_marginTop="65dp"
+            android:textAlignment="center"
             app:layout_constraintLeft_toLeftOf="@id/iv_product"
             app:layout_constraintRight_toRightOf="@id/iv_product"
-            app:layout_constraintTop_toTopOf="@id/iv_product" />
+            app:layout_constraintBottom_toBottomOf="@id/iv_product" />
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="170dp"
+            android:layout_width="160dp"
+            android:layout_height="190dp"
             android:background="@drawable/bg_white_radius"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
@@ -46,7 +54,8 @@
             android:id="@+id/tv_product_name"
             android:layout_width="117dp"
             android:layout_height="wrap_content"
-            android:text="hazelnut Coffee"
+            android:text="@{model.productName}"
+            android:ellipsize="end"
             android:maxWidth="117dp"
             android:textSize="18sp"
             android:maxLines="3"
@@ -57,19 +66,30 @@
             android:textColor="@color/black"
             app:layout_constraintLeft_toLeftOf="@id/iv_product"
             app:layout_constraintRight_toRightOf="@id/iv_product"
-            app:layout_constraintTop_toBottomOf="@id/tv_promo_price"/>
+            app:layout_constraintTop_toBottomOf="@id/iv_product"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toTopOf="@id/tv_product_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_price"
+            app:layout_constraintLeft_toLeftOf="@id/tv_product_price"
+            app:layout_constraintRight_toRightOf="@id/tv_product_price" />
 
         <TextView
             android:id="@+id/tv_product_price"
-            android:layout_width="115dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IDR 34.000"
+            android:text=""
             android:fontFamily="@font/poppins_regular"
             android:textColor="@android:color/tertiary_text_light"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

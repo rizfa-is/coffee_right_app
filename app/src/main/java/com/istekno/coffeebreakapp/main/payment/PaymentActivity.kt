@@ -56,7 +56,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
-            viewModel.updateOrderDetailId(customerId)
+//            viewModel.updateOrderDetailId(customerId)
         }
 
         binding.ivBack.setOnClickListener {
@@ -128,7 +128,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                         showToast("Failed Update!")
                     }
                 })
-                showToast("order processed successfully")
             } else {
                 showToast("Failed to process order")
             }

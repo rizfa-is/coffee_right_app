@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,21 +71,21 @@ class OrderHistoryActivity : BaseActivityViewModel<ActivityOrderHistoryBinding, 
             }
         }
 
-        viewModel.isNotFound.observe(this) {
+        viewModel.isGetList.observe(this, Observer {
             if (it) {
-                binding.historyNotFound.visibility = View.VISIBLE
-                binding.rvOrderHistory.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
-            } else {
+                viewModel.listData.observe(this, Observer { list->
+                    (binding.rvOrderHistory.adapter as OrderHistoryRecyclerViewAdapter).addList(list)
+                })
                 binding.historyNotFound.visibility = View.GONE
                 binding.rvOrderHistory.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
+            } else {
+                binding.historyNotFound.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+                binding.rvOrderHistory.visibility = View.GONE
             }
-        }
+        })
 
-        viewModel.listData.observe(this) {
-            (binding.rvOrderHistory.adapter as OrderHistoryRecyclerViewAdapter).addList(it)
-        }
     }
 
     private fun setRecyclerView() {
