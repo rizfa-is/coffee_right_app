@@ -15,13 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main.maincontent.order.detail.DetailOrderActivity"></activity>
+        <activity android:name=".main.maincontent.order.detail.DetailOrderActivity"/>
         <activity android:name=".main.checkout.CheckoutActivity" />
         <activity android:name=".main.orderhistory.detail.DetailOrderHistoryActivity" />
         <activity android:name=".main.promo.PromoActivity" />
         <activity android:name=".main.favorite.FavoriteActivity" />
         <activity android:name=".main.editprofile.EditProfileActivity" />
         <activity android:name=".main.editpassword.EditPasswordActivity" />
+        <activity android:name=".main.forgotpassword.checkemail.CheckEmailActivity" />
+        <activity android:name=".main.forgotpassword.resetpassword.ResetPasswordActivity" />
         <activity android:name=".main.payment.PaymentActivity" />
         <activity android:name=".main.cart.CartActivity" />
         <activity android:name=".main.detailproduct.DetailProductActivity" />

@@ -1,29 +1,36 @@
-/*
 package com.istekno.coffeebreakapp.main.forgotpassword.resetpassword
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.istekno.coffeebreakapp.R
+import com.istekno.coffeebreakapp.base.BaseActivityViewModel
+import com.istekno.coffeebreakapp.databinding.ActivityResetPasswordBinding
+import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.ValidateAccount.Companion.valPassConf
+import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.ValidateAccount.Companion.valPassword
+import com.istekno.coffeebreakapp.remote.ApiClient
 
-class ResetPasswordActivity : BaseActivityCoroutine<ActivityResetPasswordBinding>(), View.OnClickListener {
-    private lateinit var viewModel: ResetPasswordViewModel
+class ResetPasswordActivity : BaseActivityViewModel<ActivityResetPasswordBinding, ResetPasswordViewModel>() {
     private var acId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_reset_password
+        setViewModel = ViewModelProvider(this).get(ResetPasswordViewModel::class.java)
         super.onCreate(savedInstanceState)
         acId = intent.getIntExtra("ac_id", 0)
 
         initTextWatcher()
         setViewModel()
         subscribeLiveData()
+        onClickListener()
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_reset_password -> {
+    private fun onClickListener() {
+            binding.btnResetPassword.setOnClickListener {
                 when {
                     !valPassword(binding.inputLayoutNewPassword, binding.etNewPassword) -> {}
                     !valPassConf(
@@ -39,10 +46,9 @@ class ResetPasswordActivity : BaseActivityCoroutine<ActivityResetPasswordBinding
                     }
                 }
             }
-            R.id.ln_back -> {
-                this@ResetPasswordActivity.finish()
+            binding.ivBack.setOnClickListener {
+                onBackPressed()
             }
-        }
     }
 
     private fun initTextWatcher() {
@@ -53,6 +59,9 @@ class ResetPasswordActivity : BaseActivityCoroutine<ActivityResetPasswordBinding
     private fun setViewModel() {
         viewModel = ViewModelProvider(this@ResetPasswordActivity).get(ResetPasswordViewModel::class.java)
         viewModel.setService(createApi(this@ResetPasswordActivity))
+    }
+    private inline fun <reified ApiService> createApi(context: Context): ApiService {
+        return ApiClient.getApiClient(context)!!.create(ApiService::class.java)
     }
 
     private fun subscribeLiveData() {
@@ -74,12 +83,16 @@ class ResetPasswordActivity : BaseActivityCoroutine<ActivityResetPasswordBinding
         })
 
         viewModel.onMessageLiveData.observe(this@ResetPasswordActivity, {
-            noticeToast(it)
+            showToast(it)
         })
 
         viewModel.onFailLiveData.observe(this@ResetPasswordActivity, {
-            noticeToast(it)
+            showToast(it)
         })
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     inner class MyTextWatcher(private val view: View) : TextWatcher {
@@ -100,4 +113,3 @@ class ResetPasswordActivity : BaseActivityCoroutine<ActivityResetPasswordBinding
         }
     }
 }
-*/
