@@ -25,7 +25,7 @@
         <activity android:name=".main.payment.PaymentActivity" />
         <activity android:name=".main.cart.CartActivity" />
         <activity android:name=".main.detailproduct.DetailProductActivity" />
-        <activity android:name=".main.maincontent.MainContentActivity" />
+        <activity android:name=".main.maincontent.maincontent.MainContentActivity" />
         <activity android:name=".main.orderhistory.OrderHistoryActivity" />
         <activity android:name=".main.signup.SignupActivity" />
         <activity android:name=".main.login.LoginActivity" />

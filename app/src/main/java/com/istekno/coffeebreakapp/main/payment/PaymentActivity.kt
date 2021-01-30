@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 

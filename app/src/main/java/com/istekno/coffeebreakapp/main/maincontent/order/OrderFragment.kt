@@ -15,10 +15,8 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentOrderBinding
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.order.detail.DetailOrderActivity
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
