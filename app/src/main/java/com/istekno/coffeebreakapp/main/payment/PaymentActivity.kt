@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,7 +39,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         setRecyclerView()
         viewModel.callApiService(customerId!!)
         subscribeLiveData()
-        onClickListener()
+        subscribeSuccessLiveData()
         onClickListener()
 
     }
@@ -56,7 +57,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             val customerId = sharePref.getPreference().roleID
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
             viewModel.updateOrderDetailId(customerId)
-            subscribeSuccessLiveData()
         }
 
         binding.ivBack.setOnClickListener {
@@ -117,11 +117,18 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun subscribeSuccessLiveData() {
         viewModel.isProcessSuccess.observe(this) {
             if (it) {
+                viewModel.isUpdateSuccess.observe(this, Observer { update->
+                    if (update) {
+                        showToast("Success Update!")
+                        val intent = Intent(this, MainContentActivity::class.java)
+                        intent.putExtra("data", 0)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showToast("Failed Update!")
+                    }
+                })
                 showToast("order processed successfully")
-                val intent = Intent(this, MainContentActivity::class.java)
-                intent.putExtra("data", 0)
-                startActivity(intent)
-                finish()
             } else {
                 showToast("Failed to process order")
             }
@@ -147,6 +154,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     }
 
     private fun showToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

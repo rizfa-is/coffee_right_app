@@ -51,27 +51,25 @@ class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : Rec
 
             binding.viewPlus.setOnClickListener {
                 onPlusItemCartClickCallback.onPlusItemCartClicked(listCart[adapterPosition])
+                notifyDataSetChanged()
 
-                val amountTextFromTv = binding.tvAmountProduct.getText().toString()
-                var amountInt = amountTextFromTv.toInt()
-                amountInt += 1
-                binding.tvAmountProduct.text = amountInt.toString()
-
-//                val pricetextFromTv = binding.tvProductPrice.getText().toString()
-//                val priceInt = pricetextFromTv.toInt()
-//                binding.tvProductPrice.text = (priceInt * amountInt).toString()
+//                val amountTextFromTv = binding.tvAmountProduct.text.toString()
+//                var amountInt = amountTextFromTv.toInt()
+//                amountInt += 1
+//                binding.tvAmountProduct.text = amountInt.toString()
 
             }
             binding.viewMinus.setOnClickListener {
                 onMinusItemCartClickCallback.minusItemCartClicked((listCart[adapterPosition]))
-                val amountTextFromTv = binding.tvAmountProduct.getText().toString()
-                var amountInt = amountTextFromTv.toInt()
-                if (amountInt != 0) {
-                    amountInt -= 1
-                } else {
-                    amountInt = 0
-                }
-                binding.tvAmountProduct.text = amountInt.toString()
+                notifyDataSetChanged()
+//                val amountTextFromTv = binding.tvAmountProduct.text.toString()
+//                var amountInt = amountTextFromTv.toInt()
+//                if (amountInt != 0) {
+//                    amountInt -= 1
+//                } else {
+//                    amountInt = 0
+//                }
+//                binding.tvAmountProduct.text = amountInt.toString()
 
             }
         }
@@ -94,7 +92,4 @@ class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : Rec
 
     override fun getItemCount(): Int = listCart.size
 
-    fun setItems(cart: List<CartResponse.DataCart>) {
-        this.listCart = cart as ArrayList<CartResponse.DataCart>
-    }
 }

@@ -7,15 +7,16 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_coffe_right"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_coffe_right_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main.checkout.CheckoutActivity"/>
+        <activity android:name=".main.maincontent.order.detail.DetailOrderActivity"></activity>
+        <activity android:name=".main.checkout.CheckoutActivity" />
         <activity android:name=".main.orderhistory.detail.DetailOrderHistoryActivity" />
         <activity android:name=".main.promo.PromoActivity" />
         <activity android:name=".main.favorite.FavoriteActivity" />
