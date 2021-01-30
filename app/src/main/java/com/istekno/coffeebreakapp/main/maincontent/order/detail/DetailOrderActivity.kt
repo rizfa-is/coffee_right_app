@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderBinding
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryApiService
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryModel
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryApiService
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryModel
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
 
 class DetailOrderActivity : BaseActivityViewModel<ActivityDetailOrderBinding, DetailOrderViewModel>() {

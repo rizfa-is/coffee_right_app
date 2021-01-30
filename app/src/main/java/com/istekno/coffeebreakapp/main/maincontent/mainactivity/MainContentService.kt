@@ -1,6 +1,5 @@
-package com.istekno.coffeebreakapp.main.maincontent.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
-import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

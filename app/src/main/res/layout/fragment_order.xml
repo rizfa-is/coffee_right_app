@@ -69,12 +69,11 @@
                 android:id="@+id/iv_no_history"
                 android:layout_width="173dp"
                 android:layout_height="168dp"
+                android:layout_marginTop="175dp"
                 android:src="@drawable/ic_no_order"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_1"

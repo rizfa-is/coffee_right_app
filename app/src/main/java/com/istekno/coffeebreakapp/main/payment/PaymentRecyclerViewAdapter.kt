@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemPaymentBinding
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
 
 class PaymentRecyclerViewAdapter(private val listCart: ArrayList<PaymentModel>): RecyclerView.Adapter<PaymentRecyclerViewAdapter.ListCartHolder>() {
 

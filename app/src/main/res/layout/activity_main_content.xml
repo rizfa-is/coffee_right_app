@@ -11,7 +11,7 @@
         android:fitsSystemWindows="true"
         app:sliderType="slide"
         tools:openDrawer="start"
-        tools:context=".main.maincontent.maincontent.MainContentActivity">
+        tools:context=".main.maincontent.mainactivity.MainContentActivity">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            style="@style/Widget.Design.NavigationView"
+            style="@style/nav_drawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="24dp"
@@ -66,9 +66,6 @@
             android:fitsSystemWindows="true"
             android:background="@drawable/shape_bg_nav_drawer"
             app:headerLayout="@layout/header_nav_drawer"
-            app:itemTextAppearance="@style/text_item"
-            app:itemIconTint="@color/theme_choco"
-            app:itemTextColor="@color/theme_choco"
             app:menu="@menu/menu_maincontent">
 
             <androidx.constraintlayout.widget.ConstraintLayout

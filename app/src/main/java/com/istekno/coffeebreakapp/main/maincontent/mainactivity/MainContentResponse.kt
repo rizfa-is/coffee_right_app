@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.maincontent.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
 import com.google.gson.annotations.SerializedName
 

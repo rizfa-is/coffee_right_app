@@ -1,4 +1,3 @@
-/*
 package com.istekno.coffeebreakapp.main.forgotpassword.checkemail
 
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +7,7 @@ import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class CheckEmailViewModel : ViewModel(), CoroutineScope {
-    private lateinit var service: AccountApiService
+    private lateinit var service: CheckEmailApi
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     val onFailLiveData = MutableLiveData<String>()
@@ -18,7 +17,7 @@ class CheckEmailViewModel : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setService(service: AccountApiService) {
+    fun setService(service: CheckEmailApi) {
         this@CheckEmailViewModel.service = service
     }
 
@@ -47,7 +46,7 @@ class CheckEmailViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (response is VerifyResponse) {
+            if (response is VerifyEmailResponse) {
                 isLoadingLiveData.value = false
 
                 if (response.success) {
@@ -60,4 +59,3 @@ class CheckEmailViewModel : ViewModel(), CoroutineScope {
         }
     }
 }
-*/

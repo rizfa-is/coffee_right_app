@@ -1,7 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.order
 
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryResponse
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryResponse
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

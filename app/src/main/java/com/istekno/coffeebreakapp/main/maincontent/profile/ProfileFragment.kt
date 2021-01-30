@@ -11,16 +11,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentProfileBinding
 import com.istekno.coffeebreakapp.main.editpassword.EditPasswordActivity
 import com.istekno.coffeebreakapp.main.editprofile.EditProfileActivity
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class ProfileFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
+class ProfileFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -37,6 +37,7 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        navDrawer.setCheckedItem(R.id.nav_profile)
         val service = ApiClient.getApiClient(view.context)!!.create(ProfileService::class.java)
         val preference = SharedPreferenceUtil(view.context)
 
@@ -56,9 +57,6 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
         }
         binding.btnEditPassword.setOnClickListener {
             intent<EditPasswordActivity>(view.context)
-        }
-        binding.tvProfileSeemore1.setOnClickListener {
-            intent<OrderHistoryActivity>(view.context)
         }
     }
 

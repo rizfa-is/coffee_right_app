@@ -109,99 +109,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_profile_address" />
 
-                <TextView
-                    android:id="@+id/tv_profile_order_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/order_history"
-                    android:textColor="@color/theme_choco"
-                    android:textSize="17sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line_top" />
-
-                <TextView
-                    android:id="@+id/tv_profile_seemore1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="@string/see_more"
-                    android:textColor="@color/theme_choco"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_profile_order_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_profile_order_history" />
-
-                <RelativeLayout
-                    android:id="@+id/history_not_found"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/rv_order_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/rv_order_history">
-
-                    <ImageView
-                        android:id="@+id/iv_no_history"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:src="@drawable/ic_no_history" />
-
-                    <TextView
-                        android:id="@+id/tv_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/tv_2"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_toEndOf="@+id/iv_no_history"
-                        android:fontFamily="@font/poppins_extrabold"
-                        android:gravity="center"
-                        android:text="@string/no_history_yet"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/tv_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_1"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_toEndOf="@+id/iv_no_history"
-                        android:text="@string/hit_the_brown"
-                        android:textAlignment="center"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_order_history"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_profile_order_history" />
-
-                <View
-                    android:id="@+id/line_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="16dp"
-                    android:background="#BABABA"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_order_history" />
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_edit_profile"
                     style="@style/Widget.MaterialComponents.Button"
@@ -220,7 +127,7 @@
                     app:cornerRadius="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line_bottom" />
+                    app:layout_constraintTop_toBottomOf="@id/line_top" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_edit_password"

@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory
 
 import com.google.gson.annotations.SerializedName
 

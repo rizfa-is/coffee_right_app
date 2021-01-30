@@ -1,9 +1,8 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryApiService
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryModel
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryApiService
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 

@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,8 +52,7 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
                     isGetList.value = false
                 }
             }
-            isGetList.value = false
-            isLoading.value = false
+
         }
     }
 }

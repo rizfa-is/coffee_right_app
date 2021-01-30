@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentHomeBinding
@@ -21,7 +22,7 @@ import com.istekno.coffeebreakapp.main.favorite.FavoriteActivity
 import com.istekno.coffeebreakapp.main.promo.PromoActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
 
     companion object {
         const val HOME_KEY = "home_key"
@@ -36,6 +37,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        navDrawer.setCheckedItem(R.id.nav_home)
         val service = ApiClient.getApiClient(view.context)!!.create(HomeService::class.java)
 
         viewModel.setService(service)
