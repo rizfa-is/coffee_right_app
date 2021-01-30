@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemFavoriteBinding
+import java.text.NumberFormat
+import java.util.*
 
 class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
 
@@ -48,6 +50,11 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(listFavorite[position])
+        val item = listFavorite[position]
+        val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.productPrice.toDouble())
+            .replace("Rp".toRegex(),"IDR ")
+
+        holder.binding.tvProductPrice.text = price
     }
 
     override fun getItemCount(): Int = listFavorite.size
