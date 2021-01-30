@@ -97,7 +97,7 @@ class EditProfileActivity :
         }
 
         myCalendar = Calendar.getInstance()
-        deadlineProject()
+        dateOfBirth()
         setViewModel()
         subscribeLiveData()
 
@@ -255,7 +255,7 @@ class EditProfileActivity :
         finish()
     }
 
-    private fun deadlineProject() {
+    private fun dateOfBirth() {
         deadline = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
