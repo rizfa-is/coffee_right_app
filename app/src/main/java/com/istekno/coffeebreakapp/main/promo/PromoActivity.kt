@@ -32,6 +32,13 @@ class PromoActivity : BaseActivityViewModel<ActivityPromoBinding, PromoViewModel
         viewModel.getAllProduct()
         setRecyclerView()
         subscribeLiveData()
+        onClickListener()
+    }
+
+    private fun onClickListener() {
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setRecyclerView() {
