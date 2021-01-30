@@ -64,7 +64,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
 
     fun createOrderDetailApi(customerId: Int, paymentMethod: String, status: String) {
         launch {
-            val result = withContext(Dispatchers.IO) {
+            val result1 = withContext(Dispatchers.IO) {
                 try {
                     service.createOrderDetail(customerId, paymentMethod, status)
                 } catch (e: Throwable) {
@@ -76,14 +76,36 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (result is PaymentResponse.GeneralResponse) {
-                if (result.success) {
-                    isProcessSuccess.value = result.success
+            val result2 = withContext(Dispatchers.IO) {
+                try {
+                    service.updateOrderDetailId(customerId)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isUpdateSuccess.value = false
+                    }
+                }
+            }
+
+            if (result1 is PaymentResponse.GeneralResponse) {
+                if (result1.success) {
+                    isProcessSuccess.value = result1.success
                 } else {
                     isProcessSuccess.value = false
                 }
             } else {
                 isProcessSuccess.value = false
+            }
+
+            if (result2 is PaymentResponse.GeneralResponse) {
+                if (result2.success) {
+                    isUpdateSuccess.value = result2.success
+                } else {
+                    isUpdateSuccess.value = false
+                }
+            } else {
+                isUpdateSuccess.value = false
             }
         }
     }
