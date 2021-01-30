@@ -1,9 +1,6 @@
-package com.istekno.coffeebreakapp.main.maincontent.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.istekno.coffeebreakapp.main.login.LoginApiService
-import com.istekno.coffeebreakapp.main.login.LoginResponse
 import com.istekno.coffeebreakapp.model.SharedPrefModel
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*

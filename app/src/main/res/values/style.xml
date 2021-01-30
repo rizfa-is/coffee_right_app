@@ -24,4 +24,11 @@
         <item name="android:padding">0dp</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
+
+    <style name="nav_drawer" parent="Widget.Design.NavigationView">
+        <item name="itemTextAppearance">@style/text_item</item>
+        <item name="itemIconTint">@color/color_nav_item</item>
+        <item name="itemTextColor">@color/color_nav_text</item>
+        <item name="itemBackground">@drawable/state_background_nav</item>
+    </style>
 </resources>

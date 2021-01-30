@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
 
 import android.os.Bundle
 import android.view.View
@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderHistoryBinding
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryApiService
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryRecyclerViewAdapter
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryApiService
 import com.istekno.coffeebreakapp.remote.ApiClient
 
 class DetailOrderHistoryActivity : BaseActivityViewModel<ActivityDetailOrderHistoryBinding, DetailOrderHistoryViewModel>() {

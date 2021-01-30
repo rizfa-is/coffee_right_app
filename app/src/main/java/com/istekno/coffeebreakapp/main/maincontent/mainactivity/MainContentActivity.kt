@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.maincontent.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
-import com.istekno.coffeebreakapp.base.BaseActivity
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
@@ -26,6 +25,7 @@ import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryFragment
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -110,15 +110,13 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
     private fun initialHomePage() {
         val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
+        val navDrawer = binding.navView
         val data = intent.getIntExtra("data", -1)
 
         when (data) {
-            0 -> { fragmentProperties(OrderFragment(toolbar, title)) }
-            1 -> { fragmentProperties(ProfileFragment(toolbar, title)) }
-            else -> {
-                fragmentProperties(HomeFragment(toolbar, title))
-                Log.e("sharedPref", sharePref.getPreference().toString())
-            }
+            0 -> { fragmentProperties(OrderFragment(toolbar, title, navDrawer)) }
+            1 -> { fragmentProperties(ProfileFragment(toolbar, title, navDrawer)) }
+            else -> fragmentProperties(HomeFragment(toolbar, title, navDrawer))
         }
     }
 
@@ -173,18 +171,23 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
+        val navDrawer = binding.navView
 
         when (item.itemId) {
             R.id.nav_home -> {
-                fragmentProperties(HomeFragment(toolbar, title))
+                fragmentProperties(HomeFragment(toolbar, title, navDrawer))
             }
 
             R.id.nav_profile -> {
-                fragmentProperties(ProfileFragment(toolbar, title))
+                fragmentProperties(ProfileFragment(toolbar, title, navDrawer))
             }
 
             R.id.nav_order -> {
-                fragmentProperties(OrderFragment(toolbar, title))
+                fragmentProperties(OrderFragment(toolbar, title, navDrawer))
+            }
+
+            R.id.nav_order_history -> {
+                fragmentProperties(OrderHistoryFragment(toolbar, title, navDrawer))
             }
         }
         return false

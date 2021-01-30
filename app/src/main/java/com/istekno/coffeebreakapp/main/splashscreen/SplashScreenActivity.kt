@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySplashScreenBinding
-import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.welcomepage.WelcomePageActivity
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 

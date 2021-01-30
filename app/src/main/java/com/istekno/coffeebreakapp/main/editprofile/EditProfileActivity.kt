@@ -5,22 +5,26 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityEditProfileBinding
-import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileModel
 import com.istekno.coffeebreakapp.remote.ApiClient
+import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -36,6 +40,7 @@ class EditProfileActivity :
     private lateinit var sharedPref: SharedPreferenceUtil
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
+    private lateinit var dialog: Dialog
 
     private var pathImage: String? = null
     private var imageUri: Uri? = null
@@ -48,6 +53,7 @@ class EditProfileActivity :
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
@@ -55,6 +61,7 @@ class EditProfileActivity :
         super.onCreate(savedInstanceState)
 
         sharedPref = SharedPreferenceUtil(this)
+        dialog = Dialog()
 
         val data = intent.getParcelableExtra<ProfileModel>("Data")
         binding.etName.setText(data?.accountName)
@@ -162,7 +169,7 @@ class EditProfileActivity :
                 }
             }
 
-            moveActivity(acName, acEmail)
+            dialog.dialogUpdating(this, this) { moveActivity(acName, acEmail) }
         }
 
         binding.ivBack.setOnClickListener {
@@ -245,7 +252,7 @@ class EditProfileActivity :
         sendIntent.putExtra("name", name)
         sendIntent.putExtra("email", email)
         startActivity(sendIntent)
-        finishAffinity()
+        finish()
     }
 
     private fun deadlineProject() {

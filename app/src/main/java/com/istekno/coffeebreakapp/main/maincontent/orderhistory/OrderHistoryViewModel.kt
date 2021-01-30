@@ -1,16 +1,15 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryApiService
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class DetailOrderHistoryViewModel: ViewModel(), CoroutineScope {
+class OrderHistoryViewModel: ViewModel(), CoroutineScope {
 
-    val listData = MutableLiveData<List<DetailOrderHistoryModel>>()
+    val listData = MutableLiveData<List<OrderHistoryModel>>()
     val isLoading = MutableLiveData<Boolean>()
+    val isGetList = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -21,31 +20,39 @@ class DetailOrderHistoryViewModel: ViewModel(), CoroutineScope {
         this.service = service
     }
 
-    fun callOrderApiService(orderDetailId: Int) {
+    fun callOrderHistoryApi(customerId: Int) {
         launch {
             isLoading.value = true
 
             val result = withContext(Dispatchers.IO) {
                 try {
-                    service.getAllHistoryOrderByOdId(orderDetailId)
+                    service.getOrderHistoryByCsId(customerId)
                 } catch (e: Throwable) {
                     e.printStackTrace()
 
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+                        isGetList.value = false
                     }
                 }
             }
 
-            if (result is DetailOrderHistoryResponse) {
+            if (result is OrderHistoryResponse) {
                 if (result.success) {
+                    isGetList.value = result.success
                     val list = result.data.map {
-                        DetailOrderHistoryModel(it.productName, it.orderPrice, it.orderDetailStatus, it.orderAmount)
+                        OrderHistoryModel(it.orderId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderStatus,
+                            it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
                     }
-                    listData.value = list
+                    val mutable = list.toMutableList()
+                    mutable.removeIf { it.orderStatus != "Done" }
+                    listData.value = mutable
                     isLoading.value = false
+                } else {
+                    isGetList.value = false
                 }
             }
+
         }
     }
 }

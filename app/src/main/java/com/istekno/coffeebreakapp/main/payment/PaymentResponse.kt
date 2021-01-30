@@ -1,7 +1,6 @@
 package com.istekno.coffeebreakapp.main.payment
 
 import com.google.gson.annotations.SerializedName
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryResponse
 
 data class PaymentResponse(val success: Boolean, val message: String, val data: List<Data>) {
     data class Data(
