@@ -81,7 +81,7 @@
             android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.productPrice}"
+            android:text=""
             android:fontFamily="@font/poppins_regular"
             android:textColor="@android:color/tertiary_text_light"
             android:textSize="16sp"

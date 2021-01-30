@@ -52,8 +52,7 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
                     isGetList.value = false
                 }
             }
-            isGetList.value = false
-            isLoading.value = false
+
         }
     }
 }

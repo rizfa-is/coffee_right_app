@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemPromoBinding
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse
+import java.text.NumberFormat
+import java.util.*
 
 class PromoAdapter(): RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
 
@@ -50,8 +52,14 @@ class PromoAdapter(): RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(listFavorite[position])
         val item = listFavorite[position]
+        val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.productPrice.toDouble())
+            .replace("Rp".toRegex(),"IDR ")
         val promoPrice =  item.productPrice.toInt() - (item.productPrice.toInt() * 0.1)
-        holder.binding.tvPromoPrice.text = promoPrice.toInt().toString()
+
+
+        holder.binding.tvProductPrice.text = price
+        holder.binding.tvPromoPrice.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
+            .replace("Rp".toRegex(),"IDR ")
     }
 
     override fun getItemCount(): Int = listFavorite.size

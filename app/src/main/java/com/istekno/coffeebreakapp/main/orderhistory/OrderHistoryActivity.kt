@@ -82,6 +82,7 @@ class OrderHistoryActivity : BaseActivityViewModel<ActivityOrderHistoryBinding, 
             } else {
                 binding.historyNotFound.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
+                binding.rvOrderHistory.visibility = View.GONE
             }
         })
 
