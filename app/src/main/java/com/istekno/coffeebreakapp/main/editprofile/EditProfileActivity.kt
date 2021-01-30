@@ -13,12 +13,12 @@ import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityEditProfileBinding
+import com.istekno.coffeebreakapp.main.maincontent.maincontent.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileModel
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
@@ -38,6 +38,7 @@ class EditProfileActivity :
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
 
     private var pathImage: String? = null
+    private var imageUri: Uri? = null
     private var gender: String? = null
 
     companion object {
@@ -160,6 +161,8 @@ class EditProfileActivity :
                     )
                 }
             }
+
+            moveActivity(acName, acEmail)
         }
 
         binding.ivBack.setOnClickListener {
@@ -180,6 +183,7 @@ class EditProfileActivity :
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             binding.imageProfile.setImageURI(data?.data)
             pathImage = getPath(this, data?.data!!)
+            imageUri = data.data
         }
     }
 
@@ -234,6 +238,16 @@ class EditProfileActivity :
         return realPath
     }
 
+    private fun moveActivity(name: String, email: String) {
+        val sendIntent = Intent(this, MainContentActivity::class.java)
+        sendIntent.putExtra("data", 1)
+        sendIntent.putExtra("image_URI", imageUri)
+        sendIntent.putExtra("name", name)
+        sendIntent.putExtra("email", email)
+        startActivity(sendIntent)
+        finishAffinity()
+    }
+
     private fun deadlineProject() {
         deadline = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
@@ -257,7 +271,6 @@ class EditProfileActivity :
         viewModel.onSuccessLiveData.observe(this) {
             if (it) {
                 setResult(RESULT_OK)
-                this.finish()
             }
         }
 

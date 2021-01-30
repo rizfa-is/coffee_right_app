@@ -1,33 +1,35 @@
-package com.istekno.coffeebreakapp.main.maincontent
+package com.istekno.coffeebreakapp.main.maincontent.maincontent
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivity
+import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
+import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), NavigationView.OnNavigationItemSelectedListener {
+class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, MainContentViewModel>(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -39,9 +41,14 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
+        setViewModel = ViewModelProvider(this).get(MainContentViewModel::class.java)
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.tbMenuMaincontent)
+
+        val service = ApiClient.getApiClient(this)!!.create(MainContentService::class.java)
         sharePref = SharedPreferenceUtil(this)
+        viewModel.setService(service)
+        viewModel.setSharePref(sharePref)
 
         setNavHeaderData()
         setDrawer()
@@ -66,12 +73,30 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
         val avatar = navHeader.findViewById<ImageView>(R.id.img_nav_header)
         val name = navHeader.findViewById<TextView>(R.id.tv_nav_drawer_name)
         val email = navHeader.findViewById<TextView>(R.id.tv_nav_drawer_email)
+        val data = intent.getIntExtra("data", -1)
+        val imageUri = intent.getParcelableExtra<Uri>("image_URI")
+        val newName = intent.getStringExtra("name")
+        val newEmail = intent.getStringExtra("email")
 
-        Glide.with(this).load(img + sharePref.getPreference().acImage)
-            .placeholder(R.drawable.ic_avatar_en).into(avatar)
+        if (data == 1) {
+            if (imageUri != null) {
+                avatar.setImageURI(imageUri)
+            } else {
+                Glide.with(this).load(img + sharePref.getPreference().acImage)
+                    .placeholder(R.drawable.ic_avatar_en).into(avatar)
+            }
 
-        name.text = sharePref.getPreference().acName
-        email.text = sharePref.getPreference().acEmail
+            name.text = newName
+            email.text = newEmail
+
+            viewModel.getCustomerData()
+        } else {
+            Glide.with(this).load(img + sharePref.getPreference().acImage)
+                .placeholder(R.drawable.ic_avatar_en).into(avatar)
+
+            name.text = sharePref.getPreference().acName
+            email.text = sharePref.getPreference().acEmail
+        }
     }
 
     private fun viewListener() {
@@ -86,10 +111,14 @@ class MainContentActivity : BaseActivity<ActivityMainContentBinding>(), Navigati
         val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
         val data = intent.getIntExtra("data", -1)
-        if (data == 0) {
-            fragmentProperties(OrderFragment(toolbar, title))
-        } else {
-            fragmentProperties(HomeFragment(toolbar, title))
+
+        when (data) {
+            0 -> { fragmentProperties(OrderFragment(toolbar, title)) }
+            1 -> { fragmentProperties(ProfileFragment(toolbar, title)) }
+            else -> {
+                fragmentProperties(HomeFragment(toolbar, title))
+                Log.e("sharedPref", sharePref.getPreference().toString())
+            }
         }
     }
 

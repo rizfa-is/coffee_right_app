@@ -11,7 +11,7 @@
         android:fitsSystemWindows="true"
         app:sliderType="slide"
         tools:openDrawer="start"
-        tools:context=".main.maincontent.MainContentActivity">
+        tools:context=".main.maincontent.maincontent.MainContentActivity">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
