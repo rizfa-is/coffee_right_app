@@ -9,7 +9,7 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
 
     val listData = MutableLiveData<List<OrderHistoryModel>>()
     val isLoading = MutableLiveData<Boolean>()
-    val isNotFound = MutableLiveData<Boolean>()
+    val isGetList = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -32,25 +32,28 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
 
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
-                        isNotFound.value = true
+                        isGetList.value = false
                     }
                 }
             }
 
             if (result is OrderHistoryResponse) {
                 if (result.success) {
+                    isGetList.value = result.success
                     val list = result.data.map {
                         OrderHistoryModel(it.orderId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderStatus,
                             it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
                     }
                     val mutable = list.toMutableList()
-                    mutable.removeAll { it.orderStatus != "Done" }
+                    mutable.removeIf { it.orderStatus != "Done" }
                     listData.value = mutable
                     isLoading.value = false
                 } else {
-                    isNotFound.value = true
+                    isGetList.value = false
                 }
             }
+            isGetList.value = false
+            isLoading.value = false
         }
     }
 }
