@@ -12,6 +12,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
     val totalPrice = MutableLiveData<Int>()
     val isProcessSuccess = MutableLiveData<Boolean>()
     val isDeleteSuccess = MutableLiveData<Boolean>()
+    val isUpdateSuccess = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -78,7 +79,11 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
             if (result is PaymentResponse.GeneralResponse) {
                 if (result.success) {
                     isProcessSuccess.value = result.success
+                } else {
+                    isProcessSuccess.value = false
                 }
+            } else {
+                isProcessSuccess.value = false
             }
         }
     }
@@ -92,15 +97,19 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
                     e.printStackTrace()
 
                     withContext(Dispatchers.Main) {
-                        isProcessSuccess.value = false
+                        isUpdateSuccess.value = false
                     }
                 }
             }
 
             if (result is PaymentResponse.GeneralResponse) {
                 if (result.success) {
-                    isProcessSuccess.value = result.success
+                    isUpdateSuccess.value = result.success
+                } else {
+                    isUpdateSuccess.value = false
                 }
+            } else {
+                isUpdateSuccess.value = false
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.cart
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -37,8 +38,23 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         subscribeGetCartLiveData()
         subscribeLoadingLiveData()
         subscribeUpdateLiveData()
+        subscribeDeleteLiveData()
         onClickListener()
 
+    }
+
+    private fun subscribeDeleteLiveData() {
+        viewModel.isDeleteSuccess.observe(this, {
+            if (it) {
+                viewModel.isMessage.observe(this, { msg->
+                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                })
+            } else {
+                viewModel.isMessage.observe(this, { msg->
+                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                })
+            }
+        })
     }
 
     private fun subscribeUpdateLiveData() {
@@ -94,28 +110,50 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         val rvAdapter = CartAdapter(listCart)
 
         binding.rvProductCart.apply {
+            rvAdapter.notifyDataSetChanged()
 
             layoutManager = LinearLayoutManager(this@CartActivity, RecyclerView.VERTICAL, false)
-            rvAdapter.setItems(listCart)
-            binding.rvProductCart.adapter
-            rvAdapter.notifyDataSetChanged()
 
             rvAdapter.plusItemCartClicked(object : CartAdapter.OnPlusItemCartClickCallBack {
                 override fun onPlusItemCartClicked(cartModel: CartResponse.DataCart) {
                     Toast.makeText(this@CartActivity, "clicked plus", Toast.LENGTH_SHORT).show()
                     viewModel.updatePlusCartByOrId(cartModel.orderId)
+                    viewModel.getListCartByCsId()
+                    viewModel.getListPriceCartByCsId()
                 }
             })
 
             rvAdapter.minusItemCartClicked(object : CartAdapter.OnMinusCartClickCallBack {
                 override fun minusItemCartClicked(cartModel: CartResponse.DataCart) {
                     Toast.makeText(this@CartActivity, "clicked minus", Toast.LENGTH_SHORT).show()
-                    viewModel.updateMinusCartByOrId(cartModel.orderId)
+                    if (cartModel.orderAmount.toInt() >= 2) {
+                        viewModel.updateMinusCartByOrId(cartModel.orderId)
+                        viewModel.getListCartByCsId()
+                        viewModel.getListPriceCartByCsId()
+                    } else if (cartModel.orderAmount.toInt() <= 1) {
+                        showDialogLogout(cartModel.orderId)
+                        viewModel.getListCartByCsId()
+                        viewModel.getListPriceCartByCsId()
+                    }
                 }
             })
 
             adapter = rvAdapter
         }
+    }
+
+    private fun showDialogLogout(orderId : Int) {
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Remove Product")
+        builder.setMessage("Are you sure to remove this product from your Cart ?")
+        builder.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+            viewModel.deleteOrderById(orderId)
+            val intent = Intent(this, MainContentActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton("No") { _: DialogInterface, _: Int ->}
+        builder.show()
     }
 
     private fun onClickListener() {

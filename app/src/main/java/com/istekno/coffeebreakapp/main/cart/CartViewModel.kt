@@ -14,6 +14,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
     val isMessage = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
     val totalPriceCart = MutableLiveData<String>()
+    val isDeleteSuccess = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -124,7 +125,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
 
             if (result is UpdateOrderResponse) {
                 if (result.success) {
-                    isUpdateCart.value = true
+                    isUpdateCart.value = result.success
                     isLoading.value = false
                     isMessage.value = result.message
                 } else {
@@ -160,7 +161,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
 
             if (result is UpdateOrderResponse) {
                 if (result.success) {
-                    isUpdateCart.value = true
+                    isUpdateCart.value = result.success
                     isLoading.value = false
                     isMessage.value = result.message
                 } else {
@@ -170,6 +171,42 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 }
             } else {
                 isUpdateCart.value = false
+                isLoading.value = false
+                isMessage.value = "Something wrong..."
+            }
+
+        }
+    }
+
+    fun deleteOrderById(orId : Int) {
+        launch {
+            isLoading.value = true
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.deleteOrderById(orId)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isDeleteSuccess.value = false
+                    }
+                }
+            }
+
+            if (result is UpdateOrderResponse) {
+                if (result.success) {
+                    isDeleteSuccess.value = result.success
+                    isLoading.value = false
+                    isMessage.value = result.message
+                } else {
+                    isDeleteSuccess.value = false
+                    isLoading.value = false
+                    isMessage.value = result.message
+                }
+            } else {
+                isDeleteSuccess.value = false
                 isLoading.value = false
                 isMessage.value = "Something wrong..."
             }

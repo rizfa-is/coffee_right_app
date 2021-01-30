@@ -125,12 +125,12 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
                 if (!mutableList.isNullOrEmpty()) {
                     orderId.value = mutableList[0].orderId
                 }
+            }
 
-                if (listProductHasBeenOrder.map { it.toString() }.contains(productId.toString())) {
-                    isCheckProduct.value = true
-                } else {
-                    isCheckProduct.value = false
-                }
+            if (listProductHasBeenOrder.map { it.toString() }.contains(productId.toString())) {
+                isCheckProduct.value = true
+            } else {
+                isCheckProduct.value = false
             }
 
         }
