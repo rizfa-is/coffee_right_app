@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.maincontent.order
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +16,21 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentOrderBinding
 import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.order.detail.DetailOrderActivity
+import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
+import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class OrderFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
 OrderAdapter.OnListOrderClickListenerr{
+
+    companion object {
+        const val ORDER_HISTORY_KEY = "orID_KEY"
+        const val PRICE_BEFORE_TAX = "PRICE_BEFORE_TAX"
+        const val TAX = "TAX"
+        const val TOTAL_PRICE = "TOTAL_PRICE"
+    }
 
     private var listOrder = ArrayList<OrderResponse.Data>()
 
@@ -101,6 +112,11 @@ OrderAdapter.OnListOrderClickListenerr{
 
     override fun onOrderItemClicked(position: Int) {
         Toast.makeText(requireContext(), "item ${listOrder[position].orderDetailId} clicked", Toast.LENGTH_SHORT).show()
-
+        val sendIntent = Intent(requireContext(), DetailOrderActivity::class.java)
+        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position].orderDetailId)
+        sendIntent.putExtra(PRICE_BEFORE_TAX, listOrder[position].priceBeforeTax)
+        sendIntent.putExtra(TAX, listOrder[position].orderTax)
+        sendIntent.putExtra(TOTAL_PRICE, listOrder[position].totalPrice)
+        startActivity(sendIntent)
     }
 }
