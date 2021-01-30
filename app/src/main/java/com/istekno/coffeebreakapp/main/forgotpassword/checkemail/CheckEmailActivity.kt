@@ -1,40 +1,43 @@
-/*
 package com.istekno.coffeebreakapp.main.forgotpassword.checkemail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
+import com.istekno.coffeebreakapp.base.BaseActivityViewModel
+import com.istekno.coffeebreakapp.databinding.ActivityCheckEmailBinding
+import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.ValidateAccount.Companion.valEmail
+import com.istekno.coffeebreakapp.main.forgotpassword.resetpassword.ResetPasswordActivity
+import com.istekno.coffeebreakapp.remote.ApiClient
 
-class CheckEmailActivity : BaseActivityCoroutine<ActivityVerifyEmailBinding>(), View.OnClickListener {
-    private lateinit var viewModel: CheckEmailViewModel
+class CheckEmailActivity : BaseActivityViewModel<ActivityCheckEmailBinding, CheckEmailViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_check_email
+        setViewModel = ViewModelProvider(this).get(CheckEmailViewModel::class.java)
         super.onCreate(savedInstanceState)
 
         initTextWatcher()
         setViewModel()
         subscribeLiveData()
+        onClickListener()
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_next -> {
-                when {
-                    !valEmail(binding.inputLayoutEmail, binding.etEmail) -> {}
-                    else -> {
-                        viewModel.serviceApi(
-                            email = binding.etEmail.text.toString()
-                        )
-                    }
+    private fun onClickListener() {
+        binding.btnResendLink.setOnClickListener {
+            when {
+                !valEmail(binding.tiEmail, binding.etEmail) -> {
                 }
-            }
-            R.id.ln_back -> {
-                this@CheckEmailActivity.finish()
+                else -> {
+                    viewModel.serviceApi(
+                        email = binding.etEmail.text.toString()
+                    )
+                }
             }
         }
     }
@@ -48,19 +51,23 @@ class CheckEmailActivity : BaseActivityCoroutine<ActivityVerifyEmailBinding>(), 
         viewModel.setService(createApi(this@CheckEmailActivity))
     }
 
+    private inline fun <reified ApiService> createApi(context: Context): ApiService {
+        return ApiClient.getApiClient(context)!!.create(ApiService::class.java)
+    }
+
     private fun subscribeLiveData() {
         viewModel.isLoadingLiveData.observe(this@CheckEmailActivity, {
-            binding.btnNext.visibility = View.GONE
+            binding.btnResendLink.visibility = View.GONE
             binding.progressBar.visibility = View.VISIBLE
         })
 
         viewModel.onSuccessLiveData.observe(this@CheckEmailActivity, {
             if (it) {
                 binding.progressBar.visibility = View.GONE
-                binding.btnNext.visibility = View.VISIBLE
+                binding.btnResendLink.visibility = View.VISIBLE
             } else {
                 binding.progressBar.visibility = View.GONE
-                binding.btnNext.visibility = View.VISIBLE
+                binding.btnResendLink.visibility = View.VISIBLE
             }
         })
 
@@ -72,8 +79,12 @@ class CheckEmailActivity : BaseActivityCoroutine<ActivityVerifyEmailBinding>(), 
         })
 
         viewModel.onFailLiveData.observe(this@CheckEmailActivity, {
-            noticeToast(it)
+            showToast(it)
         })
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     inner class MyTextWatcher(private val view: View) : TextWatcher {
@@ -81,9 +92,8 @@ class CheckEmailActivity : BaseActivityCoroutine<ActivityVerifyEmailBinding>(), 
         override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
         override fun afterTextChanged(editable: Editable) {
             when (view.id) {
-                R.id.et_email -> valEmail(binding.inputLayoutEmail, binding.etEmail)
+                R.id.et_email -> valEmail(binding.tiEmail, binding.etEmail)
             }
         }
     }
 }
-*/
