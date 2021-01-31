@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.checkout
 
 import android.annotation.SuppressLint
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,6 +16,9 @@ import com.istekno.coffeebreakapp.main.payment.PaymentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.min
 
 class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, CheckoutViewModel>() {
 
@@ -64,6 +68,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun viewListener() {
         binding.cgDeliveryMethod.setOnCheckedChangeListener { _, checkedId ->
             val checkedIdNow = binding.cgNow.checkedChipId
@@ -104,6 +109,30 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
         binding.ivBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.etTimeReservation.setOnClickListener {
+            val input = binding.etTimeReservation
+            val calendar = Calendar.getInstance()
+            val timePickerListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
+                input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
+            }
+            TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+        }
+
+        binding.etTimeReservation.setOnFocusChangeListener { _, b ->
+            if (b) {
+                val input = binding.etTimeReservation
+                val calendar = Calendar.getInstance()
+                val timePickerListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
+                }
+                TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+            }
         }
 
         binding.btnConfirmAndPay.setOnClickListener {
