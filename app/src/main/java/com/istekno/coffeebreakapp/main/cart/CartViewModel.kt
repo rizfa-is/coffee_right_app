@@ -110,7 +110,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
         launch {
             isLoading.value = true
 
-            val result = withContext(Dispatchers.IO) {
+            val result1 = withContext(Dispatchers.IO) {
                 try {
                     service.updateOrderPlus(orId)
                 } catch (e: Throwable) {
@@ -123,20 +123,82 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (result is UpdateOrderResponse) {
-                if (result.success) {
-                    isUpdateCart.value = result.success
+            if (result1 is UpdateOrderResponse) {
+                if (result1.success) {
+                    isUpdateCart.value = result1.success
                     isLoading.value = false
-                    isMessage.value = result.message
                 } else {
                     isUpdateCart.value = false
                     isLoading.value = false
-                    isMessage.value = result.message
+                    isMessage.value = result1.message
                 }
             } else {
                 isUpdateCart.value = false
                 isLoading.value = false
                 isMessage.value = "Something wrong..."
+            }
+
+            val result2 = withContext(Dispatchers.IO) {
+                try {
+                    service.getListCartByCsId(sharedPref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isGetListCart.value = false
+                    }
+                }
+            }
+
+            if (result2 is CartResponse) {
+                if (result2.success) {
+                    isGetListCart.value = true
+                    val data = result2.data.map {
+                        CartResponse.DataCart(it.orderId, it.productId, it.productName, it.productImage, it.customerId, it.orderStatus, it.orderAmount, it.orderPrice, it.orderCreated, it.orderUpdated)
+                    }
+                    listCart.value = data
+                    isLoading.value = false
+                } else {
+                    isGetListCart.value = false
+                    isLoading.value = false
+                }
+            }
+
+            val result3 = withContext(Dispatchers.IO) {
+                try {
+                    service.getCartPriceByCsId(sharedPref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isGetListCart.value = false
+                    }
+                }
+            }
+
+            if (result3 is CartPriceResponse) {
+                if (result3.success) {
+                    isGetListCart.value = true
+                    val dataPrice = result3.data.map {
+                        CartPriceResponse.DataPriceCart(it.orderPrice)
+                    }
+                    val mutable = dataPrice.toMutableList()
+                    val listPrice = mutableListOf<Int>()
+                    mutable.map {
+                        listPrice.add(it.orderPrice)
+                    }
+                    var total = 0
+                    for (i in 0 until listPrice.size) {
+                        total += listPrice[i]
+                    }
+                    totalPriceCart.value = total.toString()
+                    isLoading.value = false
+                } else {
+                    isGetListCart.value = false
+                    isLoading.value = false
+                }
             }
 
         }
@@ -146,7 +208,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
         launch {
             isLoading.value = true
 
-            val result = withContext(Dispatchers.IO) {
+            val result1 = withContext(Dispatchers.IO) {
                 try {
                     service.updateOrderMin(orId)
                 } catch (e: Throwable) {
@@ -159,20 +221,82 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (result is UpdateOrderResponse) {
-                if (result.success) {
-                    isUpdateCart.value = result.success
+            if (result1 is UpdateOrderResponse) {
+                if (result1.success) {
+                    isUpdateCart.value = result1.success
                     isLoading.value = false
-                    isMessage.value = result.message
                 } else {
                     isUpdateCart.value = false
                     isLoading.value = false
-                    isMessage.value = result.message
+                    isMessage.value = result1.message
                 }
             } else {
                 isUpdateCart.value = false
                 isLoading.value = false
                 isMessage.value = "Something wrong..."
+            }
+
+            val result2 = withContext(Dispatchers.IO) {
+                try {
+                    service.getListCartByCsId(sharedPref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isGetListCart.value = false
+                    }
+                }
+            }
+
+            if (result2 is CartResponse) {
+                if (result2.success) {
+                    isGetListCart.value = true
+                    val data = result2.data.map {
+                        CartResponse.DataCart(it.orderId, it.productId, it.productName, it.productImage, it.customerId, it.orderStatus, it.orderAmount, it.orderPrice, it.orderCreated, it.orderUpdated)
+                    }
+                    listCart.value = data
+                    isLoading.value = false
+                } else {
+                    isGetListCart.value = false
+                    isLoading.value = false
+                }
+            }
+
+            val result3 = withContext(Dispatchers.IO) {
+                try {
+                    service.getCartPriceByCsId(sharedPref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isGetListCart.value = false
+                    }
+                }
+            }
+
+            if (result3 is CartPriceResponse) {
+                if (result3.success) {
+                    isGetListCart.value = true
+                    val dataPrice = result3.data.map {
+                        CartPriceResponse.DataPriceCart(it.orderPrice)
+                    }
+                    val mutable = dataPrice.toMutableList()
+                    val listPrice = mutableListOf<Int>()
+                    mutable.map {
+                        listPrice.add(it.orderPrice)
+                    }
+                    var total = 0
+                    for (i in 0 until listPrice.size) {
+                        total += listPrice[i]
+                    }
+                    totalPriceCart.value = total.toString()
+                    isLoading.value = false
+                } else {
+                    isGetListCart.value = false
+                    isLoading.value = false
+                }
             }
 
         }
