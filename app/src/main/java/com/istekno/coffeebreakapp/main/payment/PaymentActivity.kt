@@ -118,7 +118,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             if (it) {
                 viewModel.isUpdateSuccess.observe(this, Observer { update->
                     if (update) {
-                        showToast("Success Update!")
                         val intent = Intent(this, MainContentActivity::class.java)
                         intent.putExtra("data", 0)
                         startActivity(intent)

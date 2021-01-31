@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,12 +45,16 @@ OrderAdapter.OnListOrderClickListenerr{
 
         val sharedPref = SharedPreferenceUtil(requireContext())
         viewModel.setSharedPref(sharedPref)
-        val service = ApiClient.getApiClient(requireContext())?.create(OrderService::class.java)
+        val service = ApiClient.getApiClient(requireContext())?.create(OrderApiService::class.java)
         if (service != null) {
             viewModel.setService(service)
         }
 
-        viewModel.callOrderApi()
+        if (sharedPref.getPreference().level == 0) {
+            viewModel.callOrderCustomerApi()
+        } else {
+            viewModel.callOrderAdminApi()
+        }
 
         setRecyclerView(view)
         subscribeLiveData()
@@ -111,7 +114,6 @@ OrderAdapter.OnListOrderClickListenerr{
     }
 
     override fun onOrderItemClicked(position: Int) {
-        Toast.makeText(requireContext(), "item ${listOrder[position].orderDetailId} clicked", Toast.LENGTH_SHORT).show()
         val sendIntent = Intent(requireContext(), DetailOrderActivity::class.java)
         sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position].orderDetailId)
         sendIntent.putExtra(PRICE_BEFORE_TAX, listOrder[position].priceBeforeTax)
