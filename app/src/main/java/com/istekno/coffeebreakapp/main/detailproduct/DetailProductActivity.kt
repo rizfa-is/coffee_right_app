@@ -95,10 +95,31 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
         }
 
         viewModel.listData.observe(this) {
-            val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble())
-                .replace("Rp".toRegex(),"IDR ")
+
+            if (it[0].discountId == 0 || it[0].discountId == 1) {
+                binding.lineThrough.visibility = View.GONE
+                binding.tvPromoPrice.visibility = View.GONE
+
+                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble())
+                    .replace("Rp".toRegex(),"IDR ")
+
+                binding.tvPrice.text = price
+
+            } else {
+                binding.lineThrough.visibility = View.VISIBLE
+                binding.tvPromoPrice.visibility = View.VISIBLE
+
+                val promoPrice =  it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
+                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble())
+                    .replace("Rp".toRegex(),"IDR ")
+
+                binding.tvPromoPrice.text = price
+                binding.tvPrice.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
+                    .replace("Rp".toRegex(),"IDR ")
+
+            }
+
             binding.model = it[0]
-            binding.tvPrice.text = price
             Glide.with(binding.root).load(img + it[0].productImage)
                 .placeholder(R.drawable.error)
                 .error(R.drawable.ic_profile).into(binding.ivProduct)

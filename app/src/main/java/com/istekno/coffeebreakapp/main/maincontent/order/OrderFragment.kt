@@ -66,6 +66,7 @@ OrderAdapter.OnListOrderClickListenerr{
     private fun viewListener(view: View) {
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(view.context)
+            activity?.finishAffinity()
         }
     }
 

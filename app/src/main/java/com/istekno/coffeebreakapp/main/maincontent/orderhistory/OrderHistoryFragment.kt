@@ -65,6 +65,7 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
     private fun onClickListener(view: View) {
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(view.context)
+            activity?.finishAffinity()
         }
     }
 

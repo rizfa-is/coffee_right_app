@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.DialogUpdatingBinding
+import java.util.*
 import java.util.logging.Handler
+import kotlin.concurrent.schedule
 
 class Dialog {
     fun dialog(context: Context?, message: String, listAction: () -> Unit) {
@@ -53,7 +55,6 @@ class Dialog {
         dialog.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     fun dialogUpdating(context: Context?, activity: Activity, action:() -> Unit) {
         val customView = DataBindingUtil.inflate<DialogUpdatingBinding>(activity.layoutInflater, R.layout.dialog_updating, null, false)
 
@@ -62,11 +63,9 @@ class Dialog {
             .setCancelable(false)
             .create()
         dialog.show()
-        android.os.Handler.createAsync(Looper.getMainLooper()).postDelayed(
-            {
-                dialog.dismiss()
-                action()
-            }, 3000
-        )
+        Timer().schedule(3000) {
+            dialog.dismiss()
+            action()
+        }
     }
 }

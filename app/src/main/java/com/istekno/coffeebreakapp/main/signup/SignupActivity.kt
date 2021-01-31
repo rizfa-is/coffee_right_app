@@ -80,6 +80,7 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
                     showToast(it1)
                 })
                 intent<LoginActivity>(this)
+                finish()
             } else {
                 viewModel.isMessage.observe(this, Observer { it1->
                     showToast(it1)

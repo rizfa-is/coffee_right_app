@@ -42,7 +42,6 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         viewModel.setService(service)
         viewModel.setSharedPref(sharedPref)
         dialog = Dialog()
-        binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
 
         setChipGroup(binding.cgDeliveryMethod, listDelivery, 10)
         setChipGroup(binding.cgNow, listNow, 20)
@@ -57,6 +56,10 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
+
+        if (sharedPref.getPreference().acAddress != "Data not set") {
+            binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
+        }
 
         binding.tvTotalCost.text = totalPrice
 
