@@ -3,10 +3,12 @@ package com.istekno.coffeebreakapp.main.maincontent.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
@@ -71,12 +73,24 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
             }
         }
 
-        viewModel.listData.observe(viewLifecycleOwner) {
-            binding.model = it[0]
-            listData.add(it[0])
-            Glide.with(view.context).load(img + it[0].accountImage)
-                .placeholder(R.drawable.ic_avatar_en).into(binding.shapeableImageView2)
+        viewModel.isGetData.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.isMessage.observe(viewLifecycleOwner) { msg->
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                }
+                viewModel.listData.observe(viewLifecycleOwner) {list->
+                    binding.model = list[0]
+                    listData.add(list[0])
+                    Glide.with(view.context).load(img + list[0].accountImage)
+                        .placeholder(R.drawable.ic_avatar_en).into(binding.shapeableImageView2)
+                }
+            } else {
+                viewModel.isMessage.observe(viewLifecycleOwner) { msg->
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
     }
 
     @SuppressLint("SetTextI18n")
