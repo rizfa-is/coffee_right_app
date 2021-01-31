@@ -121,7 +121,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                         val intent = Intent(this, MainContentActivity::class.java)
                         intent.putExtra("data", 0)
                         startActivity(intent)
-                        finish()
+                        finishAffinity()
                     } else {
                         showToast("Failed Update!")
                     }

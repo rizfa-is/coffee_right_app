@@ -45,7 +45,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
-        private val listFilter = arrayOf("Default", "Food", "Drink")
+        private val listFilter = arrayOf("All", "Food", "Drink", "Favorite", "Promo")
     }
 
     private lateinit var mToggle: ActionBarDrawerToggle
@@ -156,7 +156,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
             sharePref.clear()
             val intent = Intent(this, MainPageActivity::class.java)
             startActivity(intent)
-            finish()
+            finishAffinity()
         }
         builder.setNegativeButton("No") { _: DialogInterface, i : Int ->}
         builder.show()

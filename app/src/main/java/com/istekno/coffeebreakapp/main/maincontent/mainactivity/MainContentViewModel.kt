@@ -85,6 +85,8 @@ class MainContentViewModel: ViewModel(), CoroutineScope {
                 when(filter) {
                     1 -> { mutableList.removeIf { it.productCategory != "Food" } }
                     2 -> { mutableList.removeIf { it.productCategory != "Drink" } }
+                    3 -> { mutableList.removeIf { it.productFavorite == "N" } }
+                    4 -> {  mutableList.removeIf { it.discountId == 1 } }
                 }
 
                 if (mutableList.isNullOrEmpty()) {

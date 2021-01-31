@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.remote
 
 import android.content.Context
+import android.util.Log
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import okhttp3.Interceptor
 import okhttp3.Response

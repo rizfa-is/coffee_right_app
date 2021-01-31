@@ -166,7 +166,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
 
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(this)
-            finish()
+            finishAffinity()
         }
 
     }

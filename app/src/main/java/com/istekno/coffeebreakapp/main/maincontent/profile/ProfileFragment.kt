@@ -3,6 +3,7 @@ package com.istekno.coffeebreakapp.main.maincontent.profile
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +45,10 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
         viewModel.setService(service)
         viewModel.setSharedPref(preference)
 
+        Log.e("sharedPref Profile before Get", preference.getPreference().toString())
         viewModel.getCustomerByID()
         subscribeLiveData(view)
+        Log.e("sharedPref Profile after Get", preference.getPreference().toString())
         viewListener(view)
     }
 
