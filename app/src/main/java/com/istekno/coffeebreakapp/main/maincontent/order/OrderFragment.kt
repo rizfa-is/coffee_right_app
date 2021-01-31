@@ -54,6 +54,7 @@ OrderAdapter.OnListOrderClickListenerr{
             viewModel.callOrderCustomerApi()
         } else {
             viewModel.callOrderAdminApi()
+            binding.btnStartOrder.visibility = View.GONE
         }
 
         setRecyclerView(view)
