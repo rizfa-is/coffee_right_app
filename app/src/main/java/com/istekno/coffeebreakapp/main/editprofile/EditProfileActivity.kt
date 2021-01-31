@@ -5,16 +5,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -50,6 +49,9 @@ class EditProfileActivity :
         private const val IMAGE_PICK_CODE = 1000
         private const val PERMISSION_CODE = 1001
         const val img = "http://184.72.105.243:3000/images/"
+
+        const val FIELD_REQUIRED = "Field must not empty"
+        const val FIELD_IS_NOT_VALID = "Email format is not valid\nRequired '@' and '.' character"
 
     }
 
@@ -128,16 +130,47 @@ class EditProfileActivity :
             val acName = binding.etName.text.toString()
             val acPhone = binding.etPhone.text.toString()
             val acEmail = binding.etEmail.text.toString()
+            val csBirthday = binding.etDob.text.toString()
+            val delAddress = binding.etAddress.text.toString()
+            val csGender = binding.radioButton.checkedRadioButtonId
 
-            gender = when (binding.radioButton.checkedRadioButtonId) {
+
+            if (acName.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (!acEmail.contains('@') || !acEmail.contains('.')) {
+                showToast(FIELD_IS_NOT_VALID)
+                return@setOnClickListener
+            }
+            if (acPhone.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (csBirthday.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (delAddress.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (csGender == -1) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+
+            gender = when (csGender) {
                 binding.female.id -> {
                     "Female"
                 }
                 binding.male.id -> {
                     "Male"
-                } else -> ""
+                }
+                else -> ({
+                    showToast(FIELD_REQUIRED)
+                }).toString()
             }
-
             if (sharedPref.getPreference().roleID != 0) {
                 if (pathImage != null) {
                     viewModel.updateAPIAccount(
@@ -148,8 +181,8 @@ class EditProfileActivity :
                     )
                     viewModel.updateAPICustomer(
                         csId = sharedPref.getPreference().roleID!!,
-                        csBirthday = createPartFromString(binding.etDob.text.toString()),
-                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csBirthday = createPartFromString(csBirthday),
+                        csAddress = createPartFromString(delAddress),
                         csGender = createPartFromString(gender!!),
                         image = createPartFromFile(pathImage!!)
                     )
@@ -162,8 +195,8 @@ class EditProfileActivity :
                     )
                     viewModel.updateAPICustomer(
                         csId = sharedPref.getPreference().roleID!!,
-                        csBirthday = createPartFromString(binding.etDob.text.toString()),
-                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csBirthday = createPartFromString(csBirthday),
+                        csAddress = createPartFromString(delAddress),
                         csGender = createPartFromString(gender!!)
                     )
                 }
@@ -281,6 +314,10 @@ class EditProfileActivity :
             }
         }
 
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private inline fun <reified ApiService> createApi(context: Context): ApiService {
