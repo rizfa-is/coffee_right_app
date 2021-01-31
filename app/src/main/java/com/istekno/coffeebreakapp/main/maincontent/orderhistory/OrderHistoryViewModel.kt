@@ -61,4 +61,44 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
 //            isLoading.value = false
         }
     }
+
+    fun callOrderHistoryByAdminApi() {
+        launch {
+            isLoading.value = true
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.getAllOrderByAdmin()
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                        isGetList.value = false
+                    }
+                }
+            }
+
+            if (result is OrderHistoryResponse) {
+                if (result.success) {
+                    val list = result.data.map {
+                        OrderHistoryModel(it.orderId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderStatus,
+                            it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                    }
+                    val mutable = list.toMutableList()
+                    mutable.removeIf { it.orderStatus != "Done" }
+                    if(!mutable.isNullOrEmpty()) {
+                        isGetList.value = result.success
+                        listData.value = mutable
+                    } else {
+                        isGetList.value = false
+                    }
+                    isLoading.value = false
+                } else {
+                    isGetList.value = false
+                }
+            }
+        }
+    }
+
 }
