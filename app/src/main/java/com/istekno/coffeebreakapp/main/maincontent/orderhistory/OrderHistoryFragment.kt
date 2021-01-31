@@ -105,7 +105,6 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
     }
 
     override fun onOrderHistoryItemClicked(position: Int) {
-        Toast.makeText(context, "item ${listOrderHistory[position].orderId} clicked", Toast.LENGTH_SHORT).show()
         val sendIntent = Intent(context, DetailOrderHistoryActivity::class.java)
         sendIntent.putExtra(ORDER_HISTORY_KEY, listOrderHistory[position].orderId)
         sendIntent.putExtra(PRICE_BEFORE_TAX, listOrderHistory[position].priceBeforeTax)
