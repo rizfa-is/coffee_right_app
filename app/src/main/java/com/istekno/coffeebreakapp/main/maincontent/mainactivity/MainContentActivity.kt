@@ -279,7 +279,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
                     }
 
                     viewModel.getAllProductByQuery(1, newText, checkedID)
-                } else if (newText == " ") {
+                } else if (newText == "") {
                     binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
                         val chip: Chip = findViewById(checkedId)
                         val id = chip.id
@@ -301,6 +301,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
                 binding.toolbarTitle.visibility = View.GONE
 
                 binding.clSearch.visibility = View.VISIBLE
+                viewModel.getAllProductByQuery(0, "", 0)
                 return true
             }
 
