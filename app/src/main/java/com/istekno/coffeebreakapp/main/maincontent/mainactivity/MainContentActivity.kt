@@ -1,5 +1,7 @@
 package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -7,21 +9,31 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
+import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
+import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
+import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
@@ -33,6 +45,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
+        private val listFilter = arrayOf("Default", "Food", "Drink")
     }
 
     private lateinit var mToggle: ActionBarDrawerToggle
@@ -52,8 +65,16 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
         setNavHeaderData()
         setDrawer()
+        chipViewInit()
+
+        val checkedID = binding.cgFilter.checkedChipId
+        if (checkedID == -1) {
+            binding.cgFilter.check(0)
+        }
 
         initialHomePage()
+        setRecyclerView(binding.root)
+        subscribeLiveData()
         viewListener()
     }
 
@@ -104,6 +125,13 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
             showDialogLogout()
         }
 
+        binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+            val chip: Chip = findViewById(checkedId)
+            val id = chip.id
+
+            viewModel.getAllProductByQuery(0, "", id)
+        }
+
         binding.navView.setNavigationItemSelectedListener(this)
     }
 
@@ -145,8 +173,146 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
+    private fun setRecyclerView(view: View) {
+        val rvAdapter = HomeAdapter()
+
+        binding.rvSearchListProduct.apply {
+            rvAdapter.notifyDataSetChanged()
+            layoutManager = GridLayoutManager(view.context, 2)
+
+            rvAdapter.setOnItemClicked(object : HomeAdapter.OnItemClickCallback {
+                override fun onItemClicked(productModel: HomeResponse.DataProduct) {
+                    val sendIntent = Intent(view.context, DetailProductActivity::class.java)
+                    sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
+                    startActivity(sendIntent)
+                }
+            })
+            adapter = rvAdapter
+        }
+    }
+
+    private fun chipViewInit() {
+        for (element in listFilter) {
+            val chip = layoutInflater.inflate(R.layout.item_chipgroup_choice, binding.cgFilter, false) as Chip
+
+            chip.id = listFilter.indexOf(element)
+            chip.text = element
+            binding.cgFilter.addView(chip)
+        }
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.productAction.observe(this, {
+            if (it) {
+                binding.pgHomeengfrg.visibility = View.VISIBLE
+                binding.rvSearchListProduct.visibility = View.GONE
+            } else {
+                binding.pgHomeengfrg.visibility = View.GONE
+                binding.rvSearchListProduct.visibility = View.VISIBLE
+            }
+        })
+
+        viewModel.listProduct.observe(this, {
+            (binding.rvSearchListProduct.adapter as HomeAdapter).setData(it)
+        })
+
+        viewModel.isFailedStatus.observe(this, {
+            if (it) {
+                binding.pgHomeengfrg.visibility = View.GONE
+                binding.rvSearchListProduct.visibility = View.GONE
+
+                binding.imgDataNotFound.visibility = View.VISIBLE
+                binding.tvNotFound.visibility = View.VISIBLE
+            } else {
+                binding.imgDataNotFound.visibility = View.GONE
+                binding.tvNotFound.visibility = View.GONE
+            }
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_toolbar, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
+        val searchItem = menu.findItem(R.id.toolbar_search)
+        var checkedID = binding.cgFilter.checkedChipId
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = "ex: Hazelnut Latte"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(1, query, id)
+                    }
+
+                    viewModel.getAllProductByQuery(1, query, checkedID)
+                } else if (query == " ") {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(0, " ", id)
+                    }
+
+                    viewModel.getAllProductByQuery(0, "", checkedID)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.length!! >= 5) {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(1, newText, id)
+                    }
+
+                    viewModel.getAllProductByQuery(1, newText, checkedID)
+                } else if (newText == " ") {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(0, " ", id)
+                    }
+
+                    viewModel.getAllProductByQuery(0, "", checkedID)
+                }
+
+                return false
+            }
+        })
+
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                binding.flMaincontent.visibility = View.GONE
+                binding.toolbarTitle.visibility = View.GONE
+
+                binding.clSearch.visibility = View.VISIBLE
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                binding.flMaincontent.visibility = View.VISIBLE
+                binding.toolbarTitle.visibility = View.VISIBLE
+
+                binding.clSearch.visibility = View.GONE
+                return true
+            }
+        })
+
         return true
     }
 
@@ -154,9 +320,6 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         when(item.itemId) {
             R.id.toolbar_cart -> {
                 intent<CartActivity>(this)
-            }
-            R.id.toolbar_search -> {
-                intent<CheckoutActivity>(this)
             }
         }
         return false
@@ -193,4 +356,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         return false
     }
 
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+    }
 }
