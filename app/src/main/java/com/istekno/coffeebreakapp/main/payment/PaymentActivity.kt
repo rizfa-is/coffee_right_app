@@ -56,7 +56,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
-//            viewModel.updateOrderDetailId(customerId)
         }
 
         binding.ivBack.setOnClickListener {

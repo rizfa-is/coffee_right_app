@@ -116,27 +116,20 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
 
             rvAdapter.plusItemCartClicked(object : CartAdapter.OnPlusItemCartClickCallBack {
                 override fun onPlusItemCartClicked(cartModel: CartResponse.DataCart) {
-                    Toast.makeText(this@CartActivity, "clicked plus", Toast.LENGTH_SHORT).show()
                     viewModel.updatePlusCartByOrId(cartModel.orderId)
                     rvAdapter.notifyItemChanged(cartModel.orderId)
-                    viewModel.getListCartByCsId()
-                    viewModel.getListPriceCartByCsId()
                 }
             })
 
             rvAdapter.minusItemCartClicked(object : CartAdapter.OnMinusCartClickCallBack {
                 override fun minusItemCartClicked(cartModel: CartResponse.DataCart) {
-                    Toast.makeText(this@CartActivity, "clicked minus", Toast.LENGTH_SHORT).show()
                     if (cartModel.orderAmount.toInt() >= 2) {
                         viewModel.updateMinusCartByOrId(cartModel.orderId)
                         rvAdapter.notifyItemChanged(cartModel.orderId)
-                        viewModel.getListCartByCsId()
                         viewModel.getListPriceCartByCsId()
                     } else if (cartModel.orderAmount.toInt() <= 1) {
                         showDialogDelete(cartModel.orderId)
                         rvAdapter.notifyItemChanged(cartModel.orderId)
-                        viewModel.getListCartByCsId()
-                        viewModel.getListPriceCartByCsId()
                     }
                 }
             })
