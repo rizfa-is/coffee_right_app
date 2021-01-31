@@ -10,3 +10,5 @@ data class DetailOrderHistoryResponse(val success: Boolean, val message: String,
         @SerializedName("or_amount") val orderAmount: Int
     )
 }
+
+data class UpdateStatusOrderDetailResponse(val success: Boolean, val message: String)
