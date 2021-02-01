@@ -2,8 +2,6 @@
 
 > This is a ReadMe to help understand about this repository
 
-![Project Image](https://user-images.githubusercontent.com/26475029/101284934-98946080-381d-11eb-85b3-e0133e704cc8.PNG)
-
 ---
 
 ### Table of Contents
