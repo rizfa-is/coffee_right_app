@@ -34,9 +34,9 @@ class ValidateAccount {
 
                     return false
                 }
-                text.length < 6 -> {
+                text.length < 8 -> {
                     inPass.isHelperTextEnabled = true
-                    inPass.helperText = "Min. 6 character!"
+                    inPass.helperText = "Min. 8 character!"
                     etPass.requestFocus()
 
                     return false
