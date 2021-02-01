@@ -55,6 +55,12 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun onClickListener() {
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
+
+            if (paymentMethod == "") {
+                showToast("Please choose payment method!")
+                return@setOnClickListener
+            }
+
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
         }
 
