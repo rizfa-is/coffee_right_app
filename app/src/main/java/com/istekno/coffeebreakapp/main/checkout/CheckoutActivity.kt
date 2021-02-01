@@ -58,7 +58,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
 
-        if (sharedPref.getPreference().acAddress != "Data not set") {
+        if (sharedPref.getPreference().acAddress != "Not set") {
             binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
         }
 
