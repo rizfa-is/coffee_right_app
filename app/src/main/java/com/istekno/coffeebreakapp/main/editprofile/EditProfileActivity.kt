@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
@@ -237,45 +238,21 @@ class EditProfileActivity :
         return MultipartBody.Part.createFormData("image", file.name, reqFile)
     }
 
-    private fun getPath(context: Context, uri: Uri): String {
-        var realPath = String()
-        uri.path?.let { path ->
+    private fun getPath(context: Context, contentUri: Uri) : String? {
+        var result: String? = null
+        val imageProfile = arrayOf(MediaStore.Images.Media.DATA)
 
-            val databaseUri: Uri
-            val selection: String?
-            val selectionArgs: Array<String>?
-            if (path.contains("/document/image:")) {
-                databaseUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                selection = "_id=?"
-                selectionArgs = arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1])
-            } else {
-                databaseUri = uri
-                selection = null
-                selectionArgs = null
-            }
+        val cursorLoader = CursorLoader(context, contentUri, imageProfile, null, null, null)
+        val cursor = cursorLoader.loadInBackground()
 
-            try {
-                val column = "_data"
-                val projection = arrayOf(column)
-                val cursor = context.contentResolver.query(
-                    databaseUri,
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null
-                )
-                cursor?.let {
-                    if (it.moveToFirst()) {
-                        val columnIndex = cursor.getColumnIndexOrThrow(column)
-                        realPath = cursor.getString(columnIndex)
-                    }
-                    cursor.close()
-                }
-            } catch (e: Exception) {
-                println(e)
-            }
+        if (cursor != null) {
+            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            result = cursor.getString(columnIndex)
+            cursor.close()
         }
-        return realPath
+
+        return result
     }
 
     private fun moveActivity(name: String, email: String) {
