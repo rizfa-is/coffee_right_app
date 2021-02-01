@@ -53,6 +53,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
     @SuppressLint("ResourceType")
     private fun setInitialChecked() {
+        val etAddress = binding.etCustomerAddress
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
@@ -64,6 +65,8 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         binding.tvTotalCost.text = totalPrice
 
         if (checkedIdDelivery == -1 || checkedIdNow == -1) {
+            etAddress.isEnabled = false
+
             binding.cgDeliveryMethod.check(10)
             binding.cgNow.check(20)
             delivery = "Dine in"
@@ -74,12 +77,15 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
     @SuppressLint("SimpleDateFormat")
     private fun viewListener() {
         binding.cgDeliveryMethod.setOnCheckedChangeListener { _, checkedId ->
+            val etAddress = binding.etCustomerAddress
             val checkedIdNow = binding.cgNow.checkedChipId
             val chip: Chip = findViewById(checkedId)
             val id = chip.id
             delivery = chip.text.toString()
 
             if (id == 10) {
+                etAddress.isEnabled = false
+
                 if (checkedIdNow == 20) {
                     now = "Yes"
                     binding.tvSetTime.visibility = View.GONE
@@ -88,6 +94,9 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 binding.tvNow.visibility = View.VISIBLE
                 binding.cgNow.visibility = View.VISIBLE
             } else {
+
+                etAddress.isEnabled = id == 11
+
                 now = "No"
                 binding.tvNow.visibility = View.GONE
                 binding.cgNow.visibility = View.GONE
@@ -139,6 +148,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         }
 
         binding.btnConfirmAndPay.setOnClickListener {
+            var etAddress = binding.etCustomerAddress.text.toString().trim()
             var etTimeReservation = binding.etTimeReservation.text.toString().trim()
             val setNow = now.map { it }[0].toString()
             val setDelivery = when (delivery) {
@@ -146,6 +156,11 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 "Door Delivery" -> "DD"
                 "Pick up" -> "PU"
                 else -> "null"
+            }
+
+            if (setDelivery == "DD" && ( etAddress.isEmpty() || etAddress == "Data not set")) {
+                showToast("Delivery address not set yet!")
+                return@setOnClickListener
             }
 
             if (setNow == "N" && etTimeReservation.isEmpty()) {
