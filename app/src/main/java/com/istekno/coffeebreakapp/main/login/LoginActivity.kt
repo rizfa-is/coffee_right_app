@@ -74,7 +74,7 @@ class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel
             if (it) {
                 showToast("Login Success")
                 intent<MainContentActivity>(this)
-                finish()
+                finishAffinity()
             } else {
                 showToast("Email/Password Wrong")
             }

@@ -66,11 +66,10 @@
 
                 <EditText
                     android:id="@+id/et_customer_address"
-                    android:text="Iskandar Street, Jakarta"
+                    android:hint="Enter delivery address"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/black"
                     android:textSize="13sp"
-                    android:editable="false"
                     android:background="@drawable/shape_bg_grey_to_blue"
                     android:paddingVertical="16dp"
                     android:paddingHorizontal="25dp"

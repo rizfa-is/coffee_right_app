@@ -55,6 +55,12 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun onClickListener() {
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
+
+            if (paymentMethod == "") {
+                showToast("Please choose payment method!")
+                return@setOnClickListener
+            }
+
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
         }
 
@@ -121,7 +127,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                         val intent = Intent(this, MainContentActivity::class.java)
                         intent.putExtra("data", 0)
                         startActivity(intent)
-                        finish()
+                        finishAffinity()
                     } else {
                         showToast("Failed Update!")
                     }

@@ -54,6 +54,7 @@ OrderAdapter.OnListOrderClickListenerr{
             viewModel.callOrderCustomerApi()
         } else {
             viewModel.callOrderAdminApi()
+            binding.btnStartOrder.visibility = View.GONE
         }
 
         setRecyclerView(view)
@@ -66,6 +67,7 @@ OrderAdapter.OnListOrderClickListenerr{
     private fun viewListener(view: View) {
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(view.context)
+            activity?.finishAffinity()
         }
     }
 

@@ -69,8 +69,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
-                app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite"
-                tools:listitem="@layout/item_home" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite" />
 
             <TextView
                 android:id="@+id/tv_home_promo"
@@ -110,14 +109,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_promo"
                 android:layout_width="0dp"
-                android:layout_height="220dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_home_promo"
-                app:layout_constraintTop_toBottomOf="@+id/tv_home_promo"
-                tools:listitem="@layout/item_home" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_promo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

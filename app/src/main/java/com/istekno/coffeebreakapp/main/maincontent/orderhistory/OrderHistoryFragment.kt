@@ -57,7 +57,11 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
         val customerId = sharedPref.getPreference().roleID
 
         setRecyclerView()
-        viewModel.callOrderHistoryApi(customerId!!)
+        if (sharedPref.getPreference().level == 0) {
+            viewModel.callOrderHistoryApi(customerId!!)
+        } else {
+            viewModel.callOrderHistoryByAdminApi()
+        }
         subscribeLiveData()
         onClickListener(view)
     }
@@ -65,6 +69,7 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
     private fun onClickListener(view: View) {
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(view.context)
+            activity?.finishAffinity()
         }
     }
 
