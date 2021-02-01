@@ -44,18 +44,23 @@ class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, 
                 showToast(FIELD_REQUIRED)
                 return@setOnClickListener
             }
-            if (acPassword.isEmpty()) {
-                showToast(FIELD_REQUIRED)
+            if (acCurrentPassword.length < 8) {
+                showToast(SignupActivity.FIELD_LENGTH)
                 return@setOnClickListener
             }
-            if (acPassword != acConfirmPassword) {
-                showToast(PASS_NOT_MATCH)
+            if (acPassword.isEmpty()) {
+                showToast(FIELD_REQUIRED)
                 return@setOnClickListener
             }
             if (acPassword.length < 8) {
                 showToast(SignupActivity.FIELD_LENGTH)
                 return@setOnClickListener
             }
+            if (acPassword != acConfirmPassword) {
+                showToast(PASS_NOT_MATCH)
+                return@setOnClickListener
+            }
+
             if (sharedPref.getPreference().roleID != 0){
                 viewModel.checkingPassword(
                     acId = sharedPref.getPreference().acID!!,
