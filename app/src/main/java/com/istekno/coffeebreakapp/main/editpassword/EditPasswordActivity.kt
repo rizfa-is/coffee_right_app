@@ -52,7 +52,10 @@ class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, 
                 showToast(PASS_NOT_MATCH)
                 return@setOnClickListener
             }
-
+            if (acPassword.length < 8) {
+                showToast(SignupActivity.FIELD_LENGTH)
+                return@setOnClickListener
+            }
             if (sharedPref.getPreference().roleID != 0){
                 viewModel.checkingPassword(
                     acId = sharedPref.getPreference().acID!!,
