@@ -51,26 +51,12 @@ class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : Rec
 
             binding.viewPlus.setOnClickListener {
                 onPlusItemCartClickCallback.onPlusItemCartClicked(listCart[adapterPosition])
-                notifyDataSetChanged()
-
-//                val amountTextFromTv = binding.tvAmountProduct.text.toString()
-//                var amountInt = amountTextFromTv.toInt()
-//                amountInt += 1
-//                binding.tvAmountProduct.text = amountInt.toString()
+                notifyItemChanged(adapterPosition)
 
             }
             binding.viewMinus.setOnClickListener {
                 onMinusItemCartClickCallback.minusItemCartClicked((listCart[adapterPosition]))
-                notifyDataSetChanged()
-//                val amountTextFromTv = binding.tvAmountProduct.text.toString()
-//                var amountInt = amountTextFromTv.toInt()
-//                if (amountInt != 0) {
-//                    amountInt -= 1
-//                } else {
-//                    amountInt = 0
-//                }
-//                binding.tvAmountProduct.text = amountInt.toString()
-
+                notifyItemChanged(adapterPosition)
             }
         }
     }

@@ -10,18 +10,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentHomeBinding
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
 import com.istekno.coffeebreakapp.main.favorite.FavoriteActivity
 import com.istekno.coffeebreakapp.main.promo.PromoActivity
+import com.istekno.coffeebreakapp.main.promo.PromoAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
 
     companion object {
         const val HOME_KEY = "home_key"
@@ -36,6 +39,7 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        navDrawer.setCheckedItem(R.id.nav_home)
         val service = ApiClient.getApiClient(view.context)!!.create(HomeService::class.java)
 
         viewModel.setService(service)
@@ -73,11 +77,11 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
         }
 
         binding.rvPromo.apply {
-            val rvAdapter = HomeAdapter()
+            val rvAdapter = PromoAdapter()
             rvAdapter.notifyDataSetChanged()
-            layoutManager = LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(view.context, 2)
 
-            rvAdapter.setOnItemClicked(object : HomeAdapter.OnItemClickCallback {
+            rvAdapter.setOnItemClicked(object : PromoAdapter.OnItemClickCallback {
                 override fun onItemClicked(productModel: HomeResponse.DataProduct) {
                     val sendIntent = Intent(view.context, DetailProductActivity::class.java)
                     sendIntent.putExtra(HOME_KEY, productModel.productId)
@@ -104,14 +108,21 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
         }
 
         viewModel.listData.observe(viewLifecycleOwner) { data ->
-            val mutableFavorite: MutableList<HomeResponse.DataProduct> = data.toMutableList()
-            val mutablePromo: MutableList<HomeResponse.DataProduct> = data.toMutableList()
+            val mutableFavorite = data.toMutableList()
+            val mutablePromo = data.toMutableList()
 
             mutableFavorite.removeIf { it.productFavorite == "N" }
-            mutablePromo.removeIf { it.discountId == 1 }
+            mutablePromo.removeIf { it.discountId == 0 || it.discountId == 1 }
+
+            for (i in 0 until mutableFavorite.size) {
+                if (i >= 5) {
+                    mutableFavorite.removeLast()
+                    mutablePromo.removeLast()
+                }
+            }
 
             (binding.rvFavorite.adapter as HomeAdapter).setData(mutableFavorite)
-            (binding.rvPromo.adapter as HomeAdapter).setData(mutablePromo)
+            (binding.rvPromo.adapter as PromoAdapter).setData(mutablePromo)
         }
     }
 

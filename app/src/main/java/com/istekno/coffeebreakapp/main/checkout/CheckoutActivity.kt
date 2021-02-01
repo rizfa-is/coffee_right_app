@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.checkout
 
 import android.annotation.SuppressLint
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,6 +16,9 @@ import com.istekno.coffeebreakapp.main.payment.PaymentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.min
 
 class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, CheckoutViewModel>() {
 
@@ -38,7 +42,6 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         viewModel.setService(service)
         viewModel.setSharedPref(sharedPref)
         dialog = Dialog()
-        binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
 
         setChipGroup(binding.cgDeliveryMethod, listDelivery, 10)
         setChipGroup(binding.cgNow, listNow, 20)
@@ -50,13 +53,20 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
     @SuppressLint("ResourceType")
     private fun setInitialChecked() {
+        val etAddress = binding.etCustomerAddress
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
 
+        if (sharedPref.getPreference().acAddress != "Data not set") {
+            binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
+        }
+
         binding.tvTotalCost.text = totalPrice
 
         if (checkedIdDelivery == -1 || checkedIdNow == -1) {
+            etAddress.isEnabled = false
+
             binding.cgDeliveryMethod.check(10)
             binding.cgNow.check(20)
             delivery = "Dine in"
@@ -64,14 +74,18 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun viewListener() {
         binding.cgDeliveryMethod.setOnCheckedChangeListener { _, checkedId ->
+            val etAddress = binding.etCustomerAddress
             val checkedIdNow = binding.cgNow.checkedChipId
             val chip: Chip = findViewById(checkedId)
             val id = chip.id
             delivery = chip.text.toString()
 
             if (id == 10) {
+                etAddress.isEnabled = false
+
                 if (checkedIdNow == 20) {
                     now = "Yes"
                     binding.tvSetTime.visibility = View.GONE
@@ -80,6 +94,9 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 binding.tvNow.visibility = View.VISIBLE
                 binding.cgNow.visibility = View.VISIBLE
             } else {
+
+                etAddress.isEnabled = id == 11
+
                 now = "No"
                 binding.tvNow.visibility = View.GONE
                 binding.cgNow.visibility = View.GONE
@@ -106,7 +123,32 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
             onBackPressed()
         }
 
+        binding.etTimeReservation.setOnClickListener {
+            val input = binding.etTimeReservation
+            val calendar = Calendar.getInstance()
+            val timePickerListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
+                input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
+            }
+            TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+        }
+
+        binding.etTimeReservation.setOnFocusChangeListener { _, b ->
+            if (b) {
+                val input = binding.etTimeReservation
+                val calendar = Calendar.getInstance()
+                val timePickerListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
+                }
+                TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+            }
+        }
+
         binding.btnConfirmAndPay.setOnClickListener {
+            var etAddress = binding.etCustomerAddress.text.toString().trim()
             var etTimeReservation = binding.etTimeReservation.text.toString().trim()
             val setNow = now.map { it }[0].toString()
             val setDelivery = when (delivery) {
@@ -114,6 +156,11 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 "Door Delivery" -> "DD"
                 "Pick up" -> "PU"
                 else -> "null"
+            }
+
+            if (setDelivery == "DD" && ( etAddress.isEmpty() || etAddress == "Data not set")) {
+                showToast("Delivery address not set yet!")
+                return@setOnClickListener
             }
 
             if (setNow == "N" && etTimeReservation.isEmpty()) {

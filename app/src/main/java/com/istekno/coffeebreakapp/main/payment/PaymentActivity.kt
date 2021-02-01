@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -55,8 +55,13 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun onClickListener() {
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
+
+            if (paymentMethod == "") {
+                showToast("Please choose payment method!")
+                return@setOnClickListener
+            }
+
             viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
-//            viewModel.updateOrderDetailId(customerId)
         }
 
         binding.ivBack.setOnClickListener {
@@ -119,11 +124,10 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             if (it) {
                 viewModel.isUpdateSuccess.observe(this, Observer { update->
                     if (update) {
-                        showToast("Success Update!")
                         val intent = Intent(this, MainContentActivity::class.java)
                         intent.putExtra("data", 0)
                         startActivity(intent)
-                        finish()
+                        finishAffinity()
                     } else {
                         showToast("Failed Update!")
                     }

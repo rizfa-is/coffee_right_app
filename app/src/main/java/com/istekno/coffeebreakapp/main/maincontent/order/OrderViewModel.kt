@@ -16,10 +16,10 @@ class OrderViewModel: ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    private lateinit var service: OrderService
+    private lateinit var service: OrderApiService
     private lateinit var sharedPref : SharedPreferenceUtil
 
-    fun setService(service: OrderService) {
+    fun setService(service: OrderApiService) {
         this.service = service
     }
 
@@ -27,7 +27,7 @@ class OrderViewModel: ViewModel(), CoroutineScope {
         this.sharedPref = sharedPref
     }
 
-    fun callOrderApi() {
+    fun callOrderCustomerApi() {
         launch {
             isLoading.value = true
 
@@ -47,13 +47,57 @@ class OrderViewModel: ViewModel(), CoroutineScope {
 
             if (result is OrderResponse) {
                 if (result.success) {
-                    getListData.value = result.success
                     val list = result.data.map {
                         OrderResponse.Data(it.orderDetailId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderDetailStatus, it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
                     }
                     val mutable = list.toMutableList()
                     mutable.removeAll { it.orderDetailStatus == "Done" }
-                    listData.value = mutable
+                    if (!mutable.isNullOrEmpty()) {
+                        getListData.value = result.success
+                        listData.value = mutable
+                    } else {
+                        getListData.value = false
+                    }
+                    isLoading.value = false
+                } else {
+                    getListData.value = false
+                    isLoading.value = false
+                }
+            }
+        }
+    }
+
+    fun callOrderAdminApi() {
+        launch {
+            isLoading.value = true
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.getAllOrderByAdmin()
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        getListData.value = false
+                        isLoading.value = false
+                        isNotFound.value = true
+                    }
+                }
+            }
+
+            if (result is OrderResponse) {
+                if (result.success) {
+                    val list = result.data.map {
+                        OrderResponse.Data(it.orderDetailId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderDetailStatus, it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                    }
+                    val mutable = list.toMutableList()
+                    mutable.removeAll { it.orderDetailStatus == "Done" }
+                    if (!mutable.isNullOrEmpty()) {
+                        getListData.value = result.success
+                        listData.value = mutable
+                    } else {
+                        getListData.value = false
+                    }
                     isLoading.value = false
                 } else {
                     getListData.value = false

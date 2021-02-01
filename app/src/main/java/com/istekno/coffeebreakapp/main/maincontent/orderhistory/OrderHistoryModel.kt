@@ -1,6 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory
-
-import com.google.gson.annotations.SerializedName
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory
 
 data class OrderHistoryModel(
     val orderId: Int?,

@@ -1,6 +1,5 @@
 package com.istekno.coffeebreakapp.main.splashscreen
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
@@ -9,8 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySplashScreenBinding
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
-import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.welcomepage.WelcomePageActivity
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 

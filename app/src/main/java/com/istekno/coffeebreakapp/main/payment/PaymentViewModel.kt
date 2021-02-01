@@ -110,32 +110,6 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun updateOrderDetailId(customerId: Int) {
-        launch {
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    service.updateOrderDetailId(customerId)
-                } catch (e: Throwable) {
-                    e.printStackTrace()
-
-                    withContext(Dispatchers.Main) {
-                        isUpdateSuccess.value = false
-                    }
-                }
-            }
-
-            if (result is PaymentResponse.GeneralResponse) {
-                if (result.success) {
-                    isUpdateSuccess.value = result.success
-                } else {
-                    isUpdateSuccess.value = false
-                }
-            } else {
-                isUpdateSuccess.value = false
-            }
-        }
-    }
-
     fun deleteDelivery(customerId: Int) {
         launch {
             val result = withContext(Dispatchers.IO) {

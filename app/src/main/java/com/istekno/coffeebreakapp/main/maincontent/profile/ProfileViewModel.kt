@@ -11,6 +11,8 @@ class ProfileViewModel : ViewModel(), CoroutineScope {
 
     val isLoading = MutableLiveData<Boolean>()
     val listData = MutableLiveData<List<ProfileModel>>()
+    val isGetData = MutableLiveData<Boolean>()
+    val isMessage = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -38,11 +40,13 @@ class ProfileViewModel : ViewModel(), CoroutineScope {
 
                     withContext(Job() + Dispatchers.Main) {
                         isLoading.value = false
+                        isGetData.value = false
                     }
                 }
             }
 
             if (result is ProfileResponse) {
+                isGetData.value = result.success
                 val list = result.data?.map {
                     ProfileModel(
                         it.customerId,
@@ -58,7 +62,12 @@ class ProfileViewModel : ViewModel(), CoroutineScope {
                 }
 
                 listData.value = list
+                isMessage.value = result.message
                 isLoading.value = false
+            } else {
+                isGetData.value = false
+                isLoading.value = false
+                isMessage.value = "Something wrong..."
             }
         }
     }

@@ -13,7 +13,7 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityCartBinding
 import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -111,39 +111,35 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         val rvAdapter = CartAdapter(listCart)
 
         binding.rvProductCart.apply {
-            rvAdapter.notifyDataSetChanged()
 
             layoutManager = LinearLayoutManager(this@CartActivity, RecyclerView.VERTICAL, false)
 
             rvAdapter.plusItemCartClicked(object : CartAdapter.OnPlusItemCartClickCallBack {
                 override fun onPlusItemCartClicked(cartModel: CartResponse.DataCart) {
-                    Toast.makeText(this@CartActivity, "clicked plus", Toast.LENGTH_SHORT).show()
                     viewModel.updatePlusCartByOrId(cartModel.orderId)
-                    viewModel.getListCartByCsId()
-                    viewModel.getListPriceCartByCsId()
+                    rvAdapter.notifyItemChanged(cartModel.orderId)
                 }
             })
 
             rvAdapter.minusItemCartClicked(object : CartAdapter.OnMinusCartClickCallBack {
                 override fun minusItemCartClicked(cartModel: CartResponse.DataCart) {
-                    Toast.makeText(this@CartActivity, "clicked minus", Toast.LENGTH_SHORT).show()
                     if (cartModel.orderAmount.toInt() >= 2) {
                         viewModel.updateMinusCartByOrId(cartModel.orderId)
-                        viewModel.getListCartByCsId()
+                        rvAdapter.notifyItemChanged(cartModel.orderId)
                         viewModel.getListPriceCartByCsId()
                     } else if (cartModel.orderAmount.toInt() <= 1) {
-                        showDialogLogout(cartModel.orderId)
-                        viewModel.getListCartByCsId()
-                        viewModel.getListPriceCartByCsId()
+                        showDialogDelete(cartModel.orderId)
+                        rvAdapter.notifyItemChanged(cartModel.orderId)
                     }
                 }
             })
 
+            rvAdapter.notifyDataSetChanged()
             adapter = rvAdapter
         }
     }
 
-    private fun showDialogLogout(orderId : Int) {
+    private fun showDialogDelete(orderId : Int) {
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("Remove Product")
         builder.setMessage("Are you sure to remove this product from your Cart ?")
@@ -170,7 +166,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
 
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(this)
-            finish()
+            finishAffinity()
         }
 
     }

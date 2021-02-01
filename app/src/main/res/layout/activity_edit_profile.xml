@@ -234,6 +234,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/etYourDoB"
                         android:gravity="left"
+                        android:focusable="false"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
                         android:background="#00000000"

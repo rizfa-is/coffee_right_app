@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

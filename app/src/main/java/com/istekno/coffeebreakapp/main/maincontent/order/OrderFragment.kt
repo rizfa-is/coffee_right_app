@@ -7,22 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseFragmentViewModel
 import com.istekno.coffeebreakapp.databinding.FragmentOrderBinding
-import com.istekno.coffeebreakapp.main.maincontent.MainContentActivity
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.order.detail.DetailOrderActivity
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryActivity
-import com.istekno.coffeebreakapp.main.orderhistory.detail.DetailOrderHistoryActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class OrderFragment(private val toolbar: MaterialToolbar, private val title: TextView) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
+class OrderFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
 OrderAdapter.OnListOrderClickListenerr{
 
     companion object {
@@ -43,15 +41,21 @@ OrderAdapter.OnListOrderClickListenerr{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setViewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        navDrawer.setCheckedItem(R.id.nav_order)
 
         val sharedPref = SharedPreferenceUtil(requireContext())
         viewModel.setSharedPref(sharedPref)
-        val service = ApiClient.getApiClient(requireContext())?.create(OrderService::class.java)
+        val service = ApiClient.getApiClient(requireContext())?.create(OrderApiService::class.java)
         if (service != null) {
             viewModel.setService(service)
         }
 
-        viewModel.callOrderApi()
+        if (sharedPref.getPreference().level == 0) {
+            viewModel.callOrderCustomerApi()
+        } else {
+            viewModel.callOrderAdminApi()
+            binding.btnStartOrder.visibility = View.GONE
+        }
 
         setRecyclerView(view)
         subscribeLiveData()
@@ -63,6 +67,7 @@ OrderAdapter.OnListOrderClickListenerr{
     private fun viewListener(view: View) {
         binding.btnStartOrder.setOnClickListener {
             intent<MainContentActivity>(view.context)
+            activity?.finishAffinity()
         }
     }
 
@@ -111,7 +116,6 @@ OrderAdapter.OnListOrderClickListenerr{
     }
 
     override fun onOrderItemClicked(position: Int) {
-        Toast.makeText(requireContext(), "item ${listOrder[position].orderDetailId} clicked", Toast.LENGTH_SHORT).show()
         val sendIntent = Intent(requireContext(), DetailOrderActivity::class.java)
         sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position].orderDetailId)
         sendIntent.putExtra(PRICE_BEFORE_TAX, listOrder[position].priceBeforeTax)

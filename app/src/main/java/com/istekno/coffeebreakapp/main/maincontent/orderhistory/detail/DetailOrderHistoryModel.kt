@@ -1,6 +1,4 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
-
-import com.google.gson.annotations.SerializedName
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
 
 data class DetailOrderHistoryModel(
     val productName: String,

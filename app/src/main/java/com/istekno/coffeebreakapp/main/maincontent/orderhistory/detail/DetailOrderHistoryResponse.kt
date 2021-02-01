@@ -1,7 +1,6 @@
-package com.istekno.coffeebreakapp.main.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
 
 import com.google.gson.annotations.SerializedName
-import com.istekno.coffeebreakapp.main.orderhistory.OrderHistoryResponse
 
 data class DetailOrderHistoryResponse(val success: Boolean, val message: String, val data: List<Data>) {
     data class Data(
@@ -11,3 +10,5 @@ data class DetailOrderHistoryResponse(val success: Boolean, val message: String,
         @SerializedName("or_amount") val orderAmount: Int
     )
 }
+
+data class UpdateStatusOrderDetailResponse(val success: Boolean, val message: String)

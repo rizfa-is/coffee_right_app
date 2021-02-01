@@ -1,4 +1,3 @@
-/*
 package com.istekno.coffeebreakapp.main.forgotpassword.resetpassword
 
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +7,7 @@ import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class ResetPasswordViewModel : ViewModel(), CoroutineScope {
-    private lateinit var serviceAccount: AccountApiService
+    private lateinit var serviceAccount: ResetPasswordApi
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     val onMessageLiveData = MutableLiveData<String>()
@@ -18,7 +17,7 @@ class ResetPasswordViewModel : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setService(serviceAccount: AccountApiService) {
+    fun setService(serviceAccount: ResetPasswordApi) {
         this@ResetPasswordViewModel.serviceAccount = serviceAccount
     }
 
@@ -51,7 +50,7 @@ class ResetPasswordViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (response is AccountResponse) {
+            if (response is ResetPasswordResponse) {
                 isLoadingLiveData.value = false
 
                 if (response.success) {
@@ -64,4 +63,3 @@ class ResetPasswordViewModel : ViewModel(), CoroutineScope {
         }
     }
 }
-*/

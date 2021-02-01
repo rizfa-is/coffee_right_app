@@ -14,13 +14,16 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityEditProfileBinding
+import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileModel
 import com.istekno.coffeebreakapp.remote.ApiClient
+import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -36,8 +39,10 @@ class EditProfileActivity :
     private lateinit var sharedPref: SharedPreferenceUtil
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
+    private lateinit var dialog: Dialog
 
     private var pathImage: String? = null
+    private var imageUri: Uri? = null
     private var gender: String? = null
 
     companion object {
@@ -45,8 +50,12 @@ class EditProfileActivity :
         private const val PERMISSION_CODE = 1001
         const val img = "http://184.72.105.243:3000/images/"
 
+        const val FIELD_REQUIRED = "Field must not empty"
+        const val FIELD_IS_NOT_VALID = "Email format is not valid\nRequired '@' and '.' character"
+
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
@@ -54,6 +63,7 @@ class EditProfileActivity :
         super.onCreate(savedInstanceState)
 
         sharedPref = SharedPreferenceUtil(this)
+        dialog = Dialog()
 
         val data = intent.getParcelableExtra<ProfileModel>("Data")
         binding.etName.setText(data?.accountName)
@@ -89,7 +99,7 @@ class EditProfileActivity :
         }
 
         myCalendar = Calendar.getInstance()
-        deadlineProject()
+        dateOfBirth()
         setViewModel()
         subscribeLiveData()
 
@@ -120,16 +130,47 @@ class EditProfileActivity :
             val acName = binding.etName.text.toString()
             val acPhone = binding.etPhone.text.toString()
             val acEmail = binding.etEmail.text.toString()
+            val csBirthday = binding.etDob.text.toString()
+            val delAddress = binding.etAddress.text.toString()
+            val csGender = binding.radioButton.checkedRadioButtonId
 
-            gender = when (binding.radioButton.checkedRadioButtonId) {
+
+            if (acName.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (!acEmail.contains('@') || !acEmail.contains('.')) {
+                showToast(FIELD_IS_NOT_VALID)
+                return@setOnClickListener
+            }
+            if (acPhone.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (csBirthday.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (delAddress.isEmpty()) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+            if (csGender == -1) {
+                showToast(FIELD_REQUIRED)
+                return@setOnClickListener
+            }
+
+            gender = when (csGender) {
                 binding.female.id -> {
                     "Female"
                 }
                 binding.male.id -> {
                     "Male"
-                } else -> ""
+                }
+                else -> ({
+                    showToast(FIELD_REQUIRED)
+                }).toString()
             }
-
             if (sharedPref.getPreference().roleID != 0) {
                 if (pathImage != null) {
                     viewModel.updateAPIAccount(
@@ -140,8 +181,8 @@ class EditProfileActivity :
                     )
                     viewModel.updateAPICustomer(
                         csId = sharedPref.getPreference().roleID!!,
-                        csBirthday = createPartFromString(binding.etDob.text.toString()),
-                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csBirthday = createPartFromString(csBirthday),
+                        csAddress = createPartFromString(delAddress),
                         csGender = createPartFromString(gender!!),
                         image = createPartFromFile(pathImage!!)
                     )
@@ -154,12 +195,14 @@ class EditProfileActivity :
                     )
                     viewModel.updateAPICustomer(
                         csId = sharedPref.getPreference().roleID!!,
-                        csBirthday = createPartFromString(binding.etDob.text.toString()),
-                        csAddress = createPartFromString(binding.etAddress.text.toString()),
+                        csBirthday = createPartFromString(csBirthday),
+                        csAddress = createPartFromString(delAddress),
                         csGender = createPartFromString(gender!!)
                     )
                 }
             }
+
+            dialog.dialogUpdating(this, this) { moveActivity(acName, acEmail) }
         }
 
         binding.ivBack.setOnClickListener {
@@ -180,6 +223,7 @@ class EditProfileActivity :
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             binding.imageProfile.setImageURI(data?.data)
             pathImage = getPath(this, data?.data!!)
+            imageUri = data.data
         }
     }
 
@@ -234,7 +278,17 @@ class EditProfileActivity :
         return realPath
     }
 
-    private fun deadlineProject() {
+    private fun moveActivity(name: String, email: String) {
+        val sendIntent = Intent(this, MainContentActivity::class.java)
+        sendIntent.putExtra("data", 1)
+        sendIntent.putExtra("image_URI", imageUri)
+        sendIntent.putExtra("name", name)
+        sendIntent.putExtra("email", email)
+        startActivity(sendIntent)
+        finish()
+    }
+
+    private fun dateOfBirth() {
         deadline = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             myCalendar.set(Calendar.YEAR, year)
             myCalendar.set(Calendar.MONTH, month)
@@ -257,10 +311,13 @@ class EditProfileActivity :
         viewModel.onSuccessLiveData.observe(this) {
             if (it) {
                 setResult(RESULT_OK)
-                this.finish()
             }
         }
 
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 
     private inline fun <reified ApiService> createApi(context: Context): ApiService {
