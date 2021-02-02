@@ -168,19 +168,15 @@ class EditProfileActivity :
                 binding.male.id -> {
                     "Male"
                 }
-                else -> ({
-                    showToast(FIELD_REQUIRED)
-                }).toString()
+                else -> ""
             }
             if (sharedPref.getPreference().roleID != 0) {
                 if (pathImage != null) {
-                    viewModel.updateAPIAccount(
+                    viewModel.updateApi(
                         acId = sharedPref.getPreference().acID!!,
                         acName = acName,
                         acEmail = acEmail,
-                        acPhone = acPhone
-                    )
-                    viewModel.updateAPICustomer(
+                        acPhone = acPhone,
                         csId = sharedPref.getPreference().roleID!!,
                         csBirthday = createPartFromString(csBirthday),
                         csAddress = createPartFromString(delAddress),
@@ -188,13 +184,11 @@ class EditProfileActivity :
                         image = createPartFromFile(pathImage!!)
                     )
                 } else {
-                    viewModel.updateAPIAccount(
+                    viewModel.updateApi(
                         acId = sharedPref.getPreference().acID!!,
                         acName = acName,
                         acEmail = acEmail,
-                        acPhone = acPhone
-                    )
-                    viewModel.updateAPICustomer(
+                        acPhone = acPhone,
                         csId = sharedPref.getPreference().roleID!!,
                         csBirthday = createPartFromString(csBirthday),
                         csAddress = createPartFromString(delAddress),

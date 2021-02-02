@@ -1,13 +1,15 @@
-package com.istekno.coffeebreakapp.main.editprofile.model
+package com.istekno.coffeebreakapp.main.editprofile
 
 import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
-class CustomerResponse(
+class EditProfileResponse(
     val success: Boolean,
     val message: String,
-    val data: List<EngineerItem>
+    val data: List<ProfileItem>
 ) {
-    data class EngineerItem(
+    data class ProfileItem(
         @SerializedName("cs_id")
         val csId: Int,
 
@@ -24,12 +26,16 @@ class CustomerResponse(
         val acPhone: String,
 
         @SerializedName("cs_gender")
-        val csGender: String,
+        val csGender: RequestBody,
 
         @SerializedName("cs_birthday")
-        val csBirthday: String,
+        val csBirthday: RequestBody,
 
         @SerializedName("cs_address")
-        val csAddress: String
+        val csAddress: RequestBody?,
+
+        @SerializedName("cs_image")
+        val image: MultipartBody.Part?
+
     )
 }
