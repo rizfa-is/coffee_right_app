@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.promo
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemPromoBinding
 import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -49,17 +51,16 @@ class PromoAdapter(): RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
         return ListViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_promo, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(listFavorite[position])
         val item = listFavorite[position]
-        val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.productPrice.toDouble())
-            .replace("Rp".toRegex(),"IDR ")
+        val formatter = DecimalFormat("#,###")
+        val price = formatter.format(item.productPrice.toDouble())
         val promoPrice =  item.productPrice.toInt() - (item.productPrice.toInt() * 0.1)
 
-
-        holder.binding.tvProductPrice.text = price
-        holder.binding.tvPromoPrice.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
-            .replace("Rp".toRegex(),"IDR ")
+        holder.binding.tvProductPrice.text = "IDR $price"
+        holder.binding.tvPromoPrice.text = "IDR ${formatter.format(promoPrice)}"
     }
 
     override fun getItemCount(): Int = listFavorite.size

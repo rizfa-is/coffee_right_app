@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemCartBinding
+import java.text.DecimalFormat
 
 class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : RecyclerView.Adapter<CartAdapter.ListCartViewHolder>() {
 
@@ -42,7 +43,10 @@ class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : Rec
 
     inner class ListCartViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cartModel: CartResponse.DataCart) {
+            val formatter = DecimalFormat("#,###")
+
             binding.model = cartModel
+            binding.tvProductPrice.text = formatter.format(cartModel.orderPrice.toDouble())
 
             Glide.with(itemView.context)
                 .load(img + cartModel.productImage)

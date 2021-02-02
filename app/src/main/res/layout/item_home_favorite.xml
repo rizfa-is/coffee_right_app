@@ -50,7 +50,6 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:lineSpacingExtra="-10dp"
             android:maxLines="2"
             android:text="@{model.productName}"
             android:textColor="@color/black"

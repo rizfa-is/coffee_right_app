@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.payment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.DecimalFormat
 
 class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentViewModel>() {
 
@@ -95,6 +97,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun subscribeLiveData() {
         viewModel.isLoading.observe(this) {
             if (it) {
@@ -109,13 +112,14 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             (binding.rvListOrder.adapter as PaymentRecyclerViewAdapter).addList(it)
         }
         viewModel.totalPrice.observe(this) {
+            val formatter = DecimalFormat("#,###")
             val tax = (it * 0.1).toInt()
             val subTotal = it
             val totalPrice = tax + subTotal
 
-            binding.tvSubtotal.text = subTotal.toString()
-            binding.tvTax.text = tax.toString()
-            binding.tvTotal.text = totalPrice.toString()
+            binding.tvSubtotal.text = "IDR ${formatter.format(subTotal.toDouble())}"
+            binding.tvTax.text = "IDR ${formatter.format(tax.toDouble())}"
+            binding.tvTotal.text = "IDR ${formatter.format(totalPrice.toDouble())}"
         }
     }
 

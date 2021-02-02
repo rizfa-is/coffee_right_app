@@ -85,7 +85,7 @@
                 android:id="@+id/tv_home_promo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/promo_for_you"
                 android:textColor="@color/theme_choco"
