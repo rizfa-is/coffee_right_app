@@ -41,8 +41,9 @@ class OrderAdapter(
             NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice.toDouble())
                 .replace("Rp".toRegex(), "IDR ")
 
-        holder.binding.tvTotalPrice.text = totalPrice
+        holder.binding.tvTotalPriceOrder.text = totalPrice
         holder.binding.tvUpdated.text = date
+        holder.binding.tvStatus.text = listOrder[position].orderDetailStatus
 
         holder.itemView.setOnClickListener {
             onListOrderClickListener.onOrderItemClicked(position)
