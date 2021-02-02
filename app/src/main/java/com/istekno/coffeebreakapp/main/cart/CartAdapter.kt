@@ -8,14 +8,15 @@ import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemCartBinding
 
-class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : RecyclerView.Adapter<CartAdapter.ListCartViewHolder>() {
+class CartAdapter(private var listCart: ArrayList<CartResponse.DataCart>) :
+    RecyclerView.Adapter<CartAdapter.ListCartViewHolder>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
     }
 
     private lateinit var onPlusItemCartClickCallback: OnPlusItemCartClickCallBack
-    private lateinit var onMinusItemCartClickCallback : OnMinusCartClickCallBack
+    private lateinit var onMinusItemCartClickCallback: OnMinusCartClickCallBack
 //    private var listCart = mutableListOf<CartResponse.DataCart>()
 
     fun setData(list: List<CartResponse.DataCart>) {
@@ -40,7 +41,8 @@ class CartAdapter(private var listCart : ArrayList<CartResponse.DataCart>) : Rec
         fun minusItemCartClicked(cartModel: CartResponse.DataCart)
     }
 
-    inner class ListCartViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListCartViewHolder(val binding: ItemCartBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(cartModel: CartResponse.DataCart) {
             binding.model = cartModel
 

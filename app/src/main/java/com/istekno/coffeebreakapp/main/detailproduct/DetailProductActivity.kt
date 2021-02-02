@@ -15,7 +15,8 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import java.text.NumberFormat
 import java.util.*
 
-class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding, DetailProductViewModel>() {
+class DetailProductActivity :
+    BaseActivityViewModel<ActivityDetailProductBinding, DetailProductViewModel>() {
 
     companion object {
         const val HOME_KEY = "home_key"
@@ -58,7 +59,7 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
 
             viewModel.isCheckProduct.observe(this, androidx.lifecycle.Observer {
                 if (it) {
-                    viewModel.orderId.observe(this, androidx.lifecycle.Observer { orderId->
+                    viewModel.orderId.observe(this, androidx.lifecycle.Observer { orderId ->
                         viewModel.updateAmountOrderApi(orderId)
                     })
                 } else {
@@ -74,7 +75,8 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
     private fun subscribeUpdateLiveData() {
         viewModel.isUpdateSuccess.observe(this, androidx.lifecycle.Observer {
             if (it) {
-                Toast.makeText(this, "Success add amount of this product!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Success add amount of this product!", Toast.LENGTH_SHORT)
+                    .show()
                 intent<CartActivity>(this)
                 finish()
             } else {
@@ -100,8 +102,9 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
                 binding.lineThrough.visibility = View.GONE
                 binding.tvPromoPrice.visibility = View.GONE
 
-                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble())
-                    .replace("Rp".toRegex(),"IDR ")
+                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+                    .format(it[0].productPrice.toDouble())
+                    .replace("Rp".toRegex(), "IDR ")
 
                 binding.tvPrice.text = price
 
@@ -109,13 +112,15 @@ class DetailProductActivity : BaseActivityViewModel<ActivityDetailProductBinding
                 binding.lineThrough.visibility = View.VISIBLE
                 binding.tvPromoPrice.visibility = View.VISIBLE
 
-                val promoPrice =  it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
-                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(it[0].productPrice.toDouble())
-                    .replace("Rp".toRegex(),"IDR ")
+                val promoPrice = it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
+                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+                    .format(it[0].productPrice.toDouble())
+                    .replace("Rp".toRegex(), "IDR ")
 
                 binding.tvPromoPrice.text = price
-                binding.tvPrice.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
-                    .replace("Rp".toRegex(),"IDR ")
+                binding.tvPrice.text =
+                    NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
+                        .replace("Rp".toRegex(), "IDR ")
 
             }
 

@@ -8,7 +8,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class LoginViewModel: ViewModel(), CoroutineScope {
+class LoginViewModel : ViewModel(), CoroutineScope {
 
     val isDataLogin = MutableLiveData<Boolean>()
 
@@ -45,21 +45,34 @@ class LoginViewModel: ViewModel(), CoroutineScope {
 
                 if (data?.accountLevel == 0) {
 
-                    sharePref.setPreference(SharedPrefModel(data.accountId, data.accountEmail, data.accountName, data.customerImage,
-                        data.customerAddress, data.customerId, data.accountLevel, data.token, true))
+                    sharePref.setPreference(
+                        SharedPrefModel(
+                            data.accountId,
+                            data.accountEmail,
+                            data.accountName,
+                            data.customerImage,
+                            data.customerAddress,
+                            data.customerId,
+                            data.accountLevel,
+                            data.token,
+                            true
+                        )
+                    )
 
                 } else if (data?.accountLevel == 1) {
 
-                    sharePref.setPreference(SharedPrefModel(data.accountId, data.accountEmail, data.accountName, data.adminImage,
-                        null, data.adminId, data.accountLevel, data.token, true))
+                    sharePref.setPreference(
+                        SharedPrefModel(
+                            data.accountId, data.accountEmail, data.accountName, data.adminImage,
+                            null, data.adminId, data.accountLevel, data.token, true
+                        )
+                    )
                 }
 
                 isDataLogin.value = true
             }
         }
     }
-
-
 
 
 }

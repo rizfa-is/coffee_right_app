@@ -49,7 +49,11 @@ class ValidateAccount {
             return true
         }
 
-        fun valPassConf(inPassConf: TextInputLayout, etPassConf: EditText, etPass: EditText): Boolean {
+        fun valPassConf(
+            inPassConf: TextInputLayout,
+            etPassConf: EditText,
+            etPass: EditText
+        ): Boolean {
             val textConf = etPassConf.text.toString().trim()
             val text = etPass.text.toString().trim()
 

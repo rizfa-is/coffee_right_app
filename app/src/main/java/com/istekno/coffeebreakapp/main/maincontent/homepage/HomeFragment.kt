@@ -3,14 +3,12 @@ package com.istekno.coffeebreakapp.main.maincontent.homepage
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -21,16 +19,25 @@ import com.istekno.coffeebreakapp.databinding.FragmentHomeBinding
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
 import com.istekno.coffeebreakapp.main.favorite.FavoriteActivity
 import com.istekno.coffeebreakapp.main.promo.PromoActivity
-import com.istekno.coffeebreakapp.main.promo.PromoAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment(
+    private val toolbar: MaterialToolbar,
+    private val title: TextView,
+    private val navDrawer: NavigationView
+) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
 
     companion object {
         const val HOME_KEY = "home_key"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var listFavorite = arrayOf<GetProductResponse.DataProduct>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setLayout = R.layout.fragment_home
         setView()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -52,7 +59,12 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
 
     private fun viewListener(view: View) {
         binding.tvHomeSeemore1.setOnClickListener {
-            intent<FavoriteActivity>(view.context)
+            val sendIntent = Intent(context, FavoriteActivity::class.java)
+            val bundle = Bundle()
+
+            bundle.putParcelableArray("favorite", listFavorite)
+            sendIntent.putExtras(bundle)
+            startActivity(sendIntent)
         }
 
         binding.tvHomeSeemore2.setOnClickListener {
@@ -62,12 +74,12 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
 
     private fun setRecyclerView(view: View) {
         binding.rvFavorite.apply {
-            val rvAdapter = HomeAdapter()
+            val rvAdapter = HomeFavoriteAdapter()
             rvAdapter.notifyDataSetChanged()
             layoutManager = LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
 
-            rvAdapter.setOnItemClicked(object : HomeAdapter.OnItemClickCallback {
-                override fun onItemClicked(productModel: HomeResponse.DataProduct) {
+            rvAdapter.setOnItemClicked(object : HomeFavoriteAdapter.OnItemClickCallback {
+                override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
                     val sendIntent = Intent(view.context, DetailProductActivity::class.java)
                     sendIntent.putExtra(HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
@@ -77,12 +89,12 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
         }
 
         binding.rvPromo.apply {
-            val rvAdapter = PromoAdapter()
+            val rvAdapter = HomePromoAdapter()
             rvAdapter.notifyDataSetChanged()
-            layoutManager = GridLayoutManager(view.context, 2)
+            layoutManager = LinearLayoutManager(view.context, RecyclerView.HORIZONTAL, false)
 
-            rvAdapter.setOnItemClicked(object : PromoAdapter.OnItemClickCallback {
-                override fun onItemClicked(productModel: HomeResponse.DataProduct) {
+            rvAdapter.setOnItemClicked(object : HomePromoAdapter.OnItemClickCallback {
+                override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
                     val sendIntent = Intent(view.context, DetailProductActivity::class.java)
                     sendIntent.putExtra(HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
@@ -99,31 +111,39 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
                 binding.pgFavorite.visibility = View.VISIBLE
                 binding.rvPromo.visibility = View.INVISIBLE
                 binding.pgPromoe.visibility = View.VISIBLE
+
+                binding.linebot.visibility = View.VISIBLE
             } else {
                 binding.rvFavorite.visibility = View.VISIBLE
                 binding.pgFavorite.visibility = View.INVISIBLE
                 binding.rvPromo.visibility = View.VISIBLE
                 binding.pgPromoe.visibility = View.INVISIBLE
+
+                binding.linebot.visibility = View.GONE
             }
         }
 
-        viewModel.listData.observe(viewLifecycleOwner) { data ->
-            val mutableFavorite = data.toMutableList()
-            val mutablePromo = data.toMutableList()
+        viewModel.listFavorite.observe(viewLifecycleOwner) { favorite ->
+            listFavorite = favorite.toTypedArray()
 
-            mutableFavorite.removeIf { it.productFavorite == "N" }
-            mutablePromo.removeIf { it.discountId == 0 || it.discountId == 1 }
-
-            for (i in 0 until mutableFavorite.size) {
+            for (i in favorite.indices) {
                 if (i >= 5) {
-                    mutableFavorite.removeLast()
-                    mutablePromo.removeLast()
+                    favorite.removeLast()
                 }
             }
 
-            (binding.rvFavorite.adapter as HomeAdapter).setData(mutableFavorite)
-            (binding.rvPromo.adapter as PromoAdapter).setData(mutablePromo)
+            (binding.rvFavorite.adapter as HomeFavoriteAdapter).setData(favorite)
         }
+
+        viewModel.listPromo.observe(viewLifecycleOwner, { promo ->
+            for (i in 0 until promo.size) {
+                if (i >= 5) {
+                    promo.removeLast()
+                }
+            }
+
+            (binding.rvPromo.adapter as HomePromoAdapter).setData(promo)
+        })
     }
 
     @SuppressLint("SetTextI18n")

@@ -14,10 +14,11 @@ import com.istekno.coffeebreakapp.main.signup.SignupActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, EditPasswordViewModel>() {
+class EditPasswordActivity :
+    BaseActivityViewModel<ActivityEditPasswordBinding, EditPasswordViewModel>() {
     private lateinit var sharedPref: SharedPreferenceUtil
 
-    companion object{
+    companion object {
         const val FIELD_REQUIRED = "Field must not empty"
         const val PASS_NOT_MATCH = "Passwords must be the same"
 
@@ -34,7 +35,7 @@ class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, 
         onClickListener()
     }
 
-    private fun onClickListener(){
+    private fun onClickListener() {
         binding.btnChangePassword.setOnClickListener {
             val acCurrentPassword = binding.etCurrentPassword.text.toString()
             val acPassword = binding.etNewPassword.text.toString()
@@ -44,19 +45,24 @@ class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, 
                 showToast(FIELD_REQUIRED)
                 return@setOnClickListener
             }
-            if (acPassword.isEmpty()) {
-                showToast(FIELD_REQUIRED)
+            if (acCurrentPassword.length < 8) {
+                showToast(SignupActivity.FIELD_LENGTH)
                 return@setOnClickListener
             }
-            if (acPassword != acConfirmPassword) {
-                showToast(PASS_NOT_MATCH)
+            if (acPassword.isEmpty()) {
+                showToast(FIELD_REQUIRED)
                 return@setOnClickListener
             }
             if (acPassword.length < 8) {
                 showToast(SignupActivity.FIELD_LENGTH)
                 return@setOnClickListener
             }
-            if (sharedPref.getPreference().roleID != 0){
+            if (acPassword != acConfirmPassword) {
+                showToast(PASS_NOT_MATCH)
+                return@setOnClickListener
+            }
+
+            if (sharedPref.getPreference().roleID != 0) {
                 viewModel.checkingPassword(
                     acId = sharedPref.getPreference().acID!!,
                     acPassword = acCurrentPassword
@@ -97,6 +103,7 @@ class EditPasswordActivity : BaseActivityViewModel<ActivityEditPasswordBinding, 
     private inline fun <reified ApiService> createApi(context: Context): ApiService {
         return ApiClient.getApiClient(context)!!.create(ApiService::class.java)
     }
+
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }

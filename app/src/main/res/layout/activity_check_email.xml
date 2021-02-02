@@ -7,118 +7,116 @@
         android:layout_height="wrap_content"
         android:background="@color/theme_grey">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="31dp">
-
-        <TextView
-            android:id="@+id/tv_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dont_worry"
-            android:textSize="65sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/black"
-            android:lineSpacingExtra="-35dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:textAlignment="center"
-            android:layout_marginTop="50dp"
-            />
-
-        <TextView
-            android:id="@+id/tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_your_email_address_to_get_reset_password_link"
-            android:fontFamily="@font/poppins_regular"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/tv_header"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_header"/>
-
-        <ImageView
-            android:id="@+id/iv_forgot_password"
-            android:layout_width="267dp"
-            android:layout_height="278dp"
-            android:src="@drawable/img_forgot_password"
-            android:layout_marginTop="11dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ti_email"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/iv_forgot_password"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:hint="@string/enter_your_email_address"
-            android:layout_marginTop="30dp">
+            android:paddingHorizontal="31dp">
 
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="16sp"
-                android:backgroundTint="@color/theme_grey"
-                android:textColorHint="#9A9A9D" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tv_received"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Haven't received any link?"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_marginTop="26dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@id/ti_email"
-            app:layout_constraintLeft_toLeftOf="@id/ti_email"
-            app:layout_constraintRight_toRightOf="@id/ti_email"
-            app:layout_constraintBottom_toTopOf="@+id/ln_btn"
-            />
-
-        <LinearLayout
-            android:id="@+id/ln_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/white"
-                android:visibility="gone" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_resend_link"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/send_link"
-                android:textAllCaps="false"
-                android:textSize="17sp"
-                app:cornerRadius="15dp"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:lineSpacingExtra="-35dp"
+                android:text="@string/dont_worry"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="65sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/enter_your_email_address_to_get_reset_password_link"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@+id/tv_header"
+                app:layout_constraintTop_toBottomOf="@+id/tv_header" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/iv_forgot_password"
+                android:layout_width="267dp"
+                android:layout_height="278dp"
+                android:layout_marginTop="11dp"
+                android:src="@drawable/img_forgot_password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/enter_your_email_address"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_forgot_password">
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/theme_grey"
+                    android:fontFamily="@font/poppins_regular"
+                    android:inputType="textEmailAddress"
+                    android:paddingHorizontal="16dp"
+                    android:textColorHint="#9A9A9D"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_received"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Haven't received any link?"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/ln_btn"
+                app:layout_constraintLeft_toLeftOf="@id/ti_email"
+                app:layout_constraintRight_toRightOf="@id/ti_email"
+                app:layout_constraintTop_toBottomOf="@id/ti_email" />
+
+            <LinearLayout
+                android:id="@+id/ln_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/white"
+                    android:visibility="gone" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_resend_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/send_link"
+                    android:textAllCaps="false"
+                    android:textSize="17sp"
+                    app:cornerRadius="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
 

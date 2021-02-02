@@ -7,7 +7,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.log
 
-class SignupViewModel: ViewModel(), CoroutineScope {
+class SignupViewModel : ViewModel(), CoroutineScope {
 
     val isRegister = MutableLiveData<Boolean>()
     val isMessage = MutableLiveData<String>()

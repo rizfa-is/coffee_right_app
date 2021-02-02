@@ -2,7 +2,6 @@ package com.istekno.coffeebreakapp.main.promo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -13,7 +12,7 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPromoBinding
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse
+import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeService
 import com.istekno.coffeebreakapp.remote.ApiClient
 
@@ -50,7 +49,7 @@ class PromoActivity : BaseActivityViewModel<ActivityPromoBinding, PromoViewModel
             layoutManager = gridLayoutManager
 
             rvAdapter.setOnItemClicked(object : PromoAdapter.OnItemClickCallback {
-                override fun onItemClicked(productModel: HomeResponse.DataProduct) {
+                override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
                     val sendIntent = Intent(this@PromoActivity, DetailProductActivity::class.java)
                     sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
@@ -73,7 +72,7 @@ class PromoActivity : BaseActivityViewModel<ActivityPromoBinding, PromoViewModel
         }
 
         viewModel.listData.observe(this) { data ->
-            val mutablePromo: MutableList<HomeResponse.DataProduct> = data.toMutableList()
+            val mutablePromo: MutableList<GetProductResponse.DataProduct> = data.toMutableList()
             mutablePromo.removeIf { it.discountId == 0 || it.discountId == 1 }
 
             (binding.rvPromo.adapter as PromoAdapter).setData(mutablePromo)

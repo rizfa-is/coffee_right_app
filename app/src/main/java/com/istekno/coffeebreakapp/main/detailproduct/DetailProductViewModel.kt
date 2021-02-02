@@ -6,7 +6,7 @@ import com.istekno.coffeebreakapp.main.payment.PaymentResponse
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class DetailProductViewModel: ViewModel(), CoroutineScope {
+class DetailProductViewModel : ViewModel(), CoroutineScope {
 
     val isLoading = MutableLiveData<Boolean>()
     val listData = MutableLiveData<List<DetailProductResponse.DataProduct>>()
@@ -70,7 +70,7 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
         }
     }
 
-    fun updateAmountOrderApi(orderId : Int) {
+    fun updateAmountOrderApi(orderId: Int) {
         launch {
             val result = withContext(Dispatchers.IO) {
                 try {
@@ -96,7 +96,7 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
         }
     }
 
-    fun checkProductOnCartApi(productId : Int, customerId: Int) {
+    fun checkProductOnCartApi(productId: Int, customerId: Int) {
         launch {
             val listProductHasBeenOrder = mutableListOf<Long>()
             val listOrderIdByCsId = mutableListOf<Long>()
@@ -104,7 +104,7 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
             val result1 = withContext(Dispatchers.IO) {
                 try {
                     service.getAllOrderByCsIdNCart(customerId)
-                } catch (e:Throwable) {
+                } catch (e: Throwable) {
                     e.printStackTrace()
                 }
             }
@@ -118,7 +118,12 @@ class DetailProductViewModel: ViewModel(), CoroutineScope {
                 }
 
                 val list = result1.data.map {
-                    ListOrderByCsIdResponse.DataOrder(it.orderId, it.productId, it.csId, it.orStatus)
+                    ListOrderByCsIdResponse.DataOrder(
+                        it.orderId,
+                        it.productId,
+                        it.csId,
+                        it.orStatus
+                    )
                 }
                 val mutableList = list.toMutableList()
                 mutableList.removeIf { it.productId != productId }

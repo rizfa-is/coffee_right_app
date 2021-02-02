@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemPaymentBinding
 
-class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<DetailOrderHistoryModel>):
+class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<DetailOrderHistoryModel>) :
     RecyclerView.Adapter<DetailOrderHistoryRecyclerViewAdapter.DetailOrderHistoryHolder>() {
 
     fun addList(list: List<DetailOrderHistoryModel>) {
@@ -17,12 +17,20 @@ class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<Det
     }
 
 
-    class DetailOrderHistoryHolder(val binding: ItemPaymentBinding): RecyclerView.ViewHolder(binding.root)
+    class DetailOrderHistoryHolder(val binding: ItemPaymentBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = listOrder.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailOrderHistoryHolder {
-        return DetailOrderHistoryHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_payment, parent, false))
+        return DetailOrderHistoryHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_payment,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: DetailOrderHistoryHolder, position: Int) {

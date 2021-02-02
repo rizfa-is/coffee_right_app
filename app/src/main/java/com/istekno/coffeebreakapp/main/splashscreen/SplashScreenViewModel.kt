@@ -9,7 +9,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class SplashScreenViewModel: ViewModel(), CoroutineScope {
+class SplashScreenViewModel : ViewModel(), CoroutineScope {
 
     val isRemember = MutableLiveData<Boolean>()
     val checkJwt = MutableLiveData<Boolean>()

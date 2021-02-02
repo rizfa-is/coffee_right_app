@@ -12,7 +12,8 @@ import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderHistoryBinding
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryApiService
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class DetailOrderHistoryActivity : BaseActivityViewModel<ActivityDetailOrderHistoryBinding, DetailOrderHistoryViewModel>() {
+class DetailOrderHistoryActivity :
+    BaseActivityViewModel<ActivityDetailOrderHistoryBinding, DetailOrderHistoryViewModel>() {
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
@@ -61,7 +62,7 @@ class DetailOrderHistoryActivity : BaseActivityViewModel<ActivityDetailOrderHist
 
         viewModel.listData.observe(this) {
             (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(it)
-            binding.tvTax.text = intent.getIntExtra(TAX,-1).toString()
+            binding.tvTax.text = intent.getIntExtra(TAX, -1).toString()
             binding.tvSubtotal.text = intent.getIntExtra(PRICE_BEFORE_TAX, -1).toString()
             binding.tvTotal.text = intent.getIntExtra(TOTAL_PRICE, -1).toString()
         }

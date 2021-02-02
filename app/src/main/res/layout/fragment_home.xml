@@ -52,21 +52,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_home_favorite" />
 
+            <View
+                android:id="@+id/lineup"
+                android:layout_width="2dp"
+                android:layout_height="200dp"
+                android:background="@color/theme_grey"
+                app:layout_constraintBottom_toTopOf="@+id/tv_home_promo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite" />
+
             <ProgressBar
                 android:id="@+id/pg_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminateTint="@color/theme_yellow"
-                app:layout_constraintBottom_toBottomOf="@+id/rv_favorite"
+                app:layout_constraintBottom_toBottomOf="@+id/lineup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rv_favorite" />
+                app:layout_constraintTop_toTopOf="@+id/lineup" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite"
                 android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_favorite" />
@@ -81,7 +91,7 @@
                 android:textColor="@color/theme_choco"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_home_favorite"
-                app:layout_constraintTop_toBottomOf="@+id/rv_favorite" />
+                app:layout_constraintTop_toBottomOf="@+id/lineup" />
 
             <TextView
                 android:id="@+id/tv_home_seemore2"
@@ -96,15 +106,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_home_promo" />
 
+            <View
+                android:id="@+id/linebot"
+                android:layout_width="2dp"
+                android:layout_height="200dp"
+                android:background="@color/theme_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_home_promo" />
+
             <ProgressBar
                 android:id="@+id/pg_promoe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminateTint="@color/theme_yellow"
-                app:layout_constraintBottom_toBottomOf="@+id/rv_promo"
+                app:layout_constraintBottom_toBottomOf="@+id/linebot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/rv_promo" />
+                app:layout_constraintTop_toTopOf="@+id/linebot" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_promo"
@@ -113,7 +132,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_home_promo"
                 app:layout_constraintTop_toBottomOf="@+id/tv_home_promo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

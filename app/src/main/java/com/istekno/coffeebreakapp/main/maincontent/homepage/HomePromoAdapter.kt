@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.promo
+package com.istekno.coffeebreakapp.main.maincontent.homepage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,12 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
-import com.istekno.coffeebreakapp.databinding.ItemPromoBinding
-import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
+import com.istekno.coffeebreakapp.databinding.ItemHomePromoBinding
 import java.text.NumberFormat
 import java.util.*
 
-class PromoAdapter() : RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
+class HomePromoAdapter : RecyclerView.Adapter<HomePromoAdapter.ListViewHolder>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -34,7 +33,7 @@ class PromoAdapter() : RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
         fun onItemClicked(productModel: GetProductResponse.DataProduct)
     }
 
-    inner class ListViewHolder(val binding: ItemPromoBinding) :
+    inner class ListViewHolder(val binding: ItemHomePromoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(productModel: GetProductResponse.DataProduct) {
             binding.model = productModel
@@ -50,7 +49,7 @@ class PromoAdapter() : RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
         return ListViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_promo,
+                R.layout.item_home_promo,
                 parent,
                 false
             )
@@ -64,7 +63,6 @@ class PromoAdapter() : RecyclerView.Adapter<PromoAdapter.ListViewHolder>() {
             .format(item.productPrice.toDouble())
             .replace("Rp".toRegex(), "IDR ")
         val promoPrice = item.productPrice.toInt() - (item.productPrice.toInt() * 0.1)
-
 
         holder.binding.tvProductPrice.text = price
         holder.binding.tvPromoPrice.text =
