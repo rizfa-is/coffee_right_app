@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.detailproduct
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.istekno.coffeebreakapp.databinding.ActivityDetailProductBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -85,6 +87,7 @@ class DetailProductActivity :
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun subscribeLiveData() {
         viewModel.isLoading.observe(this) {
             if (it) {
@@ -102,16 +105,22 @@ class DetailProductActivity :
                 binding.lineThrough.visibility = View.GONE
                 binding.tvPromoPrice.visibility = View.GONE
 
+<<<<<<< HEAD
                 val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
                     .format(it[0].productPrice.toDouble())
                     .replace("Rp".toRegex(), "IDR ")
+=======
+                val formatter = DecimalFormat("#,###")
+                val price = formatter.format(it[0].productPrice.toDouble())
+>>>>>>> back-format
 
-                binding.tvPrice.text = price
+                binding.tvPrice.text = "IDR $price"
 
             } else {
                 binding.lineThrough.visibility = View.VISIBLE
                 binding.tvPromoPrice.visibility = View.VISIBLE
 
+<<<<<<< HEAD
                 val promoPrice = it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
                 val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
                     .format(it[0].productPrice.toDouble())
@@ -121,6 +130,14 @@ class DetailProductActivity :
                 binding.tvPrice.text =
                     NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
                         .replace("Rp".toRegex(), "IDR ")
+=======
+                val formatter = DecimalFormat("#,###")
+                val price = formatter.format(it[0].productPrice.toDouble())
+                val promoPrice =  it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
+
+                binding.tvPromoPrice.text = "IDR $price"
+                binding.tvPrice.text = "IDR ${formatter.format(promoPrice)}"
+>>>>>>> back-format
 
             }
 

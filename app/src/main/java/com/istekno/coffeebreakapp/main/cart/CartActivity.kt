@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.cart
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -16,10 +17,12 @@ import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.DecimalFormat
 
 class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>() {
 
     private var listCart = ArrayList<CartResponse.DataCart>()
+    private var sumPrice = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_cart
@@ -82,6 +85,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun subscribeGetCartLiveData() {
         viewModel.isGetListCart.observe(this, {
             if (it) {
@@ -89,8 +93,16 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
                     (binding.rvProductCart.adapter as CartAdapter).setData(it1)
                 })
                 binding.rvProductCart.visibility = View.VISIBLE
+<<<<<<< HEAD
                 viewModel.totalPriceCart.observe(this, { price ->
                     binding.tvTotal.text = price
+=======
+                viewModel.totalPriceCart.observe(this, { price->
+                    sumPrice = price
+                    val formatter = DecimalFormat("#,###")
+
+                    binding.tvTotal.text = formatter.format(price.toDouble())
+>>>>>>> back-format
                 })
                 binding.layoutTotal.visibility = View.VISIBLE
                 binding.ivEmptyCart.visibility = View.GONE
@@ -160,7 +172,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
 
         binding.fabGoCheckout.setOnClickListener {
             val intent = Intent(this, CheckoutActivity::class.java)
-            intent.putExtra("total_price", binding.tvTotal.text)
+            intent.putExtra("total_price", sumPrice)
             startActivity(intent)
         }
 

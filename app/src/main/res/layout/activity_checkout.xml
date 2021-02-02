@@ -64,17 +64,25 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cg_delivery_method"
+                <HorizontalScrollView
+                    android:id="@+id/hv_filter1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_title_set_delivery_method"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title_set_delivery_method"
-                    app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_set_delivery_method">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cg_delivery_method"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:selectionRequired="true"
+                        app:singleLine="true"
+                        app:singleSelection="true" />
+
+                </HorizontalScrollView>
 
                 <TextView
                     android:id="@+id/tv_now"
@@ -86,20 +94,28 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cg_delivery_method" />
+                    app:layout_constraintTop_toBottomOf="@id/hv_filter1" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cg_now"
-                    android:layout_width="0dp"
+                <HorizontalScrollView
+                    android:id="@+id/hv_filter"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="45dp"
+                    android:paddingHorizontal="8dp"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_now"
-                    app:layout_constraintEnd_toEndOf="@+id/cg_delivery_method"
                     app:layout_constraintStart_toEndOf="@+id/tv_now"
-                    app:layout_constraintTop_toTopOf="@+id/tv_now"
-                    app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_now">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cg_now"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="45dp"
+                        app:selectionRequired="true"
+                        app:singleLine="true"
+                        app:singleSelection="true" />
+
+                </HorizontalScrollView>
 
                 <TextView
                     android:id="@+id/tv_set_time"
@@ -198,15 +214,13 @@
 
                 <TextView
                     android:id="@+id/tv_total_cost"
-                    android:text="IDR 123.000"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
