@@ -1,346 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".main.cart.CartActivity">
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".main.cart.CartActivity"
-        android:paddingHorizontal="35dp">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:src="@drawable/ic_arrow_left_black"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <View
-            android:id="@+id/view_order"
-            android:background="@drawable/shape_bg_choco_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="50dp"
-            app:layout_constraintStart_toEndOf="@id/iv_back"
-            app:layout_constraintTop_toTopOf="@id/iv_back"
-            app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
-
-        <View
-            android:background="@drawable/shape_bg_white_circle"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            app:layout_constraintTop_toTopOf="@id/view_order"
-            app:layout_constraintBottom_toBottomOf="@id/view_order"
-            app:layout_constraintStart_toStartOf="@id/view_order"
-            app:layout_constraintEnd_toEndOf="@id/view_order"
-            />
-
-        <TextView
-            android:text="Order"
-            android:textColor="@color/theme_choco"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view_order"
-            app:layout_constraintStart_toStartOf="@id/view_order"
-            app:layout_constraintEnd_toEndOf="@id/view_order"/>
-
-        <View
-            android:background="@color/theme_dark_grey"
-            android:layout_width="50dp"
-            android:layout_height="2dp"
-            app:layout_constraintStart_toEndOf="@id/view_order"
-            app:layout_constraintTop_toTopOf="@id/view_order"
-            app:layout_constraintBottom_toBottomOf="@id/view_order"/>
-
-        <View
-            android:id="@+id/view_checkout"
-            android:background="@drawable/shape_bg_dark_grey_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="50dp"
-            app:layout_constraintStart_toEndOf="@id/view_order"
-            app:layout_constraintTop_toTopOf="@id/iv_back"
-            app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
-
-        <View
-            android:background="@drawable/shape_bg_white_circle"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            app:layout_constraintTop_toTopOf="@id/view_checkout"
-            app:layout_constraintBottom_toBottomOf="@id/view_checkout"
-            app:layout_constraintStart_toStartOf="@id/view_checkout"
-            app:layout_constraintEnd_toEndOf="@id/view_checkout" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Checkout"
-            android:textColor="@color/icon_home"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/view_checkout"
-            app:layout_constraintStart_toStartOf="@id/view_checkout"
-            app:layout_constraintEnd_toEndOf="@id/view_checkout"
-            />
-
-        <View
-            android:background="@color/theme_dark_grey"
-            android:layout_width="50dp"
-            android:layout_height="2dp"
-            app:layout_constraintStart_toEndOf="@id/view_checkout"
-            app:layout_constraintTop_toTopOf="@id/view_checkout"
-            app:layout_constraintBottom_toBottomOf="@id/view_checkout"
-            />
-
-        <View
-            android:id="@+id/view_payment"
-            android:background="@drawable/shape_bg_dark_grey_circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="50dp"
-            app:layout_constraintStart_toEndOf="@id/view_checkout"
-            app:layout_constraintTop_toTopOf="@id/iv_back"
-            app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
-
-        <View
-            android:background="@drawable/shape_bg_white_circle"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            app:layout_constraintTop_toTopOf="@id/view_payment"
-            app:layout_constraintBottom_toBottomOf="@id/view_payment"
-            app:layout_constraintStart_toStartOf="@id/view_payment"
-            app:layout_constraintEnd_toEndOf="@id/view_payment"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Payment"
-            android:textColor="@color/icon_home"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="12sp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/view_payment"
-            app:layout_constraintStart_toStartOf="@id/view_payment"
-            app:layout_constraintEnd_toEndOf="@id/view_payment"
-            />
-
-        <TextView
-            android:id="@+id/tv_title_cart"
-            android:text="My"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/iv_back"
-            app:layout_constraintStart_toStartOf="@id/iv_back"
-            />
-
-        <TextView
-            android:text="Cart"
-            android:textSize="18sp"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginStart="3dp"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_title_cart"
-            app:layout_constraintStart_toEndOf="@id/tv_title_cart"
-            />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/iv_empty_cart"
-            android:src="@drawable/ic_no_order"
-            android:layout_width="173dp"
-            android:layout_height="168dp"
-            android:visibility="gone"
-            android:layout_marginTop="100dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_cart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/tv_no_cart"
-            android:text="Your Cart is empty"
-            android:textSize="28sp"
-            android:visibility="gone"
-            android:fontFamily="@font/poppins_extrabold"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_empty_cart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_desc_to_add_cart"
-            android:text="Hit the button down bellow \nto Add Product to Cart"
-            android:textColor="@color/icon_home"
-            android:textSize="17sp"
-            android:visibility="gone"
-            android:textAlignment="center"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_no_cart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_start_order"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="@string/start_ordering"
-            android:textSize="17sp"
-            android:visibility="gone"
-            android:textAllCaps="false"
-            android:fontFamily="@font/poppins_bold"
-            app:cornerRadius="15dp"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_product_cart"
-            android:layout_width="0dp"
-            android:layout_height="290dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_cart"
-            app:layout_constraintBottom_toTopOf="@id/layout_total"
-            tools:listitem="@layout/item_cart"/>
+        android:nestedScrollingEnabled="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_total"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            app:layout_constraintStart_toStartOf="@id/tv_title_cart"
-            app:layout_constraintTop_toBottomOf="@id/rv_product_cart">
+            android:layout_height="match_parent"
+            android:paddingHorizontal="35dp">
 
-            <View
-                android:id="@+id/view_delivery"
-                android:background="@drawable/shape_bg_dark_grey"
-                android:layout_width="74dp"
-                android:layout_height="64dp"
+            <ImageView
+                android:id="@+id/iv_back"
+                android:src="@drawable/ic_arrow_left_choco"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <ImageView
-                android:src="@drawable/fast_delivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:layout_constraintTop_toTopOf="@id/view_delivery"
-                app:layout_constraintStart_toStartOf="@id/view_delivery"
-                app:layout_constraintEnd_toEndOf="@id/view_delivery"/>
+            <View
+                android:id="@+id/view_order"
+                android:background="@drawable/shape_bg_choco_circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="50dp"
+                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintTop_toTopOf="@id/iv_back"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
 
-            <TextView
-                android:text="Free"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/poppins_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/view_delivery"
-                app:layout_constraintStart_toStartOf="@id/view_delivery"
-                app:layout_constraintEnd_toEndOf="@id/view_delivery"
+            <View
+                android:background="@drawable/shape_bg_white_circle"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                app:layout_constraintTop_toTopOf="@id/view_order"
+                app:layout_constraintBottom_toBottomOf="@id/view_order"
+                app:layout_constraintStart_toStartOf="@id/view_order"
+                app:layout_constraintEnd_toEndOf="@id/view_order"
                 />
 
             <TextView
-                android:id="@+id/tv_total_price_cart"
-                android:text="Total Price:"
-                android:textSize="20sp"
-                android:layout_marginLeft="15dp"
+                android:text="Order"
+                android:textColor="@color/theme_choco"
                 android:fontFamily="@font/poppins_regular"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/view_delivery"
-                app:layout_constraintTop_toTopOf="@id/view_delivery"/>
+                app:layout_constraintTop_toBottomOf="@id/view_order"
+                app:layout_constraintStart_toStartOf="@id/view_order"
+                app:layout_constraintEnd_toEndOf="@id/view_order"/>
+
+            <View
+                android:background="@color/theme_dark_grey"
+                android:layout_width="50dp"
+                android:layout_height="2dp"
+                app:layout_constraintStart_toEndOf="@id/view_order"
+                app:layout_constraintTop_toTopOf="@id/view_order"
+                app:layout_constraintBottom_toBottomOf="@id/view_order"/>
+
+            <View
+                android:id="@+id/view_checkout"
+                android:background="@drawable/shape_bg_dark_grey_circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
+                app:layout_constraintStart_toEndOf="@id/view_order"
+                app:layout_constraintTop_toTopOf="@id/iv_back"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+            <View
+                android:background="@drawable/shape_bg_white_circle"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                app:layout_constraintTop_toTopOf="@id/view_checkout"
+                app:layout_constraintBottom_toBottomOf="@id/view_checkout"
+                app:layout_constraintStart_toStartOf="@id/view_checkout"
+                app:layout_constraintEnd_toEndOf="@id/view_checkout" />
 
             <TextView
-                android:id="@+id/tv_idr"
-                android:text="IDR"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins_extrabold"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_price_cart"
-                app:layout_constraintStart_toStartOf="@id/tv_total_price_cart"/>
-
-            <TextView
-                android:id="@+id/tv_total"
-                android:text=""
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins_extrabold"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                app:layout_constraintTop_toTopOf="@id/tv_idr"
-                app:layout_constraintBottom_toBottomOf="@id/tv_idr"
-                app:layout_constraintStart_toEndOf="@id/tv_idr"
+                android:text="Checkout"
+                android:textColor="@color/icon_home"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/view_checkout"
+                app:layout_constraintStart_toStartOf="@id/view_checkout"
+                app:layout_constraintEnd_toEndOf="@id/view_checkout"
                 />
 
             <View
-                android:layout_width="300dp"
                 android:background="@color/theme_dark_grey"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_idr"
-                app:layout_constraintStart_toStartOf="@id/tv_idr"/>
+                android:layout_width="50dp"
+                android:layout_height="2dp"
+                app:layout_constraintStart_toEndOf="@id/view_checkout"
+                app:layout_constraintTop_toTopOf="@id/view_checkout"
+                app:layout_constraintBottom_toBottomOf="@id/view_checkout"
+                />
+
+            <View
+                android:id="@+id/view_payment"
+                android:background="@drawable/shape_bg_dark_grey_circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="50dp"
+                app:layout_constraintStart_toEndOf="@id/view_checkout"
+                app:layout_constraintTop_toTopOf="@id/iv_back"
+                app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+            <View
+                android:background="@drawable/shape_bg_white_circle"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                app:layout_constraintTop_toTopOf="@id/view_payment"
+                app:layout_constraintBottom_toBottomOf="@id/view_payment"
+                app:layout_constraintStart_toStartOf="@id/view_payment"
+                app:layout_constraintEnd_toEndOf="@id/view_payment"
+                />
 
             <TextView
-                android:id="@+id/tv_title_complete_order"
-                android:text="Complete Order"
-                android:textSize="17sp"
-                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:textColor="@color/icon_home"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/view_payment"
+                app:layout_constraintStart_toStartOf="@id/view_payment"
+                app:layout_constraintEnd_toEndOf="@id/view_payment"
+                />
+
+            <TextView
+                android:id="@+id/tv_title_cart"
+                android:text="My"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/iv_back"
+                app:layout_constraintStart_toStartOf="@id/iv_back"
+                />
+
+            <TextView
+                android:text="Cart"
+                android:textSize="18sp"
                 android:fontFamily="@font/poppins_bold"
+                android:layout_marginStart="3dp"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_idr"
-                app:layout_constraintStart_toStartOf="@id/tv_idr"
+                app:layout_constraintTop_toTopOf="@id/tv_title_cart"
+                app:layout_constraintStart_toEndOf="@id/tv_title_cart"
                 />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_go_checkout"
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_empty_cart"
+                android:src="@drawable/ic_no_order"
+                android:layout_width="173dp"
+                android:layout_height="168dp"
+                android:visibility="gone"
+                android:layout_marginTop="100dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_cart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tv_no_cart"
+                android:text="Your Cart is empty"
+                android:textSize="28sp"
+                android:visibility="gone"
+                android:fontFamily="@font/poppins_extrabold"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:backgroundTint="@color/black"
-                android:src="@drawable/ic_arrow_right_2"
-                app:tint="@color/white"
-                app:layout_constraintTop_toTopOf="@id/tv_title_complete_order"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title_complete_order"
-                app:layout_constraintStart_toEndOf="@id/tv_title_complete_order"
-                />
+                android:layout_marginTop="35dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty_cart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
+            <TextView
+                android:id="@+id/tv_desc_to_add_cart"
+                android:text="Hit the button down bellow \nto Add Product to Cart"
+                android:textColor="@color/icon_home"
+                android:textSize="17sp"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_no_cart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_start_order"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/start_ordering"
+                android:textSize="17sp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:fontFamily="@font/poppins_bold"
+                app:cornerRadius="15dp"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product_cart"
+                android:layout_width="0dp"
+                android:layout_height="290dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_cart"
+                app:layout_constraintBottom_toTopOf="@id/layout_total"
+                tools:listitem="@layout/item_cart"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_cart"
+                app:layout_constraintTop_toBottomOf="@id/rv_product_cart">
+
+                <View
+                    android:id="@+id/view_delivery"
+                    android:background="@drawable/shape_bg_dark_grey"
+                    android:layout_width="74dp"
+                    android:layout_height="64dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageView
+                    android:src="@drawable/fast_delivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toTopOf="@id/view_delivery"
+                    app:layout_constraintStart_toStartOf="@id/view_delivery"
+                    app:layout_constraintEnd_toEndOf="@id/view_delivery"/>
+
+                <TextView
+                    android:text="Free"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/view_delivery"
+                    app:layout_constraintStart_toStartOf="@id/view_delivery"
+                    app:layout_constraintEnd_toEndOf="@id/view_delivery"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_total_price_cart"
+                    android:text="Total Price:"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/view_delivery"
+                    app:layout_constraintTop_toTopOf="@id/view_delivery"/>
+
+                <TextView
+                    android:id="@+id/tv_idr"
+                    android:text="IDR"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_price_cart"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_price_cart"/>
+
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_idr"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_idr"
+                    app:layout_constraintStart_toEndOf="@id/tv_idr"
+                    />
+
+                <View
+                    android:layout_width="300dp"
+                    android:background="@color/theme_dark_grey"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_idr"
+                    app:layout_constraintStart_toStartOf="@id/tv_idr"/>
+
+                <TextView
+                    android:id="@+id/tv_title_complete_order"
+                    android:text="Complete Order"
+                    android:textSize="17sp"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_idr"
+                    app:layout_constraintStart_toStartOf="@id/tv_idr"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_go_checkout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:backgroundTint="@color/black"
+                    android:src="@drawable/ic_arrow_right_2"
+                    app:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/tv_title_complete_order"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_title_complete_order"
+                    app:layout_constraintStart_toEndOf="@id/tv_title_complete_order"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 </layout>
