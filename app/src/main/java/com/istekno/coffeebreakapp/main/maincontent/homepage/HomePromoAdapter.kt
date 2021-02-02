@@ -6,20 +6,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
-import com.istekno.coffeebreakapp.databinding.ItemFavoriteBinding
+import com.istekno.coffeebreakapp.databinding.ItemHomePromoBinding
 import java.text.NumberFormat
 import java.util.*
 
-class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
+class HomePromoAdapter: RecyclerView.Adapter<HomePromoAdapter.ListViewHolder>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
     }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
-    private val listFavorite = mutableListOf<HomeResponse.DataProduct>()
+    private val listFavorite = mutableListOf<GetProductResponse.DataProduct>()
 
-    fun setData(list: List<HomeResponse.DataProduct>) {
+    fun setData(list: List<GetProductResponse.DataProduct>) {
         listFavorite.clear()
         listFavorite.addAll(list)
         notifyDataSetChanged()
@@ -30,11 +30,11 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(productModel: HomeResponse.DataProduct)
+        fun onItemClicked(productModel: GetProductResponse.DataProduct)
     }
 
-    inner class ListViewHolder(val binding: ItemFavoriteBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(productModel: HomeResponse.DataProduct) {
+    inner class ListViewHolder(val binding: ItemHomePromoBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(productModel: GetProductResponse.DataProduct) {
             binding.model = productModel
 
             Glide.with(itemView.context).load(img + productModel.productImage)
@@ -45,7 +45,7 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return ListViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_favorite, parent, false))
+        return ListViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_home_promo, parent, false))
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -53,8 +53,11 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
         val item = listFavorite[position]
         val price = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.productPrice.toDouble())
             .replace("Rp".toRegex(),"IDR ")
+        val promoPrice =  item.productPrice.toInt() - (item.productPrice.toInt() * 0.1)
 
         holder.binding.tvProductPrice.text = price
+        holder.binding.tvPromoPrice.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
+            .replace("Rp".toRegex(),"IDR ")
     }
 
     override fun getItemCount(): Int = listFavorite.size

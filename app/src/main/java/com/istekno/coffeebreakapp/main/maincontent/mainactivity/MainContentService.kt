@@ -1,6 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse
+import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,10 +13,10 @@ interface MainContentService {
     @GET("product/getAllProduct")
     suspend fun getProductByQuery(
         @Query("search") search: String
-    ): HomeResponse
+    ): GetProductResponse
 
     @GET("product/getFilterProduct")
     suspend fun getProductFilter(
         @Query("filter") filter: String
-    ): HomeResponse
+    ): GetProductResponse
 }

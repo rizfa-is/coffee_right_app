@@ -53,7 +53,6 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
     @SuppressLint("ResourceType")
     private fun setInitialChecked() {
-        val etAddress = binding.etCustomerAddress
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
@@ -65,8 +64,6 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         binding.tvTotalCost.text = totalPrice
 
         if (checkedIdDelivery == -1 || checkedIdNow == -1) {
-            etAddress.isEnabled = false
-
             binding.cgDeliveryMethod.check(10)
             binding.cgNow.check(20)
             delivery = "Dine in"
@@ -77,14 +74,14 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
     @SuppressLint("SimpleDateFormat")
     private fun viewListener() {
         binding.cgDeliveryMethod.setOnCheckedChangeListener { _, checkedId ->
-            val etAddress = binding.etCustomerAddress
+            val clAddress = binding.clAddress
             val checkedIdNow = binding.cgNow.checkedChipId
             val chip: Chip = findViewById(checkedId)
             val id = chip.id
             delivery = chip.text.toString()
 
             if (id == 10) {
-                etAddress.isEnabled = false
+                clAddress.visibility = View.GONE
 
                 if (checkedIdNow == 20) {
                     now = "Yes"
@@ -95,7 +92,11 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 binding.cgNow.visibility = View.VISIBLE
             } else {
 
-                etAddress.isEnabled = id == 11
+                if (id == 11) {
+                    clAddress.visibility = View.VISIBLE
+                } else {
+                    clAddress.visibility = View.GONE
+                }
 
                 now = "No"
                 binding.tvNow.visibility = View.GONE
@@ -158,7 +159,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 else -> "null"
             }
 
-            if (setDelivery == "DD" && ( etAddress.isEmpty() || etAddress == "Data not set")) {
+            if (setDelivery == "DD" && ( etAddress.isEmpty() || etAddress == "Not set")) {
                 showToast("Delivery address not set yet!")
                 return@setOnClickListener
             }
