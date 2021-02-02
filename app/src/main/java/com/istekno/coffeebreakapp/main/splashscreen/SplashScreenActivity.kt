@@ -10,6 +10,7 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivitySplashScreenBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.welcomepage.WelcomePageActivity
+import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class SplashScreenActivity :
@@ -26,11 +27,16 @@ class SplashScreenActivity :
         setViewModel = ViewModelProvider(this).get(SplashScreenViewModel::class.java)
         super.onCreate(savedInstanceState)
 
+        val service = ApiClient.getApiClient(this)?.create(CheckJwtExpiredApiService::class.java)
+        if (service != null) {
+            viewModel.setService(service)
+        }
+
         sharePref = SharedPreferenceUtil(this)
 
         viewModel.setSharePref(sharePref)
         viewModel.checkLoginStatus()
-
+        viewModel.callApiService()
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -48,8 +54,15 @@ class SplashScreenActivity :
     private fun subscribeLiveData() {
         viewModel.isRemember.observe(this, Observer {
             if (it) {
-                intent<MainContentActivity>(this)
-                finish()
+                viewModel.checkJwt.observe(this) {it1 ->
+                    if (it1) {
+                        intent<MainContentActivity>(this)
+                        finish()
+                    } else {
+                        intent<WelcomePageActivity>(this)
+                        finish()
+                    }
+                }
             } else {
                 intent<WelcomePageActivity>(this)
                 finish()
