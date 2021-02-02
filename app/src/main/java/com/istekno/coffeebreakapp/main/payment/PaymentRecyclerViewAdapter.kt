@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemPaymentBinding
 
-class PaymentRecyclerViewAdapter(private val listCart: ArrayList<PaymentModel>): RecyclerView.Adapter<PaymentRecyclerViewAdapter.ListCartHolder>() {
+class PaymentRecyclerViewAdapter(private val listCart: ArrayList<PaymentModel>) :
+    RecyclerView.Adapter<PaymentRecyclerViewAdapter.ListCartHolder>() {
 
     fun addList(list: List<PaymentModel>) {
         listCart.clear()
@@ -15,7 +16,7 @@ class PaymentRecyclerViewAdapter(private val listCart: ArrayList<PaymentModel>):
         notifyDataSetChanged()
     }
 
-    class ListCartHolder(val binding: ItemPaymentBinding): RecyclerView.ViewHolder(binding.root)
+    class ListCartHolder(val binding: ItemPaymentBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = listCart.size
 

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EditPasswordViewModel: ViewModel(), CoroutineScope {
+class EditPasswordViewModel : ViewModel(), CoroutineScope {
     private lateinit var service: EditPasswordApi
 
     val onSuccessLiveData = MutableLiveData<Boolean>()

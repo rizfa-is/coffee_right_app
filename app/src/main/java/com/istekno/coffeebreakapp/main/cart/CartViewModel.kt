@@ -19,10 +19,10 @@ class CartViewModel : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    private lateinit var service : CartApiService
-    private lateinit var sharedPref : SharedPreferenceUtil
+    private lateinit var service: CartApiService
+    private lateinit var sharedPref: SharedPreferenceUtil
 
-    fun setService(service : CartApiService) {
+    fun setService(service: CartApiService) {
         this.service = service
     }
 
@@ -51,7 +51,18 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 if (result.success) {
                     isGetListCart.value = true
                     val data = result.data.map {
-                        CartResponse.DataCart(it.orderId, it.productId, it.productName, it.productImage, it.customerId, it.orderStatus, it.orderAmount, it.orderPrice, it.orderCreated, it.orderUpdated)
+                        CartResponse.DataCart(
+                            it.orderId,
+                            it.productId,
+                            it.productName,
+                            it.productImage,
+                            it.customerId,
+                            it.orderStatus,
+                            it.orderAmount,
+                            it.orderPrice,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     listCart.value = data
                     isLoading.value = false
@@ -106,7 +117,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun updatePlusCartByOrId(orId : Int) {
+    fun updatePlusCartByOrId(orId: Int) {
         launch {
             isLoading.value = true
 
@@ -155,7 +166,18 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 if (result2.success) {
                     isGetListCart.value = true
                     val data = result2.data.map {
-                        CartResponse.DataCart(it.orderId, it.productId, it.productName, it.productImage, it.customerId, it.orderStatus, it.orderAmount, it.orderPrice, it.orderCreated, it.orderUpdated)
+                        CartResponse.DataCart(
+                            it.orderId,
+                            it.productId,
+                            it.productName,
+                            it.productImage,
+                            it.customerId,
+                            it.orderStatus,
+                            it.orderAmount,
+                            it.orderPrice,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     listCart.value = data
                     isLoading.value = false
@@ -204,7 +226,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun updateMinusCartByOrId(orId : Int) {
+    fun updateMinusCartByOrId(orId: Int) {
         launch {
             isLoading.value = true
 
@@ -253,7 +275,18 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 if (result2.success) {
                     isGetListCart.value = true
                     val data = result2.data.map {
-                        CartResponse.DataCart(it.orderId, it.productId, it.productName, it.productImage, it.customerId, it.orderStatus, it.orderAmount, it.orderPrice, it.orderCreated, it.orderUpdated)
+                        CartResponse.DataCart(
+                            it.orderId,
+                            it.productId,
+                            it.productName,
+                            it.productImage,
+                            it.customerId,
+                            it.orderStatus,
+                            it.orderAmount,
+                            it.orderPrice,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     listCart.value = data
                     isLoading.value = false
@@ -302,7 +335,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun deleteOrderById(orId : Int) {
+    fun deleteOrderById(orId: Int) {
         launch {
             isLoading.value = true
 

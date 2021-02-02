@@ -20,8 +20,12 @@ import com.istekno.coffeebreakapp.main.maincontent.order.detail.DetailOrderActiv
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class OrderFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
-OrderAdapter.OnListOrderClickListenerr{
+class OrderFragment(
+    private val toolbar: MaterialToolbar,
+    private val title: TextView,
+    private val navDrawer: NavigationView
+) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
+    OrderAdapter.OnListOrderClickListenerr {
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
@@ -32,7 +36,11 @@ OrderAdapter.OnListOrderClickListenerr{
 
     private var listOrder = ArrayList<OrderResponse.Data>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setLayout = R.layout.fragment_order
         setView()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -74,7 +82,7 @@ OrderAdapter.OnListOrderClickListenerr{
     private fun subscribeLiveData() {
         viewModel.getListData.observe(viewLifecycleOwner, {
             if (it) {
-                viewModel.listData.observe(viewLifecycleOwner) { list->
+                viewModel.listData.observe(viewLifecycleOwner) { list ->
                     (binding.rvOrderHistory.adapter as OrderAdapter).setData(list)
                 }
                 binding.rvOrderHistory.visibility = View.VISIBLE
@@ -101,7 +109,8 @@ OrderAdapter.OnListOrderClickListenerr{
 
     private fun setRecyclerView(view: View) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
-        binding.rvOrderHistory.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
+        binding.rvOrderHistory.layoutManager =
+            LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
 
         val adapter = OrderAdapter(listOrder, this)
         binding.rvOrderHistory.adapter = adapter

@@ -11,12 +11,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 
-abstract class BaseFragment<FragmentBinding: ViewDataBinding>: Fragment()  {
+abstract class BaseFragment<FragmentBinding : ViewDataBinding> : Fragment() {
 
     private lateinit var binding: FragmentBinding
     protected var setLayout = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, setLayout, container, false)
         return binding.root
     }

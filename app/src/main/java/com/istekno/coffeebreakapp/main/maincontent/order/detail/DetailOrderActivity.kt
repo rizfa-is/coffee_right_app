@@ -18,7 +18,8 @@ import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrd
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class DetailOrderActivity : BaseActivityViewModel<ActivityDetailOrderBinding, DetailOrderViewModel>() {
+class DetailOrderActivity :
+    BaseActivityViewModel<ActivityDetailOrderBinding, DetailOrderViewModel>() {
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
@@ -93,9 +94,11 @@ class DetailOrderActivity : BaseActivityViewModel<ActivityDetailOrderBinding, De
     private fun subscribeGetListLiveData() {
         viewModel.isGetList.observe(this, {
             if (it) {
-                viewModel.listData.observe(this, { list->
-                    (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(list)
-                    binding.tvTax.text = intent.getIntExtra(TAX,-1).toString()
+                viewModel.listData.observe(this, { list ->
+                    (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(
+                        list
+                    )
+                    binding.tvTax.text = intent.getIntExtra(TAX, -1).toString()
                     binding.tvSubtotal.text = intent.getIntExtra(PRICE_BEFORE_TAX, -1).toString()
                     binding.tvTotal.text = intent.getIntExtra(TOTAL_PRICE, -1).toString()
                 })
@@ -106,7 +109,7 @@ class DetailOrderActivity : BaseActivityViewModel<ActivityDetailOrderBinding, De
 
     }
 
-    private fun onClickListener(odId : Int) {
+    private fun onClickListener(odId: Int) {
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }

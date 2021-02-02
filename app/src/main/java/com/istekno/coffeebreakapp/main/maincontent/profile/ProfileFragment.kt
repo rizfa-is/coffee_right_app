@@ -22,7 +22,11 @@ import com.istekno.coffeebreakapp.main.editprofile.EditProfileActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class ProfileFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
+class ProfileFragment(
+    private val toolbar: MaterialToolbar,
+    private val title: TextView,
+    private val navDrawer: NavigationView
+) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -30,7 +34,11 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
 
     private var listData = ArrayList<ProfileModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setLayout = R.layout.fragment_profile
         setView()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -77,17 +85,17 @@ class ProfileFragment(private val toolbar: MaterialToolbar, private val title: T
 
         viewModel.isGetData.observe(viewLifecycleOwner) {
             if (it) {
-                viewModel.isMessage.observe(viewLifecycleOwner) { msg->
+                viewModel.isMessage.observe(viewLifecycleOwner) { msg ->
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                 }
-                viewModel.listData.observe(viewLifecycleOwner) {list->
+                viewModel.listData.observe(viewLifecycleOwner) { list ->
                     binding.model = list[0]
                     listData.add(list[0])
                     Glide.with(view.context).load(img + list[0].accountImage)
                         .placeholder(R.drawable.ic_avatar_en).into(binding.shapeableImageView2)
                 }
             } else {
-                viewModel.isMessage.observe(viewLifecycleOwner) { msg->
+                viewModel.isMessage.observe(viewLifecycleOwner) { msg ->
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                 }
             }

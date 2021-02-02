@@ -6,7 +6,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class CheckoutViewModel: ViewModel(), CoroutineScope {
+class CheckoutViewModel : ViewModel(), CoroutineScope {
 
     val isError = MutableLiveData<Boolean>()
     val isMessage = MutableLiveData<String>()
@@ -30,7 +30,13 @@ class CheckoutViewModel: ViewModel(), CoroutineScope {
 
             val result = withContext(Job() + Dispatchers.IO) {
                 try {
-                    service.addDelivery(sharedPref.getPreference().roleID!!, deliveryMethod, deliveryNow, deliverySetTime,  sharedPref.getPreference().acAddress!!)
+                    service.addDelivery(
+                        sharedPref.getPreference().roleID!!,
+                        deliveryMethod,
+                        deliveryNow,
+                        deliverySetTime,
+                        sharedPref.getPreference().acAddress!!
+                    )
                 } catch (e: Throwable) {
                     e.printStackTrace()
 

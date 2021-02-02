@@ -127,12 +127,19 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         binding.etTimeReservation.setOnClickListener {
             val input = binding.etTimeReservation
             val calendar = Calendar.getInstance()
-            val timePickerListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                calendar.set(Calendar.MINUTE, minute)
-                input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
-            }
-            TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+            val timePickerListener =
+                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
+                }
+            TimePickerDialog(
+                this,
+                timePickerListener,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            ).show()
         }
 
         binding.etTimeReservation.setOnFocusChangeListener { _, b ->
@@ -144,7 +151,13 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                     calendar.set(Calendar.MINUTE, minute)
                     input.setText(SimpleDateFormat("HH:mm:ss").format(calendar.time))
                 }
-                TimePickerDialog(this, timePickerListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+                TimePickerDialog(
+                    this,
+                    timePickerListener,
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                    calendar.get(Calendar.MINUTE),
+                    true
+                ).show()
             }
         }
 
@@ -159,7 +172,7 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
                 else -> "null"
             }
 
-            if (setDelivery == "DD" && ( etAddress.isEmpty() || etAddress == "Not set")) {
+            if (setDelivery == "DD" && (etAddress.isEmpty() || etAddress == "Not set")) {
                 showToast("Delivery address not set yet!")
                 return@setOnClickListener
             }
@@ -188,7 +201,8 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
 
     private fun setChipGroup(chipGroup: ChipGroup, list: List<String>, type: Int) {
         for (element in list) {
-            val chip = layoutInflater.inflate(R.layout.item_chipgroup_choice, chipGroup, false) as Chip
+            val chip =
+                layoutInflater.inflate(R.layout.item_chipgroup_choice, chipGroup, false) as Chip
 
             chip.id = list.indexOf(element) + type
             chip.text = element

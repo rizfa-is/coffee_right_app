@@ -14,6 +14,6 @@ interface CheckoutApiService {
         @Field("dv_yn") deliveryNow: String,
         @Field("dv_st") deliverySetTime: String,
         @Field("dv_address") deliveryAddress: String
-        ): CheckoutResponse
+    ): CheckoutResponse
 
 }

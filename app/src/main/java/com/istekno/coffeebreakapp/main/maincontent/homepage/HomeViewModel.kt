@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel: ViewModel(), CoroutineScope {
+class HomeViewModel : ViewModel(), CoroutineScope {
 
     val isLoading = MutableLiveData<Boolean>()
     val listFavorite = MutableLiveData<MutableList<GetProductResponse.DataProduct>>()
@@ -50,14 +50,27 @@ class HomeViewModel: ViewModel(), CoroutineScope {
 
             if (resultOrder is GetOrderResponse && resultProduct is GetProductResponse) {
                 data class Model(val productId: Int, val totalProduct: Int)
+
                 val listTotalOrderPerProductId = mutableListOf<Model>()
                 val listIdProductFromOrder = mutableListOf<String>()
                 val listProduct = mutableListOf<GetProductResponse.DataProduct>()
 
                 resultProduct.data.map {
                     if (it.productFavorite == "Y") {
-                        listProduct.add(GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice,
-                            it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated))
+                        listProduct.add(
+                            GetProductResponse.DataProduct(
+                                it.productId,
+                                it.discountId,
+                                it.productName,
+                                it.productDesc,
+                                it.productPrice,
+                                it.productImage,
+                                it.productFavorite,
+                                it.productCategory,
+                                it.productCreated,
+                                it.productUpdated
+                            )
+                        )
                     }
                 }
 
@@ -65,7 +78,8 @@ class HomeViewModel: ViewModel(), CoroutineScope {
                     if (it.orderStatus == "Done") listIdProductFromOrder.add(it.productId.toString())
                 }
 
-                listIdProductFromOrder.groupingBy { it }.eachCount().map { listTotalOrderPerProductId.add(Model(it.key.toInt(), it.value)) }
+                listIdProductFromOrder.groupingBy { it }.eachCount()
+                    .map { listTotalOrderPerProductId.add(Model(it.key.toInt(), it.value)) }
                 listTotalOrderPerProductId.sortByDescending { it.totalProduct }
 
                 if (listTotalOrderPerProductId.isNullOrEmpty()) {
@@ -83,15 +97,51 @@ class HomeViewModel: ViewModel(), CoroutineScope {
 
                         resultProduct.data.map {
                             if (it.productId == id) {
-                                allFavorite.add(GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice,
-                                    it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated))
+                                allFavorite.add(
+                                    GetProductResponse.DataProduct(
+                                        it.productId,
+                                        it.discountId,
+                                        it.productName,
+                                        it.productDesc,
+                                        it.productPrice,
+                                        it.productImage,
+                                        it.productFavorite,
+                                        it.productCategory,
+                                        it.productCreated,
+                                        it.productUpdated
+                                    )
+                                )
 
                                 if (it.productCategory == "Drink") {
-                                    listDrink.add(GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice,
-                                        it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated))
+                                    listDrink.add(
+                                        GetProductResponse.DataProduct(
+                                            it.productId,
+                                            it.discountId,
+                                            it.productName,
+                                            it.productDesc,
+                                            it.productPrice,
+                                            it.productImage,
+                                            it.productFavorite,
+                                            it.productCategory,
+                                            it.productCreated,
+                                            it.productUpdated
+                                        )
+                                    )
                                 } else {
-                                    listFood.add(GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice,
-                                        it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated))
+                                    listFood.add(
+                                        GetProductResponse.DataProduct(
+                                            it.productId,
+                                            it.discountId,
+                                            it.productName,
+                                            it.productDesc,
+                                            it.productPrice,
+                                            it.productImage,
+                                            it.productFavorite,
+                                            it.productCategory,
+                                            it.productCreated,
+                                            it.productUpdated
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -111,8 +161,20 @@ class HomeViewModel: ViewModel(), CoroutineScope {
                 val listProduct = mutableListOf<GetProductResponse.DataProduct>()
 
                 resultProduct.data.map {
-                    listProduct.add(GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice,
-                        it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated))
+                    listProduct.add(
+                        GetProductResponse.DataProduct(
+                            it.productId,
+                            it.discountId,
+                            it.productName,
+                            it.productDesc,
+                            it.productPrice,
+                            it.productImage,
+                            it.productFavorite,
+                            it.productCategory,
+                            it.productCreated,
+                            it.productUpdated
+                        )
+                    )
                 }
 
                 listProduct.removeIf { it.discountId < 2 }

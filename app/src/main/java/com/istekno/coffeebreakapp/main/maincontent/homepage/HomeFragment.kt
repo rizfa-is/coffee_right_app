@@ -21,7 +21,11 @@ import com.istekno.coffeebreakapp.main.favorite.FavoriteActivity
 import com.istekno.coffeebreakapp.main.promo.PromoActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class HomeFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
+class HomeFragment(
+    private val toolbar: MaterialToolbar,
+    private val title: TextView,
+    private val navDrawer: NavigationView
+) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
 
     companion object {
         const val HOME_KEY = "home_key"
@@ -29,7 +33,11 @@ class HomeFragment(private val toolbar: MaterialToolbar, private val title: Text
 
     private var listFavorite = arrayOf<GetProductResponse.DataProduct>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setLayout = R.layout.fragment_home
         setView()
         return super.onCreateView(inflater, container, savedInstanceState)

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity<ActivityBinding: ViewDataBinding>: AppCompatActivity() {
+abstract class BaseActivity<ActivityBinding : ViewDataBinding> : AppCompatActivity() {
     protected lateinit var binding: ActivityBinding
     protected var setLayout = 0
 

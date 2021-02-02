@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-class SplashScreenViewModel: ViewModel(), CoroutineScope {
+class SplashScreenViewModel : ViewModel(), CoroutineScope {
 
     val isRemember = MutableLiveData<Boolean>()
 
