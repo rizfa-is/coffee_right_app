@@ -47,12 +47,12 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     private fun subscribeDeleteLiveData() {
         viewModel.isDeleteSuccess.observe(this, {
             if (it) {
-                viewModel.isMessage.observe(this, { msg->
-                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                viewModel.isMessage.observe(this, { msg ->
+                    Toast.makeText(this@CartActivity, msg, Toast.LENGTH_SHORT).show()
                 })
             } else {
-                viewModel.isMessage.observe(this, { msg->
-                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                viewModel.isMessage.observe(this, { msg ->
+                    Toast.makeText(this@CartActivity, msg, Toast.LENGTH_SHORT).show()
                 })
             }
         })
@@ -61,12 +61,12 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     private fun subscribeUpdateLiveData() {
         viewModel.isUpdateCart.observe(this, {
             if (it) {
-                viewModel.isMessage.observe(this, { msg->
-                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                viewModel.isMessage.observe(this, { msg ->
+                    Toast.makeText(this@CartActivity, msg, Toast.LENGTH_SHORT).show()
                 })
             } else {
-                viewModel.isMessage.observe(this, { msg->
-                    Toast.makeText(this@CartActivity, msg , Toast.LENGTH_SHORT).show()
+                viewModel.isMessage.observe(this, { msg ->
+                    Toast.makeText(this@CartActivity, msg, Toast.LENGTH_SHORT).show()
                 })
             }
         })
@@ -85,11 +85,11 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
     private fun subscribeGetCartLiveData() {
         viewModel.isGetListCart.observe(this, {
             if (it) {
-                viewModel.listCart.observe(this, { it1->
+                viewModel.listCart.observe(this, { it1 ->
                     (binding.rvProductCart.adapter as CartAdapter).setData(it1)
                 })
                 binding.rvProductCart.visibility = View.VISIBLE
-                viewModel.totalPriceCart.observe(this, { price->
+                viewModel.totalPriceCart.observe(this, { price ->
                     binding.tvTotal.text = price
                 })
                 binding.layoutTotal.visibility = View.VISIBLE
@@ -139,7 +139,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         }
     }
 
-    private fun showDialogDelete(orderId : Int) {
+    private fun showDialogDelete(orderId: Int) {
         val builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("Remove Product")
         builder.setMessage("Are you sure to remove this product from your Cart ?")
@@ -149,7 +149,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
             startActivity(intent)
             finish()
         }
-        builder.setNegativeButton("No") { _: DialogInterface, _: Int ->}
+        builder.setNegativeButton("No") { _: DialogInterface, _: Int -> }
         builder.show()
     }
 

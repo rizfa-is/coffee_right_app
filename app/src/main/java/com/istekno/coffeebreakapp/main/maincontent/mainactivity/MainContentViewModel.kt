@@ -8,7 +8,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class MainContentViewModel: ViewModel(), CoroutineScope {
+class MainContentViewModel : ViewModel(), CoroutineScope {
 
     var listProduct = MutableLiveData<List<GetProductResponse.DataProduct>>()
     val productAction = MutableLiveData<Boolean>()
@@ -43,8 +43,19 @@ class MainContentViewModel: ViewModel(), CoroutineScope {
                 val res = result.data?.get(0)
 
                 if (data == 0) {
-                    sharePref.setPreference(SharedPrefModel(res?.accountId, res?.accountEmail, res?.accountName, res?.accountImage,
-                        res?.accountAddress, res?.customerId, data, sharePref.getPreference().token, true))
+                    sharePref.setPreference(
+                        SharedPrefModel(
+                            res?.accountId,
+                            res?.accountEmail,
+                            res?.accountName,
+                            res?.accountImage,
+                            res?.accountAddress,
+                            res?.customerId,
+                            data,
+                            sharePref.getPreference().token,
+                            true
+                        )
+                    )
                 }
             }
         }
@@ -78,13 +89,28 @@ class MainContentViewModel: ViewModel(), CoroutineScope {
             if (result is GetProductResponse) {
                 val mutableList: MutableList<GetProductResponse.DataProduct>
                 val list = result.data.map {
-                    GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice, it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated)
+                    GetProductResponse.DataProduct(
+                        it.productId,
+                        it.discountId,
+                        it.productName,
+                        it.productDesc,
+                        it.productPrice,
+                        it.productImage,
+                        it.productFavorite,
+                        it.productCategory,
+                        it.productCreated,
+                        it.productUpdated
+                    )
                 }
                 mutableList = list.toMutableList()
 
-                when(filter) {
-                    1 -> { mutableList.removeIf { it.productCategory != "Food" } }
-                    2 -> { mutableList.removeIf { it.productCategory != "Drink" } }
+                when (filter) {
+                    1 -> {
+                        mutableList.removeIf { it.productCategory != "Food" }
+                    }
+                    2 -> {
+                        mutableList.removeIf { it.productCategory != "Drink" }
+                    }
                 }
 
                 if (mutableList.isNullOrEmpty()) {

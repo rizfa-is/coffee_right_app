@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class OrderHistoryViewModel: ViewModel(), CoroutineScope {
+class OrderHistoryViewModel : ViewModel(), CoroutineScope {
 
     val listData = MutableLiveData<List<OrderHistoryModel>>()
     val isLoading = MutableLiveData<Boolean>()
@@ -40,12 +40,23 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
             if (result is OrderHistoryResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderHistoryModel(it.orderId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderStatus,
-                            it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                        OrderHistoryModel(
+                            it.orderId,
+                            it.customerId,
+                            it.deliveryId,
+                            it.priceBeforeTax,
+                            it.couponId,
+                            it.totalPrice,
+                            it.orderStatus,
+                            it.orderPayment,
+                            it.orderTax,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     val mutable = list.toMutableList()
                     mutable.removeIf { it.orderStatus != "Done" }
-                    if(!mutable.isNullOrEmpty()) {
+                    if (!mutable.isNullOrEmpty()) {
                         isGetList.value = result.success
                         listData.value = mutable
                     } else {
@@ -82,12 +93,23 @@ class OrderHistoryViewModel: ViewModel(), CoroutineScope {
             if (result is OrderHistoryResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderHistoryModel(it.orderId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderStatus,
-                            it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                        OrderHistoryModel(
+                            it.orderId,
+                            it.customerId,
+                            it.deliveryId,
+                            it.priceBeforeTax,
+                            it.couponId,
+                            it.totalPrice,
+                            it.orderStatus,
+                            it.orderPayment,
+                            it.orderTax,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     val mutable = list.toMutableList()
                     mutable.removeIf { it.orderStatus != "Done" }
-                    if(!mutable.isNullOrEmpty()) {
+                    if (!mutable.isNullOrEmpty()) {
                         isGetList.value = result.success
                         listData.value = mutable
                     } else {

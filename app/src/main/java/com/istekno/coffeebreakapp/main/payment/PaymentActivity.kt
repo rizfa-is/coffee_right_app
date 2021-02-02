@@ -122,7 +122,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun subscribeSuccessLiveData() {
         viewModel.isProcessSuccess.observe(this) {
             if (it) {
-                viewModel.isUpdateSuccess.observe(this, Observer { update->
+                viewModel.isUpdateSuccess.observe(this, Observer { update ->
                     if (update) {
                         val intent = Intent(this, MainContentActivity::class.java)
                         intent.putExtra("data", 0)

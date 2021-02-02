@@ -37,7 +37,9 @@ import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryFrag
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, MainContentViewModel>(), NavigationView.OnNavigationItemSelectedListener {
+class MainContentActivity :
+    BaseActivityViewModel<ActivityMainContentBinding, MainContentViewModel>(),
+    NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -74,7 +76,8 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mToggle = ActionBarDrawerToggle(this, drawer, binding.tbMenuMaincontent,
+        mToggle = ActionBarDrawerToggle(
+            this, drawer, binding.tbMenuMaincontent,
             R.string.open,
             R.string.close
         )
@@ -133,8 +136,12 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         val data = intent.getIntExtra("data", -1)
 
         when (data) {
-            0 -> { fragmentProperties(OrderFragment(toolbar, title, navDrawer)) }
-            1 -> { fragmentProperties(ProfileFragment(toolbar, title, navDrawer)) }
+            0 -> {
+                fragmentProperties(OrderFragment(toolbar, title, navDrawer))
+            }
+            1 -> {
+                fragmentProperties(ProfileFragment(toolbar, title, navDrawer))
+            }
             else -> fragmentProperties(HomeFragment(toolbar, title, navDrawer))
         }
     }
@@ -149,7 +156,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
             startActivity(intent)
             finishAffinity()
         }
-        builder.setNegativeButton("No") { _: DialogInterface, i : Int ->}
+        builder.setNegativeButton("No") { _: DialogInterface, i: Int -> }
         builder.show()
     }
 
@@ -173,7 +180,8 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
             rvAdapter.setOnItemClicked(object : HomeFavoriteAdapter.OnItemClickCallback {
                 override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
-                    val sendIntent = Intent(this@MainContentActivity, DetailProductActivity::class.java)
+                    val sendIntent =
+                        Intent(this@MainContentActivity, DetailProductActivity::class.java)
                     sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
                 }
@@ -184,7 +192,11 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
     private fun chipViewInit() {
         for (element in listFilter) {
-            val chip = layoutInflater.inflate(R.layout.item_chipgroup_choice, binding.cgFilter, false) as Chip
+            val chip = layoutInflater.inflate(
+                R.layout.item_chipgroup_choice,
+                binding.cgFilter,
+                false
+            ) as Chip
 
             chip.id = listFilter.indexOf(element)
             chip.text = element
@@ -311,7 +323,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.toolbar_cart -> {
                 intent<CartActivity>(this)
             }

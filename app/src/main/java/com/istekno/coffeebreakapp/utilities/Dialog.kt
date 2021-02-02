@@ -55,8 +55,13 @@ class Dialog {
         dialog.show()
     }
 
-    fun dialogUpdating(context: Context?, activity: Activity, action:() -> Unit) {
-        val customView = DataBindingUtil.inflate<DialogUpdatingBinding>(activity.layoutInflater, R.layout.dialog_updating, null, false)
+    fun dialogUpdating(context: Context?, activity: Activity, action: () -> Unit) {
+        val customView = DataBindingUtil.inflate<DialogUpdatingBinding>(
+            activity.layoutInflater,
+            R.layout.dialog_updating,
+            null,
+            false
+        )
 
         val dialog = AlertDialog.Builder(context)
             .setView(customView.root)

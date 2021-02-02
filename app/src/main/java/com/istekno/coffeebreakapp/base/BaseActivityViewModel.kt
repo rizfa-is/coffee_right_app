@@ -8,7 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 
-abstract class BaseActivityViewModel<ActivityBinding: ViewDataBinding, ActivityViewModel: ViewModel>: AppCompatActivity() {
+abstract class BaseActivityViewModel<ActivityBinding : ViewDataBinding, ActivityViewModel : ViewModel> :
+    AppCompatActivity() {
 
     lateinit var binding: ActivityBinding
     lateinit var viewModel: ActivityViewModel

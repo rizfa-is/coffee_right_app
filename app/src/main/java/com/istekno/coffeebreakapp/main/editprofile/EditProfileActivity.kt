@@ -232,7 +232,7 @@ class EditProfileActivity :
         return MultipartBody.Part.createFormData("image", file.name, reqFile)
     }
 
-    private fun getPath(context: Context, contentUri: Uri) : String? {
+    private fun getPath(context: Context, contentUri: Uri): String? {
         var result: String? = null
         val imageProfile = arrayOf(MediaStore.Images.Media.DATA)
 

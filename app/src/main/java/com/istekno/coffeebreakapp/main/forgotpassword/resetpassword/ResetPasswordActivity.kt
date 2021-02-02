@@ -14,7 +14,8 @@ import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.ValidateAccount
 import com.istekno.coffeebreakapp.main.forgotpassword.checkemail.ValidateAccount.Companion.valPassword
 import com.istekno.coffeebreakapp.remote.ApiClient
 
-class ResetPasswordActivity : BaseActivityViewModel<ActivityResetPasswordBinding, ResetPasswordViewModel>() {
+class ResetPasswordActivity :
+    BaseActivityViewModel<ActivityResetPasswordBinding, ResetPasswordViewModel>() {
     private var acId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,25 +31,27 @@ class ResetPasswordActivity : BaseActivityViewModel<ActivityResetPasswordBinding
     }
 
     private fun onClickListener() {
-            binding.btnResetPassword.setOnClickListener {
-                when {
-                    !valPassword(binding.inputLayoutNewPassword, binding.etNewPassword) -> {}
-                    !valPassConf(
-                        binding.inputLayoutPasswordConfirm,
-                        binding.etPasswordConfirm,
-                        binding.etNewPassword
-                    ) -> {}
-                    else -> {
-                        viewModel.serviceUpdate(
-                            acId = acId!!,
-                            acPassword = binding.etNewPassword.text.toString()
-                        )
-                    }
+        binding.btnResetPassword.setOnClickListener {
+            when {
+                !valPassword(binding.inputLayoutNewPassword, binding.etNewPassword) -> {
+                }
+                !valPassConf(
+                    binding.inputLayoutPasswordConfirm,
+                    binding.etPasswordConfirm,
+                    binding.etNewPassword
+                ) -> {
+                }
+                else -> {
+                    viewModel.serviceUpdate(
+                        acId = acId!!,
+                        acPassword = binding.etNewPassword.text.toString()
+                    )
                 }
             }
-            binding.ivBack.setOnClickListener {
-                onBackPressed()
-            }
+        }
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun initTextWatcher() {
@@ -57,9 +60,11 @@ class ResetPasswordActivity : BaseActivityViewModel<ActivityResetPasswordBinding
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProvider(this@ResetPasswordActivity).get(ResetPasswordViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this@ResetPasswordActivity).get(ResetPasswordViewModel::class.java)
         viewModel.setService(createApi(this@ResetPasswordActivity))
     }
+
     private inline fun <reified ApiService> createApi(context: Context): ApiService {
         return ApiClient.getApiClient(context)!!.create(ApiService::class.java)
     }

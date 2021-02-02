@@ -6,7 +6,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class OrderViewModel: ViewModel(), CoroutineScope {
+class OrderViewModel : ViewModel(), CoroutineScope {
 
     val listData = MutableLiveData<List<OrderResponse.Data>>()
     val getListData = MutableLiveData<Boolean>()
@@ -17,7 +17,7 @@ class OrderViewModel: ViewModel(), CoroutineScope {
         get() = Job() + Dispatchers.Main
 
     private lateinit var service: OrderApiService
-    private lateinit var sharedPref : SharedPreferenceUtil
+    private lateinit var sharedPref: SharedPreferenceUtil
 
     fun setService(service: OrderApiService) {
         this.service = service
@@ -48,7 +48,19 @@ class OrderViewModel: ViewModel(), CoroutineScope {
             if (result is OrderResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderResponse.Data(it.orderDetailId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderDetailStatus, it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                        OrderResponse.Data(
+                            it.orderDetailId,
+                            it.customerId,
+                            it.deliveryId,
+                            it.priceBeforeTax,
+                            it.couponId,
+                            it.totalPrice,
+                            it.orderDetailStatus,
+                            it.orderPayment,
+                            it.orderTax,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     val mutable = list.toMutableList()
                     mutable.removeAll { it.orderDetailStatus == "Done" }
@@ -88,7 +100,19 @@ class OrderViewModel: ViewModel(), CoroutineScope {
             if (result is OrderResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderResponse.Data(it.orderDetailId, it.customerId, it.deliveryId, it.priceBeforeTax, it.couponId, it.totalPrice, it.orderDetailStatus, it.orderPayment, it.orderTax, it.orderCreated, it.orderUpdated)
+                        OrderResponse.Data(
+                            it.orderDetailId,
+                            it.customerId,
+                            it.deliveryId,
+                            it.priceBeforeTax,
+                            it.couponId,
+                            it.totalPrice,
+                            it.orderDetailStatus,
+                            it.orderPayment,
+                            it.orderTax,
+                            it.orderCreated,
+                            it.orderUpdated
+                        )
                     }
                     val mutable = list.toMutableList()
                     mutable.removeAll { it.orderDetailStatus == "Done" }

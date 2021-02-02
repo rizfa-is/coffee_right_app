@@ -23,7 +23,11 @@ import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrd
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val title: TextView, private val navDrawer: NavigationView) : BaseFragmentViewModel<FragmentOrderHistoryBinding, OrderHistoryViewModel>(),
+class OrderHistoryFragment(
+    private val toolbar: MaterialToolbar,
+    private val title: TextView,
+    private val navDrawer: NavigationView
+) : BaseFragmentViewModel<FragmentOrderHistoryBinding, OrderHistoryViewModel>(),
     OrderHistoryRecyclerViewAdapter.OnListOrderHistoryClickListener {
 
     companion object {
@@ -36,7 +40,11 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
     private lateinit var sharedPref: SharedPreferenceUtil
     private var listOrderHistory = ArrayList<OrderHistoryModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setLayout = R.layout.fragment_order_history
         setView()
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -49,7 +57,8 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
 
         sharedPref = SharedPreferenceUtil(view.context)
 
-        val service = ApiClient.getApiClient(view.context)?.create(OrderHistoryApiService::class.java)
+        val service =
+            ApiClient.getApiClient(view.context)?.create(OrderHistoryApiService::class.java)
         if (service != null) {
             viewModel.setService(service)
         }
@@ -86,7 +95,7 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
 
         viewModel.isGetList.observe(viewLifecycleOwner, Observer {
             if (it) {
-                viewModel.listData.observe(viewLifecycleOwner, Observer { list->
+                viewModel.listData.observe(viewLifecycleOwner, Observer { list ->
                     (binding.rvOrderHistory.adapter as OrderHistoryRecyclerViewAdapter).addList(list)
                 })
                 binding.historyNotFound.visibility = View.GONE
@@ -103,7 +112,8 @@ class OrderHistoryFragment(private val toolbar: MaterialToolbar, private val tit
 
     private fun setRecyclerView() {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
-        binding.rvOrderHistory.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvOrderHistory.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
         val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this)
         binding.rvOrderHistory.adapter = adapter

@@ -5,7 +5,7 @@ import retrofit2.http.*
 interface PaymentApiService {
 
     @GET("order/statusCart/{id}")
-    suspend fun getCartByCustomerId(@Path("id") customerId: Int) : PaymentResponse
+    suspend fun getCartByCustomerId(@Path("id") customerId: Int): PaymentResponse
 
     @FormUrlEncoded
     @POST("orderDetail/Create")
@@ -13,12 +13,12 @@ interface PaymentApiService {
         @Field("csId") customerId: Int,
         @Field("odPaymentMethod") paymentMethod: String,
         @Field("odStatus") orderDetailStatus: String
-    ) : PaymentResponse.GeneralResponse
+    ): PaymentResponse.GeneralResponse
 
     @PUT("order/updateOdIdByCsId/{id}")
-    suspend fun updateOrderDetailId(@Path("id") customerId: Int) : PaymentResponse.GeneralResponse
+    suspend fun updateOrderDetailId(@Path("id") customerId: Int): PaymentResponse.GeneralResponse
 
     @DELETE("delivery/deleteDeliveryByCsId/{id}")
-    suspend fun deleteDelivery(@Path("id") customerId: Int) : PaymentResponse.GeneralResponse
+    suspend fun deleteDelivery(@Path("id") customerId: Int): PaymentResponse.GeneralResponse
 
 }

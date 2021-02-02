@@ -10,9 +10,10 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OrderHistoryRecyclerViewAdapter(private val listOrderHistory: ArrayList<OrderHistoryModel>,
-                                      private val onListOrderHistoryClickListener: OnListOrderHistoryClickListener)
-    : RecyclerView.Adapter<OrderHistoryRecyclerViewAdapter.OrderHistoryHolder>() {
+class OrderHistoryRecyclerViewAdapter(
+    private val listOrderHistory: ArrayList<OrderHistoryModel>,
+    private val onListOrderHistoryClickListener: OnListOrderHistoryClickListener
+) : RecyclerView.Adapter<OrderHistoryRecyclerViewAdapter.OrderHistoryHolder>() {
 
     fun addList(list: List<OrderHistoryModel>) {
         listOrderHistory.clear()
@@ -20,18 +21,28 @@ class OrderHistoryRecyclerViewAdapter(private val listOrderHistory: ArrayList<Or
         notifyDataSetChanged()
     }
 
-    class OrderHistoryHolder(val binding: ItemOrderHistoryBinding) : RecyclerView.ViewHolder(binding.root)
+    class OrderHistoryHolder(val binding: ItemOrderHistoryBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = listOrderHistory.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderHistoryHolder {
-        return OrderHistoryHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_order_history, parent, false))
+        return OrderHistoryHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_order_history,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: OrderHistoryHolder, position: Int) {
         val item = listOrderHistory[position]
         val date = item.orderUpdated!!.split("T")[0]
-        val totalPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice?.toDouble()).replace("Rp".toRegex(),"IDR ")
+        val totalPrice =
+            NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(item.totalPrice?.toDouble())
+                .replace("Rp".toRegex(), "IDR ")
 
         holder.binding.tvProductPrice.text = date
         holder.binding.tvProductName.text = totalPrice

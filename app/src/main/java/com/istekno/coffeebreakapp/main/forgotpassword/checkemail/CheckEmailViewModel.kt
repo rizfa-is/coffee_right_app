@@ -39,7 +39,8 @@ class CheckEmailViewModel : ViewModel(), CoroutineScope {
                                 onFailLiveData.value = "Account not registered"
                             }
                             else -> {
-                                onFailLiveData.value = "Fail to check email! Please try again later!"
+                                onFailLiveData.value =
+                                    "Fail to check email! Please try again later!"
                             }
                         }
                     }

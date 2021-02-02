@@ -6,17 +6,19 @@ import retrofit2.http.*
 interface DetailProductApiService {
 
     @GET("product/getProductByPrId/{id}")
-    suspend fun getDetailProduct(@Path("id") productId: Int) : DetailProductResponse
+    suspend fun getDetailProduct(@Path("id") productId: Int): DetailProductResponse
 
     @FormUrlEncoded
     @POST("order/addOrder")
-    suspend fun createOrder(@Field("prId") productId: Int,
-                            @Field("csId") customerId: Int) : PaymentResponse.GeneralResponse
+    suspend fun createOrder(
+        @Field("prId") productId: Int,
+        @Field("csId") customerId: Int
+    ): PaymentResponse.GeneralResponse
 
     @PUT("order/updateOrder/{orderId}")
-    suspend fun updateAmountOrder(@Path("orderId") orderId : Int) : PaymentResponse.GeneralResponse
+    suspend fun updateAmountOrder(@Path("orderId") orderId: Int): PaymentResponse.GeneralResponse
 
     @GET("order/statusCart/{csId}")
-    suspend fun getAllOrderByCsIdNCart(@Path("csId") csId : Int) : ListOrderByCsIdResponse
+    suspend fun getAllOrderByCsIdNCart(@Path("csId") csId: Int): ListOrderByCsIdResponse
 
 }

@@ -12,7 +12,8 @@ import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActiv
 import com.istekno.coffeebreakapp.main.welcomepage.WelcomePageActivity
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
-class SplashScreenActivity : BaseActivityViewModel<ActivitySplashScreenBinding, SplashScreenViewModel>() {
+class SplashScreenActivity :
+    BaseActivityViewModel<ActivitySplashScreenBinding, SplashScreenViewModel>() {
 
     private lateinit var sharePref: SharedPreferenceUtil
 

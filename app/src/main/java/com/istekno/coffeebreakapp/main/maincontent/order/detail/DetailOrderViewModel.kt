@@ -9,7 +9,7 @@ import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.UpdateSta
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class DetailOrderViewModel: ViewModel(), CoroutineScope {
+class DetailOrderViewModel : ViewModel(), CoroutineScope {
 
     val listData = MutableLiveData<List<DetailOrderHistoryModel>>()
     val isGetList = MutableLiveData<Boolean>()
@@ -46,7 +46,12 @@ class DetailOrderViewModel: ViewModel(), CoroutineScope {
                 if (result.success) {
                     isGetList.value = result.success
                     val list = result.data.map {
-                        DetailOrderHistoryModel(it.productName, it.orderPrice, it.orderDetailStatus, it.orderAmount)
+                        DetailOrderHistoryModel(
+                            it.productName,
+                            it.orderPrice,
+                            it.orderDetailStatus,
+                            it.orderAmount
+                        )
                     }
                     listData.value = list
                     isLoading.value = false

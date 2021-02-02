@@ -76,13 +76,13 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
     private fun subscribeLiveData() {
         viewModel.isRegister.observe(this, Observer {
             if (it) {
-                viewModel.isMessage.observe(this, Observer { it1->
+                viewModel.isMessage.observe(this, Observer { it1 ->
                     showToast(it1)
                 })
                 intent<LoginActivity>(this)
                 finish()
             } else {
-                viewModel.isMessage.observe(this, Observer { it1->
+                viewModel.isMessage.observe(this, Observer { it1 ->
                     showToast(it1)
                 })
             }

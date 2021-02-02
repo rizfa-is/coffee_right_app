@@ -43,12 +43,14 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
         binding.rvDrink.apply {
             val rvAdapter = HomeFavoriteAdapter()
             rvAdapter.notifyDataSetChanged()
-            val gridLayoutManager = GridLayoutManager(this@FavoriteActivity, 2, LinearLayoutManager.HORIZONTAL, false)
+            val gridLayoutManager =
+                GridLayoutManager(this@FavoriteActivity, 2, LinearLayoutManager.HORIZONTAL, false)
             layoutManager = gridLayoutManager
 
             rvAdapter.setOnItemClicked(object : HomeFavoriteAdapter.OnItemClickCallback {
                 override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
-                    val sendIntent = Intent(this@FavoriteActivity, DetailProductActivity::class.java)
+                    val sendIntent =
+                        Intent(this@FavoriteActivity, DetailProductActivity::class.java)
                     sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
                 }
@@ -59,11 +61,13 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
         binding.rvFood.apply {
             val rvAdapter = HomeFavoriteAdapter()
             rvAdapter.notifyDataSetChanged()
-            layoutManager = LinearLayoutManager(this@FavoriteActivity, RecyclerView.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@FavoriteActivity, RecyclerView.HORIZONTAL, false)
 
             rvAdapter.setOnItemClicked(object : HomeFavoriteAdapter.OnItemClickCallback {
                 override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
-                    val sendIntent = Intent(this@FavoriteActivity, DetailProductActivity::class.java)
+                    val sendIntent =
+                        Intent(this@FavoriteActivity, DetailProductActivity::class.java)
                     sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
                 }

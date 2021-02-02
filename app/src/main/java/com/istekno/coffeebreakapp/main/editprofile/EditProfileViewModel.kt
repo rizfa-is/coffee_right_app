@@ -8,7 +8,7 @@ import okhttp3.RequestBody
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EditProfileViewModel: ViewModel(), CoroutineScope {
+class EditProfileViewModel : ViewModel(), CoroutineScope {
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     val onMessageLiveData = MutableLiveData<String>()

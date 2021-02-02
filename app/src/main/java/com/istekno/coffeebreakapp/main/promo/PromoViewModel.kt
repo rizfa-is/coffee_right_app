@@ -7,7 +7,7 @@ import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeService
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class PromoViewModel: ViewModel(), CoroutineScope {
+class PromoViewModel : ViewModel(), CoroutineScope {
     val isLoading = MutableLiveData<Boolean>()
     val listData = MutableLiveData<List<GetProductResponse.DataProduct>>()
 
@@ -38,7 +38,18 @@ class PromoViewModel: ViewModel(), CoroutineScope {
 
             if (result is GetProductResponse) {
                 val data = result.data.map {
-                    GetProductResponse.DataProduct(it.productId, it.discountId, it.productName, it.productDesc, it.productPrice, it.productImage, it.productFavorite, it.productCategory, it.productCreated, it.productUpdated)
+                    GetProductResponse.DataProduct(
+                        it.productId,
+                        it.discountId,
+                        it.productName,
+                        it.productDesc,
+                        it.productPrice,
+                        it.productImage,
+                        it.productFavorite,
+                        it.productCategory,
+                        it.productCreated,
+                        it.productUpdated
+                    )
                 }
 
                 listData.value = data
