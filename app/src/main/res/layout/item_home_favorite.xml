@@ -11,7 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="215dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -31,18 +33,20 @@
             android:id="@+id/imageView"
             android:layout_width="130dp"
             android:layout_height="170dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/bg_white_radius"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_product_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
@@ -50,26 +54,30 @@
             android:maxLines="2"
             android:text="@{model.productName}"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_product" />
 
         <TextView
             android:id="@+id/tv_product_price"
-            android:layout_width="115dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins_bold"
+            android:maxLines="1"
             android:text="0"
             android:textAlignment="center"
             android:textColor="@color/theme_choco"
-            android:textSize="17sp"
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="@+id/tv_product_name"
-            app:layout_constraintStart_toStartOf="@+id/tv_product_name"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

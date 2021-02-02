@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,8 +19,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.navigation.NavigationView
@@ -29,11 +26,10 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
-import com.istekno.coffeebreakapp.main.checkout.CheckoutActivity
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeAdapter
+import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFavoriteAdapter
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
-import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeResponse
+import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
@@ -45,7 +41,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
-        private val listFilter = arrayOf("All", "Food", "Drink", "Favorite", "Promo")
+        private val listFilter = arrayOf("All", "Food", "Drink")
     }
 
     private lateinit var mToggle: ActionBarDrawerToggle
@@ -67,13 +63,8 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         setDrawer()
         chipViewInit()
 
-        val checkedID = binding.cgFilter.checkedChipId
-        if (checkedID == -1) {
-            binding.cgFilter.check(0)
-        }
-
         initialHomePage()
-        setRecyclerView(binding.root)
+        setRecyclerView()
         subscribeLiveData()
         viewListener()
     }
@@ -110,7 +101,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
             name.text = newName
             email.text = newEmail
 
-            viewModel.getCustomerData()
+            viewModel.updateSharedPref()
         } else {
             Glide.with(this).load(img + sharePref.getPreference().acImage)
                 .placeholder(R.drawable.ic_avatar_en).into(avatar)
@@ -173,16 +164,16 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         }
     }
 
-    private fun setRecyclerView(view: View) {
-        val rvAdapter = HomeAdapter()
+    private fun setRecyclerView() {
+        val rvAdapter = HomeFavoriteAdapter()
 
         binding.rvSearchListProduct.apply {
             rvAdapter.notifyDataSetChanged()
-            layoutManager = GridLayoutManager(view.context, 2)
+            layoutManager = GridLayoutManager(this@MainContentActivity, 2)
 
-            rvAdapter.setOnItemClicked(object : HomeAdapter.OnItemClickCallback {
-                override fun onItemClicked(productModel: HomeResponse.DataProduct) {
-                    val sendIntent = Intent(view.context, DetailProductActivity::class.java)
+            rvAdapter.setOnItemClicked(object : HomeFavoriteAdapter.OnItemClickCallback {
+                override fun onItemClicked(productModel: GetProductResponse.DataProduct) {
+                    val sendIntent = Intent(this@MainContentActivity, DetailProductActivity::class.java)
                     sendIntent.putExtra(HomeFragment.HOME_KEY, productModel.productId)
                     startActivity(sendIntent)
                 }
@@ -213,7 +204,7 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
         })
 
         viewModel.listProduct.observe(this, {
-            (binding.rvSearchListProduct.adapter as HomeAdapter).setData(it)
+            (binding.rvSearchListProduct.adapter as HomeFavoriteAdapter).setData(it)
         })
 
         viewModel.isFailedStatus.observe(this, {
@@ -297,6 +288,8 @@ class MainContentActivity : BaseActivityViewModel<ActivityMainContentBinding, Ma
 
         searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                binding.cgFilter.check(0)
+
                 binding.flMaincontent.visibility = View.GONE
                 binding.toolbarTitle.visibility = View.GONE
 

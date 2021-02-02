@@ -45,44 +45,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_white"
-                android:elevation="3dp"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="20dp">
-
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:text="Address"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins_bold"
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-                <EditText
-                    android:id="@+id/et_customer_address"
-                    android:hint="Enter delivery address"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:background="@drawable/shape_bg_grey_to_blue"
-                    android:paddingVertical="16dp"
-                    android:paddingHorizontal="25dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,6 +133,46 @@
                     app:layout_constraintBottom_toBottomOf="@id/tv_set_time"
                     app:layout_constraintStart_toEndOf="@+id/tv_set_time"
                     app:layout_constraintTop_toTopOf="@id/tv_set_time" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_address"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg_white"
+                android:elevation="3dp"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="17sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <EditText
+                    android:id="@+id/et_customer_address"
+                    android:hint="Enter delivery address"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:background="@drawable/shape_bg_grey_to_blue"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
