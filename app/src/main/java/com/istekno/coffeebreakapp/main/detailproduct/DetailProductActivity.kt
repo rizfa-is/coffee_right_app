@@ -105,14 +105,8 @@ class DetailProductActivity :
                 binding.lineThrough.visibility = View.GONE
                 binding.tvPromoPrice.visibility = View.GONE
 
-<<<<<<< HEAD
-                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-                    .format(it[0].productPrice.toDouble())
-                    .replace("Rp".toRegex(), "IDR ")
-=======
                 val formatter = DecimalFormat("#,###")
                 val price = formatter.format(it[0].productPrice.toDouble())
->>>>>>> back-format
 
                 binding.tvPrice.text = "IDR $price"
 
@@ -120,24 +114,12 @@ class DetailProductActivity :
                 binding.lineThrough.visibility = View.VISIBLE
                 binding.tvPromoPrice.visibility = View.VISIBLE
 
-<<<<<<< HEAD
-                val promoPrice = it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
-                val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-                    .format(it[0].productPrice.toDouble())
-                    .replace("Rp".toRegex(), "IDR ")
-
-                binding.tvPromoPrice.text = price
-                binding.tvPrice.text =
-                    NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(promoPrice)
-                        .replace("Rp".toRegex(), "IDR ")
-=======
                 val formatter = DecimalFormat("#,###")
                 val price = formatter.format(it[0].productPrice.toDouble())
                 val promoPrice =  it[0].productPrice.toInt() - (it[0].productPrice.toInt() * 0.1)
 
                 binding.tvPromoPrice.text = "IDR $price"
                 binding.tvPrice.text = "IDR ${formatter.format(promoPrice)}"
->>>>>>> back-format
 
             }
 

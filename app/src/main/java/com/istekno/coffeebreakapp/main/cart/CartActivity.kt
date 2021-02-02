@@ -93,16 +93,11 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
                     (binding.rvProductCart.adapter as CartAdapter).setData(it1)
                 })
                 binding.rvProductCart.visibility = View.VISIBLE
-<<<<<<< HEAD
-                viewModel.totalPriceCart.observe(this, { price ->
-                    binding.tvTotal.text = price
-=======
                 viewModel.totalPriceCart.observe(this, { price->
                     sumPrice = price
                     val formatter = DecimalFormat("#,###")
 
                     binding.tvTotal.text = formatter.format(price.toDouble())
->>>>>>> back-format
                 })
                 binding.layoutTotal.visibility = View.VISIBLE
                 binding.ivEmptyCart.visibility = View.GONE
