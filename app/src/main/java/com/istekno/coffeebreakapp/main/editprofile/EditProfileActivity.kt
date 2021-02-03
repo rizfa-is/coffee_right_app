@@ -204,7 +204,6 @@ class EditProfileActivity :
                     )
                 }
             }
-
             dialog.dialogUpdating(this, this) { moveActivity(acName, acEmail) }
         }
 
