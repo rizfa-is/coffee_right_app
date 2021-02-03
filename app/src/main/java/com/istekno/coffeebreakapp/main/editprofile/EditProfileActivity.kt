@@ -10,7 +10,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.widget.TextView
 import android.widget.Toast
@@ -35,8 +34,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditProfileActivity :
-    BaseActivityViewModel<ActivityEditProfileBinding, EditProfileViewModel>() {
+class EditProfileActivity : BaseActivityViewModel<ActivityEditProfileBinding, EditProfileViewModel>() {
     private lateinit var sharedPref: SharedPreferenceUtil
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
@@ -196,7 +194,6 @@ class EditProfileActivity :
                     )
                 }
             }
-
             dialog.dialogUpdating(this, this) { moveActivity(acName, acEmail) }
         }
 
