@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -79,7 +80,10 @@ class SignupActivity : BaseActivityViewModel<ActivitySignupBinding, SignupViewMo
                 viewModel.isMessage.observe(this, Observer { it1 ->
                     showToast(it1)
                 })
-                intent<LoginActivity>(this)
+
+                val sendIntent = Intent(this, LoginActivity::class.java)
+                sendIntent.putExtra("sign_up", 1)
+                startActivity(sendIntent)
                 finish()
             } else {
                 viewModel.isMessage.observe(this, Observer { it1 ->
