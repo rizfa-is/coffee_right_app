@@ -7,6 +7,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -74,10 +75,10 @@ class EditProfileActivity :
         binding.etAddress.setText(data?.accountAddress)
         binding.etPhone.setText(data?.accountPhone)
         binding.etEmail.setText(data?.accountEmail)
-        Glide.with(this).load(img + data?.accountImage)
-            .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
 
         if (date != null) {
+            Glide.with(this).load(img + data?.accountImage)
+                .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
             binding.etDob.setText(dateFormatter(date))
             myBirthday = date
         }
