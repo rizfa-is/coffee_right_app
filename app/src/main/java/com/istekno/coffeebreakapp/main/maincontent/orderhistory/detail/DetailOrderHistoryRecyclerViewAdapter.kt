@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
+import com.istekno.coffeebreakapp.databinding.ItemDetailOrderBinding
 import com.istekno.coffeebreakapp.databinding.ItemPaymentBinding
 
 class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<DetailOrderHistoryModel>) :
@@ -17,7 +18,7 @@ class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<Det
     }
 
 
-    class DetailOrderHistoryHolder(val binding: ItemPaymentBinding) :
+    class DetailOrderHistoryHolder(val binding: ItemDetailOrderBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount(): Int = listOrder.size
@@ -26,7 +27,7 @@ class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<Det
         return DetailOrderHistoryHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_payment,
+                R.layout.item_detail_order,
                 parent,
                 false
             )
@@ -38,7 +39,7 @@ class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<Det
 
         holder.binding.tvProductName.text = item.productName
         holder.binding.tvAmountProduct.text = item.orderAmount.toString()
-        holder.binding.tvPriceProduct.text = item.orderPrice.toString()
+        holder.binding.tvProductPrice.text = item.orderPrice.toString()
 
     }
 }
