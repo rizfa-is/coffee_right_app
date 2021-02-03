@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,13 +28,13 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityMainContentBinding
 import com.istekno.coffeebreakapp.main.cart.CartActivity
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
+import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFavoriteAdapter
 import com.istekno.coffeebreakapp.main.maincontent.homepage.HomeFragment
-import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderFragment
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryFragment
 import com.istekno.coffeebreakapp.main.maincontent.profile.ProfileFragment
 import com.istekno.coffeebreakapp.main.mainpage.MainPageActivity
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryFragment
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
@@ -49,6 +50,7 @@ class MainContentActivity :
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var drawer: DrawerLayout
     private lateinit var sharePref: SharedPreferenceUtil
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
@@ -334,7 +336,14 @@ class MainContentActivity :
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers()
-        } else super.onBackPressed()
+        } else if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        doubleBackToExitPressedOnce = true
+        showToast("Please click BACK again to exit")
+        Handler(mainLooper).postDelayed( { doubleBackToExitPressedOnce = false }, 2000)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -363,6 +372,6 @@ class MainContentActivity :
     }
 
     private fun showToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }
