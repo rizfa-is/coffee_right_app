@@ -16,6 +16,7 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityPaymentBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
+import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import java.text.DecimalFormat
 
@@ -24,6 +25,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private var listCart = ArrayList<PaymentModel>()
     private var paymentMethod: String = ""
     private lateinit var sharePref: SharedPreferenceUtil
+    private lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_payment
@@ -35,7 +37,11 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             viewModel.setService(service)
         }
 
-        onRadioButtonClicked(binding.root)
+        dialog = Dialog()
+
+        binding.radioCard.isClickable = false
+        binding.radioBankAccount.isClickable = false
+        binding.radioCod.isChecked = true
 
         val customerId = sharePref.getPreference().roleID
         setRecyclerView()
@@ -51,25 +57,22 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         super.onBackPressed()
         val customerId = sharePref.getPreference().roleID
         viewModel.deleteDelivery(customerId!!)
-        subscribeDeleteLiveData()
     }
 
     private fun onClickListener() {
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
 
-            if (paymentMethod == "") {
-                showToast("Please choose payment method!")
-                return@setOnClickListener
-            }
-
-            viewModel.createOrderDetailApi(customerId!!, paymentMethod, "Paid")
+//            if (paymentMethod == "") {
+//                showToast("Please choose payment method!")
+//                return@setOnClickListener
+//            }
+            dialog.dialog(this, "Are You Sure ?") { viewModel.createOrderDetailApi(customerId!!, "COD", "Unpaid") }
         }
 
         binding.ivBack.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
             viewModel.deleteDelivery(customerId!!)
-            subscribeDeleteLiveData()
             onBackPressed()
         }
     }
@@ -132,22 +135,10 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
                         intent.putExtra("data", 0)
                         startActivity(intent)
                         finishAffinity()
-                    } else {
-                        showToast("Failed Update!")
                     }
                 })
             } else {
                 showToast("Failed to process order")
-            }
-        }
-    }
-
-    private fun subscribeDeleteLiveData() {
-        viewModel.isDeleteSuccess.observe(this) {
-            if (it) {
-                showToast("success delete delivery")
-            } else {
-                showToast("failed delete delivery")
             }
         }
     }
@@ -163,4 +154,5 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
 }

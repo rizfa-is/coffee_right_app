@@ -11,7 +11,6 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
     val isLoading = MutableLiveData<Boolean>()
     val totalPrice = MutableLiveData<Int>()
     val isProcessSuccess = MutableLiveData<Boolean>()
-    val isDeleteSuccess = MutableLiveData<Boolean>()
     val isUpdateSuccess = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
@@ -117,16 +116,6 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
                     service.deleteDelivery(customerId)
                 } catch (e: Throwable) {
                     e.printStackTrace()
-
-                    withContext(Dispatchers.Main) {
-                        isDeleteSuccess.value = false
-                    }
-                }
-            }
-
-            if (result is PaymentResponse.GeneralResponse) {
-                if (result.success) {
-                    isDeleteSuccess.value = result.success
                 }
             }
         }
