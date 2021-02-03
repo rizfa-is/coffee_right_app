@@ -54,10 +54,8 @@ class ProfileFragment(
         viewModel.setService(service)
         viewModel.setSharedPref(preference)
 
-        Log.e("sharedPref Profile before Get", preference.getPreference().toString())
         viewModel.getCustomerByID()
         subscribeLiveData(view)
-        Log.e("sharedPref Profile after Get", preference.getPreference().toString())
         viewListener(view)
     }
 
