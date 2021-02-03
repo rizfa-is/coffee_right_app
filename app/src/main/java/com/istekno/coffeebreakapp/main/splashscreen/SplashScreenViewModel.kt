@@ -46,9 +46,10 @@ class SplashScreenViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-        if (result is PaymentResponse.GeneralResponse) {
-            checkJwt.value = result.success
-        }
+            if (result is PaymentResponse.GeneralResponse) {
+                checkJwt.value = result.success
+            }
         }
     }
+
 }

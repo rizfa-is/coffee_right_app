@@ -39,7 +39,6 @@ class SplashScreenActivity :
         viewModel.checkLoginStatus()
         viewModel.callApiService()
 
-
         window.setFlags(
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -65,16 +64,10 @@ class SplashScreenActivity :
                         finish()
                     }
                 }
-//                intent<MainContentActivity>(this)
-//                finish()
             } else {
                 intent<WelcomePageActivity>(this)
                 finish()
             }
         })
-    }
-
-    private fun checkJwtExpired() {
-
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
