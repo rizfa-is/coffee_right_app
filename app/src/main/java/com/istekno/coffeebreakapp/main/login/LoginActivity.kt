@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.login
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel>() {
 
     private lateinit var sharePref: SharedPreferenceUtil
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_login
@@ -79,6 +81,21 @@ class LoginActivity : BaseActivityViewModel<ActivityLoginBinding, LoginViewModel
                 showToast("Email/Password Wrong")
             }
         })
+    }
+
+    override fun onBackPressed() {
+        val intent = intent.getIntExtra("sign_up", -1)
+
+        if (intent == 1) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            doubleBackToExitPressedOnce = true
+            showToast("Please click BACK again to exit")
+            Handler(mainLooper).postDelayed( { doubleBackToExitPressedOnce = false }, 2000 )
+        } else super.onBackPressed()
     }
 
     private fun showToast(msg: String) {

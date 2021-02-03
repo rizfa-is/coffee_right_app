@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.homepage
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -7,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemHomeFavoriteBinding
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
-class HomeFavoriteAdapter : RecyclerView.Adapter<HomeFavoriteAdapter.ListViewHolder>() {
+class HomeFavoriteAdapter: RecyclerView.Adapter<HomeFavoriteAdapter.ListViewHolder>() {
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -33,8 +35,7 @@ class HomeFavoriteAdapter : RecyclerView.Adapter<HomeFavoriteAdapter.ListViewHol
         fun onItemClicked(productModel: GetProductResponse.DataProduct)
     }
 
-    inner class ListViewHolder(val binding: ItemHomeFavoriteBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(val binding: ItemHomeFavoriteBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(productModel: GetProductResponse.DataProduct) {
             binding.model = productModel
 
@@ -46,24 +47,17 @@ class HomeFavoriteAdapter : RecyclerView.Adapter<HomeFavoriteAdapter.ListViewHol
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return ListViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_home_favorite,
-                parent,
-                false
-            )
-        )
+        return ListViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_home_favorite, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(listFavorite[position])
         val item = listFavorite[position]
-        val price = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            .format(item.productPrice.toDouble())
-            .replace("Rp".toRegex(), "IDR ")
+        val formatter = DecimalFormat("#,###")
+        val price = formatter.format(item.productPrice.toDouble())
 
-        holder.binding.tvProductPrice.text = price
+        holder.binding.tvProductPrice.text = "IDR $price"
     }
 
     override fun getItemCount(): Int = listFavorite.size

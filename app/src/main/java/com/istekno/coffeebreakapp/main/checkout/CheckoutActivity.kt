@@ -16,6 +16,7 @@ import com.istekno.coffeebreakapp.main.payment.PaymentActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.Dialog
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
@@ -51,17 +52,19 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
         subscribeLiveData()
     }
 
-    @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType", "SetTextI18n")
     private fun setInitialChecked() {
         val checkedIdDelivery = binding.cgDeliveryMethod.checkedChipId
         val checkedIdNow = binding.cgNow.checkedChipId
         val totalPrice = intent.getStringExtra("total_price")
+        val formatter = DecimalFormat("#,###")
+        val price = formatter.format(totalPrice?.toDouble())
 
         if (sharedPref.getPreference().acAddress != "Not set") {
             binding.etCustomerAddress.setText(sharedPref.getPreference().acAddress)
         }
 
-        binding.tvTotalCost.text = totalPrice
+        binding.tvTotalCost.text = "IDR $price"
 
         if (checkedIdDelivery == -1 || checkedIdNow == -1) {
             binding.cgDeliveryMethod.check(10)

@@ -7,14 +7,14 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.loader.content.CursorLoader
@@ -34,6 +34,8 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class EditProfileActivity :
@@ -46,6 +48,7 @@ class EditProfileActivity :
     private var pathImage: String? = null
     private var imageUri: Uri? = null
     private var gender: String? = null
+    private var myBirthday = ""
 
     companion object {
         private const val IMAGE_PICK_CODE = 1000
@@ -57,7 +60,6 @@ class EditProfileActivity :
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
@@ -68,13 +70,19 @@ class EditProfileActivity :
         dialog = Dialog()
 
         val data = intent.getParcelableExtra<ProfileModel>("Data")
+        val date = intent.getParcelableExtra<ProfileModel>("Data")?.accountBirthday?.split('T')?.get(0)
+
         binding.etName.setText(data?.accountName)
         binding.etAddress.setText(data?.accountAddress)
         binding.etPhone.setText(data?.accountPhone)
         binding.etEmail.setText(data?.accountEmail)
-        Glide.with(this).load(img + data?.accountImage)
-            .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
-        binding.etDob.setText(data?.accountBirthday?.split('T')?.get(0))
+
+        if (date != null) {
+            Glide.with(this).load(img + data?.accountImage)
+                .placeholder(R.drawable.ic_avatar_en).into(binding.imageProfile)
+            binding.etDob.setText(dateFormatter(date))
+            myBirthday = date
+        }
 
         gender = when (binding.radioButton.checkedRadioButtonId) {
             binding.female.id -> {
@@ -132,7 +140,7 @@ class EditProfileActivity :
             val acName = binding.etName.text.toString()
             val acPhone = binding.etPhone.text.toString()
             val acEmail = binding.etEmail.text.toString()
-            val csBirthday = binding.etDob.text.toString()
+            val csBirthday = myBirthday
             val delAddress = binding.etAddress.text.toString()
             val csGender = binding.radioButton.checkedRadioButtonId
 
@@ -266,12 +274,23 @@ class EditProfileActivity :
             myCalendar.set(Calendar.MONTH, month)
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            val day = findViewById<TextView>(R.id.et_dob)
+            val day = binding.etDob
             val myFormat = "yyyy-MM-dd"
             val sdf = SimpleDateFormat(myFormat, Locale.US)
+            val date = sdf.format(myCalendar.time)
 
-            day.text = sdf.format(myCalendar.time)
+            day.setText(dateFormatter(date))
+            myBirthday = date
         }
+    }
+
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun dateFormatter(date: String): String {
+        val myDate = LocalDate.parse(date)
+        val formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
+        val dateFormatted = myDate.format(formatter)
+
+        return dateFormatted.replace("-".toRegex(), " ")
     }
 
     private fun setViewModel() {
