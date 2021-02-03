@@ -3,11 +3,14 @@ package com.istekno.coffeebreakapp.main.maincontent.order
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -19,6 +22,7 @@ import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActiv
 import com.istekno.coffeebreakapp.main.maincontent.order.detail.DetailOrderActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import kotlinx.coroutines.Runnable
 
 class OrderFragment(
     private val toolbar: MaterialToolbar,
@@ -35,6 +39,7 @@ class OrderFragment(
     }
 
     private var listOrder = ArrayList<OrderResponse.Data>()
+    private lateinit var handler: Handler
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +67,7 @@ class OrderFragment(
             viewModel.callOrderCustomerApi()
         } else {
             viewModel.callOrderAdminApi()
+            dataRefreshManagement()
             binding.btnStartOrder.visibility = View.GONE
         }
 
@@ -131,5 +137,15 @@ class OrderFragment(
         sendIntent.putExtra(TAX, listOrder[position].orderTax)
         sendIntent.putExtra(TOTAL_PRICE, listOrder[position].totalPrice)
         startActivity(sendIntent)
+    }
+
+    fun dataRefreshManagement() {
+        handler = Handler(Looper.getMainLooper())
+        handler.post(object : Runnable {
+            override fun run() {
+                viewModel.callOrderAdminApi()
+                handler.postDelayed(this, 2000)
+            }
+        })
     }
 }
