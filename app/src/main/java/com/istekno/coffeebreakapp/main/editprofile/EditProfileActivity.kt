@@ -37,7 +37,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class EditProfileActivity : BaseActivityViewModel<ActivityEditProfileBinding, EditProfileViewModel>() {
+class EditProfileActivity :
+    BaseActivityViewModel<ActivityEditProfileBinding, EditProfileViewModel>() {
     private lateinit var sharedPref: SharedPreferenceUtil
     private lateinit var myCalendar: Calendar
     private lateinit var deadline: DatePickerDialog.OnDateSetListener
