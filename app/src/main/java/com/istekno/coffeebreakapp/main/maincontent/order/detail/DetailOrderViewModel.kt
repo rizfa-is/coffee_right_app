@@ -3,6 +3,7 @@ package com.istekno.coffeebreakapp.main.maincontent.order.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderApiService
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryResponse
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryModel
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryResponse
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.UpdateStatusOrderDetailResponse
@@ -23,47 +24,6 @@ class DetailOrderViewModel : ViewModel(), CoroutineScope {
 
     fun setService(service: OrderApiService) {
         this.service = service
-    }
-
-    fun callOrderApiService(orderDetailId: Int) {
-        launch {
-            isLoading.value = true
-
-            val result = withContext(Dispatchers.IO) {
-                try {
-                    service.getAllHistoryOrderByOdId(orderDetailId)
-                } catch (e: Throwable) {
-                    e.printStackTrace()
-
-                    withContext(Dispatchers.Main) {
-                        isGetList.value = false
-                        isLoading.value = false
-                    }
-                }
-            }
-
-            if (result is DetailOrderHistoryResponse) {
-                if (result.success) {
-                    isGetList.value = result.success
-                    val list = result.data.map {
-                        DetailOrderHistoryModel(
-                            it.productName,
-                            it.orderPrice,
-                            it.orderDetailStatus,
-                            it.orderAmount
-                        )
-                    }
-                    listData.value = list
-                    isLoading.value = false
-                } else {
-                    isGetList.value = false
-                    isLoading.value = false
-                }
-            } else {
-                isGetList.value = false
-                isLoading.value = false
-            }
-        }
     }
 
     fun updateStatusByAdmin(odId: Int) {

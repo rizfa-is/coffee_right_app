@@ -14,6 +14,8 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderApiService
+import com.istekno.coffeebreakapp.main.maincontent.order.OrderResponse
+import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryResponse
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryModel
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
@@ -29,7 +31,7 @@ class DetailOrderActivity :
         const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
-    private var listOrder = ArrayList<DetailOrderHistoryModel>()
+    private var listOrder = ArrayList<OrderResponse.Product>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_detail_order
@@ -42,7 +44,8 @@ class DetailOrderActivity :
             viewModel.setService(service)
         }
 
-        val id = intent.getIntExtra(ORDER_HISTORY_KEY, -1)
+        val data = intent.getParcelableExtra<OrderResponse.Data>(ORDER_HISTORY_KEY)
+        binding.model = data
 
         if (sharedPref.getPreference().level == 0) {
             binding.btnUpdateDone.visibility = View.GONE
@@ -51,11 +54,12 @@ class DetailOrderActivity :
         }
 
         setRecyclerView()
-        viewModel.callOrderApiService(id)
-        subscribeLoadingLiveData()
-        subscribeGetListLiveData()
         subscribeUpdateLiveData()
-        onClickListener(id)
+        if (data != null) {
+            onClickListener(data.orderDetailId)
+            (binding.rvListOrder.adapter as DetailOrderRecyclerViewAdapter).addList(data.productOrder)
+        }
+
     }
 
     private fun subscribeUpdateLiveData() {
@@ -63,7 +67,6 @@ class DetailOrderActivity :
             if (it) {
                 Toast.makeText(this, "Updated successfully!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainContentActivity::class.java)
-//                intent.putExtra("data", 0)
                 startActivity(intent)
                 finish()
             } else {
@@ -72,42 +75,11 @@ class DetailOrderActivity :
         })
     }
 
-    private fun subscribeLoadingLiveData() {
-        viewModel.isLoading.observe(this, {
-            if (it) {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.scrollView.visibility = View.GONE
-            } else {
-                binding.progressBar.visibility = View.GONE
-                binding.scrollView.visibility = View.VISIBLE
-            }
-        })
-    }
-
     private fun setRecyclerView() {
-        binding.rvListOrder.isNestedScrollingEnabled = false
         binding.rvListOrder.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        val adapter = DetailOrderHistoryRecyclerViewAdapter(listOrder)
+        val adapter = DetailOrderRecyclerViewAdapter(listOrder)
         binding.rvListOrder.adapter = adapter
-    }
-
-    private fun subscribeGetListLiveData() {
-        viewModel.isGetList.observe(this, {
-            if (it) {
-                viewModel.listData.observe(this, { list ->
-                    (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(
-                        list
-                    )
-                    binding.tvTax.text = intent.getIntExtra(TAX, -1).toString()
-                    binding.tvSubtotal.text = intent.getIntExtra(PRICE_BEFORE_TAX, -1).toString()
-                    binding.tvTotal.text = intent.getIntExtra(TOTAL_PRICE, -1).toString()
-                })
-            } else {
-                Toast.makeText(this, "Something wrong ...", Toast.LENGTH_SHORT).show()
-            }
-        })
-
     }
 
     private fun onClickListener(odId: Int) {

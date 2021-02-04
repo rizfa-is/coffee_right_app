@@ -1,4 +1,4 @@
-package com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail
+package com.istekno.coffeebreakapp.main.maincontent.order.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,12 +9,13 @@ import com.istekno.coffeebreakapp.R
 import com.istekno.coffeebreakapp.databinding.ItemDetailOrderBinding
 import com.istekno.coffeebreakapp.databinding.ItemPaymentBinding
 import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
+import com.istekno.coffeebreakapp.main.maincontent.order.OrderResponse
 import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryResponse
 
-class DetailOrderHistoryRecyclerViewAdapter(private val listOrder: ArrayList<OrderHistoryResponse.Product>) :
-    RecyclerView.Adapter<DetailOrderHistoryRecyclerViewAdapter.DetailOrderHistoryHolder>() {
+class DetailOrderRecyclerViewAdapter(private val listOrder: ArrayList<OrderResponse.Product>) :
+    RecyclerView.Adapter<DetailOrderRecyclerViewAdapter.DetailOrderHistoryHolder>() {
 
-    fun addList(list: List<OrderHistoryResponse.Product>) {
+    fun addList(list: List<OrderResponse.Product>) {
         listOrder.clear()
         listOrder.addAll(list)
         notifyDataSetChanged()
