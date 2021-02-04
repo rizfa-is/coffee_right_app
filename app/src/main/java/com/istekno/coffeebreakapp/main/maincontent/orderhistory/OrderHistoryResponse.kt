@@ -18,7 +18,7 @@ data class OrderHistoryResponse(val success: Boolean, val message: String, val d
         @SerializedName("dv_address") val deliveryAddress: String,
         @SerializedName("od_total_price_before_tax") val priceBeforeTax: Int,
         @SerializedName("od_transaction_id") val transactionId: String,
-        @SerializedName("od_totalPrice") val totalPrice: Int,
+        @SerializedName("od_total_price") val totalPrice: Int,
         @SerializedName("od_status") val orderDetailStatus: String,
         @SerializedName("od_payment_method") val orderPayment: String,
         @SerializedName("od_tax") val orderTax: Int,

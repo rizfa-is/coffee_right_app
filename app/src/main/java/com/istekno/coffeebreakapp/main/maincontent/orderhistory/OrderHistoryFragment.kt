@@ -32,9 +32,6 @@ class OrderHistoryFragment(
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
-        const val PRICE_BEFORE_TAX = "PRICE_BEFORE_TAX"
-        const val TAX = "TAX"
-        const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
     private lateinit var sharedPref: SharedPreferenceUtil
@@ -121,6 +118,7 @@ class OrderHistoryFragment(
 
     override fun onOrderHistoryItemClicked(position: Int) {
         val sendIntent = Intent(context, DetailOrderHistoryActivity::class.java)
+        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrderHistory[position])
         startActivity(sendIntent)
     }
 

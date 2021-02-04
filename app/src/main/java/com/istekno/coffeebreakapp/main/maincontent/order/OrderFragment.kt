@@ -33,9 +33,6 @@ class OrderFragment(
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
-        const val PRICE_BEFORE_TAX = "PRICE_BEFORE_TAX"
-        const val TAX = "TAX"
-        const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
     private var listOrder = ArrayList<OrderResponse.Data>()
@@ -132,10 +129,7 @@ class OrderFragment(
 
     override fun onOrderItemClicked(position: Int) {
         val sendIntent = Intent(requireContext(), DetailOrderActivity::class.java)
-        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position].orderDetailId)
-        sendIntent.putExtra(PRICE_BEFORE_TAX, listOrder[position].priceBeforeTax)
-        sendIntent.putExtra(TAX, listOrder[position].orderTax)
-        sendIntent.putExtra(TOTAL_PRICE, listOrder[position].totalPrice)
+        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position])
         startActivity(sendIntent)
     }
 
