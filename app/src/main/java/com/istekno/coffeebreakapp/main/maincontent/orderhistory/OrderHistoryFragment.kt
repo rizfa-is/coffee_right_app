@@ -38,7 +38,7 @@ class OrderHistoryFragment(
     }
 
     private lateinit var sharedPref: SharedPreferenceUtil
-    private var listOrderHistory = ArrayList<OrderHistoryModel>()
+    private var listOrderHistory = ArrayList<OrderHistoryResponse.Data>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,10 +121,6 @@ class OrderHistoryFragment(
 
     override fun onOrderHistoryItemClicked(position: Int) {
         val sendIntent = Intent(context, DetailOrderHistoryActivity::class.java)
-        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrderHistory[position].orderId)
-        sendIntent.putExtra(PRICE_BEFORE_TAX, listOrderHistory[position].priceBeforeTax)
-        sendIntent.putExtra(TAX, listOrderHistory[position].orderTax)
-        sendIntent.putExtra(TOTAL_PRICE, listOrderHistory[position].totalPrice)
         startActivity(sendIntent)
     }
 
