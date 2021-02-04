@@ -11,11 +11,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class OrderHistoryRecyclerViewAdapter(
-    private val listOrderHistory: ArrayList<OrderHistoryModel>,
+    private val listOrderHistory: ArrayList<OrderHistoryResponse.Data>,
     private val onListOrderHistoryClickListener: OnListOrderHistoryClickListener
 ) : RecyclerView.Adapter<OrderHistoryRecyclerViewAdapter.OrderHistoryHolder>() {
 
-    fun addList(list: List<OrderHistoryModel>) {
+    fun addList(list: List<OrderHistoryResponse.Data>) {
         listOrderHistory.clear()
         listOrderHistory.addAll(list)
         notifyDataSetChanged()

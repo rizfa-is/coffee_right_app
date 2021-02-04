@@ -7,7 +7,7 @@ import kotlin.coroutines.CoroutineContext
 
 class OrderHistoryViewModel : ViewModel(), CoroutineScope {
 
-    val listData = MutableLiveData<List<OrderHistoryModel>>()
+    val listData = MutableLiveData<List<OrderHistoryResponse.Data>>()
     val isLoading = MutableLiveData<Boolean>()
     val isGetList = MutableLiveData<Boolean>()
 
@@ -40,22 +40,27 @@ class OrderHistoryViewModel : ViewModel(), CoroutineScope {
             if (result is OrderHistoryResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderHistoryModel(
-                            it.orderId,
+                        OrderHistoryResponse.Data(
+                            it.orderDetailId,
                             it.customerId,
-                            it.deliveryId,
+                            it.customerName,
+                            it.customerEmail,
+                            it.customerPhone,
+                            it.deliveryType,
+                            it.deliveryAddress,
                             it.priceBeforeTax,
-                            it.couponId,
+                            it.transactionId,
                             it.totalPrice,
-                            it.orderStatus,
+                            it.orderDetailStatus,
                             it.orderPayment,
                             it.orderTax,
                             it.orderCreated,
-                            it.orderUpdated
+                            it.orderUpdated,
+                            it.productOrder
                         )
                     }
                     val mutable = list.toMutableList()
-                    mutable.removeIf { it.orderStatus != "Done" }
+                    mutable.removeIf { it.orderDetailStatus != "Done" }
                     if (!mutable.isNullOrEmpty()) {
                         isGetList.value = result.success
                         listData.value = mutable
@@ -93,22 +98,27 @@ class OrderHistoryViewModel : ViewModel(), CoroutineScope {
             if (result is OrderHistoryResponse) {
                 if (result.success) {
                     val list = result.data.map {
-                        OrderHistoryModel(
-                            it.orderId,
+                        OrderHistoryResponse.Data(
+                            it.orderDetailId,
                             it.customerId,
-                            it.deliveryId,
+                            it.customerName,
+                            it.customerEmail,
+                            it.customerPhone,
+                            it.deliveryType,
+                            it.deliveryAddress,
                             it.priceBeforeTax,
-                            it.couponId,
+                            it.transactionId,
                             it.totalPrice,
-                            it.orderStatus,
+                            it.orderDetailStatus,
                             it.orderPayment,
                             it.orderTax,
                             it.orderCreated,
-                            it.orderUpdated
+                            it.orderUpdated,
+                            it.productOrder
                         )
                     }
                     val mutable = list.toMutableList()
-                    mutable.removeIf { it.orderStatus != "Done" }
+                    mutable.removeIf { it.orderDetailStatus != "Done" }
                     if (!mutable.isNullOrEmpty()) {
                         isGetList.value = result.success
                         listData.value = mutable

@@ -51,15 +51,20 @@ class OrderViewModel : ViewModel(), CoroutineScope {
                         OrderResponse.Data(
                             it.orderDetailId,
                             it.customerId,
-                            it.deliveryId,
+                            it.customerName,
+                            it.customerEmail,
+                            it.customerPhone,
+                            it.deliveryType,
+                            it.deliveryAddress,
                             it.priceBeforeTax,
-                            it.couponId,
+                            it.transactionId,
                             it.totalPrice,
                             it.orderDetailStatus,
                             it.orderPayment,
                             it.orderTax,
                             it.orderCreated,
-                            it.orderUpdated
+                            it.orderUpdated,
+                            it.productOrder
                         )
                     }
                     val mutable = list.toMutableList()
@@ -103,15 +108,20 @@ class OrderViewModel : ViewModel(), CoroutineScope {
                         OrderResponse.Data(
                             it.orderDetailId,
                             it.customerId,
-                            it.deliveryId,
+                            it.customerName,
+                            it.customerEmail,
+                            it.customerPhone,
+                            it.deliveryType,
+                            it.deliveryAddress,
                             it.priceBeforeTax,
-                            it.couponId,
+                            it.transactionId,
                             it.totalPrice,
                             it.orderDetailStatus,
                             it.orderPayment,
                             it.orderTax,
                             it.orderCreated,
-                            it.orderUpdated
+                            it.orderUpdated,
+                            it.productOrder
                         )
                     }
                     val mutable = list.toMutableList()
