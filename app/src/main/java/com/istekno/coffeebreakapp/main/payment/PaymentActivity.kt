@@ -63,10 +63,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
 
-//            if (paymentMethod == "") {
-//                showToast("Please choose payment method!")
-//                return@setOnClickListener
-//            }
             dialog.dialog(this, "Are You Sure ?") { viewModel.createOrderDetailApi(customerId!!, "COD", "Unpaid") }
         }
 
