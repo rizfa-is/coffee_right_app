@@ -131,8 +131,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             if (it) {
                 viewModel.isUpdateSuccess.observe(this, Observer { update ->
                     if (update) {
-                        val intent = Intent(this, MainContentActivity::class.java)
-                        intent.putExtra("data", 0)
+                        val intent = Intent(this, SuccessOrderScreenActivity::class.java)
                         startActivity(intent)
                         finishAffinity()
                     }
