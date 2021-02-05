@@ -15,9 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoffeeBreakApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main.maincontent.order.detail.DetailOrderActivity"/>
+        <activity android:name=".main.payment.SuccessOrderScreenActivity"></activity>
+        <activity android:name=".main.maincontent.order.detail.DetailOrderActivity" />
         <activity android:name=".main.checkout.CheckoutActivity" />
-        <activity android:name="com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryActivity" />
+        <activity android:name=".main.maincontent.orderhistory.detail.DetailOrderHistoryActivity" />
         <activity android:name=".main.promo.PromoActivity" />
         <activity android:name=".main.favorite.FavoriteActivity" />
         <activity android:name=".main.editprofile.EditProfileActivity" />
