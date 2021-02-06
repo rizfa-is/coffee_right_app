@@ -161,8 +161,6 @@ class HomeViewModel : ViewModel(), CoroutineScope {
                         listFavorite.value = allFavorite
                     }
                 }
-
-                isLoading.value = false
             }
 
             if (resultProduct is GetProductResponse) {
@@ -188,8 +186,9 @@ class HomeViewModel : ViewModel(), CoroutineScope {
                 listProduct.removeIf { it.discountId < 2 }
 
                 listPromo.value = listProduct
-                isLoading.value = false
             }
+
+            isLoading.value = false
         }
     }
 

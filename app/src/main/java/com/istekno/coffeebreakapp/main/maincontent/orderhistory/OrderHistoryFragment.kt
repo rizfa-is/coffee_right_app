@@ -24,7 +24,6 @@ import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class OrderHistoryFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentOrderHistoryBinding, OrderHistoryViewModel>(),
@@ -124,9 +123,6 @@ class OrderHistoryFragment(
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = false
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = false
-
         title.text = "Order History"
     }
 }

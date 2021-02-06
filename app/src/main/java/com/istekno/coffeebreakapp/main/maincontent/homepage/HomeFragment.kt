@@ -23,7 +23,6 @@ import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class HomeFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentHomeBinding, HomeViewModel>() {
@@ -109,24 +108,6 @@ class HomeFragment(
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.rvFavorite.visibility = View.INVISIBLE
-                binding.pgFavorite.visibility = View.VISIBLE
-                binding.rvPromo.visibility = View.INVISIBLE
-                binding.pgPromoe.visibility = View.VISIBLE
-
-                binding.linebot.visibility = View.VISIBLE
-            } else {
-                binding.rvFavorite.visibility = View.VISIBLE
-                binding.pgFavorite.visibility = View.INVISIBLE
-                binding.rvPromo.visibility = View.VISIBLE
-                binding.pgPromoe.visibility = View.INVISIBLE
-
-                binding.linebot.visibility = View.GONE
-            }
-        }
-
         viewModel.listFavorite.observe(viewLifecycleOwner) { favorite ->
             listFavorite = favorite.toTypedArray()
 
@@ -148,13 +129,28 @@ class HomeFragment(
 
             (binding.rvPromo.adapter as HomePromoAdapter).setData(promo)
         })
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.rvFavorite.visibility = View.INVISIBLE
+                binding.pgFavorite.visibility = View.VISIBLE
+                binding.rvPromo.visibility = View.INVISIBLE
+                binding.pgPromoe.visibility = View.VISIBLE
+
+                binding.linebot.visibility = View.VISIBLE
+            } else {
+                binding.rvFavorite.visibility = View.VISIBLE
+                binding.pgFavorite.visibility = View.INVISIBLE
+                binding.rvPromo.visibility = View.VISIBLE
+                binding.pgPromoe.visibility = View.INVISIBLE
+
+                binding.linebot.visibility = View.GONE
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = true
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = true
-
         title.text = "Home"
     }
 }
