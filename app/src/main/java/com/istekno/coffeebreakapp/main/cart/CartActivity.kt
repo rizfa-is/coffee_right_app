@@ -152,8 +152,7 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
         builder.setMessage("Are you sure to remove this product from your Cart ?")
         builder.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
             viewModel.deleteOrderById(orderId)
-            val intent = Intent(this, MainContentActivity::class.java)
-            startActivity(intent)
+            intent<MainContentActivity>(this)
             finish()
         }
         builder.setNegativeButton("No") { _: DialogInterface, _: Int -> }
@@ -162,7 +161,8 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
 
     private fun onClickListener() {
         binding.ivBack.setOnClickListener {
-            onBackPressed()
+            intent<MainContentActivity>(this)
+            finish()
         }
 
         binding.fabGoCheckout.setOnClickListener {
@@ -175,6 +175,10 @@ class CartActivity : BaseActivityViewModel<ActivityCartBinding, CartViewModel>()
             intent<MainContentActivity>(this)
             finishAffinity()
         }
+    }
 
+    override fun onBackPressed() {
+        intent<MainContentActivity>(this)
+        finish()
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.Runnable
 
 class OrderFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentOrderBinding, OrderViewModel>(),
@@ -33,9 +33,6 @@ class OrderFragment(
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
-        const val PRICE_BEFORE_TAX = "PRICE_BEFORE_TAX"
-        const val TAX = "TAX"
-        const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
     private var listOrder = ArrayList<OrderResponse.Data>()
@@ -67,11 +64,10 @@ class OrderFragment(
             viewModel.callOrderCustomerApi()
         } else {
             viewModel.callOrderAdminApi()
-            dataRefreshManagement()
             binding.btnStartOrder.visibility = View.GONE
         }
 
-        setRecyclerView(view)
+        setRecyclerView(view, sharedPref.getPreference().level!!)
         subscribeLiveData()
         subscribeLoadingLiveData()
         viewListener(view)
@@ -89,6 +85,7 @@ class OrderFragment(
         viewModel.getListData.observe(viewLifecycleOwner, {
             if (it) {
                 viewModel.listData.observe(viewLifecycleOwner) { list ->
+                    Log.e("list", "list")
                     (binding.rvOrderHistory.adapter as OrderAdapter).setData(list)
                 }
                 binding.rvOrderHistory.visibility = View.VISIBLE
@@ -113,33 +110,27 @@ class OrderFragment(
         })
     }
 
-    private fun setRecyclerView(view: View) {
+    private fun setRecyclerView(view: View, role: Int) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
         binding.rvOrderHistory.layoutManager =
             LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
 
-        val adapter = OrderAdapter(listOrder, this)
+        val adapter = OrderAdapter(listOrder, this, role)
         binding.rvOrderHistory.adapter = adapter
     }
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = false
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = false
-
         title.text = "Order"
     }
 
     override fun onOrderItemClicked(position: Int) {
         val sendIntent = Intent(requireContext(), DetailOrderActivity::class.java)
-        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position].orderDetailId)
-        sendIntent.putExtra(PRICE_BEFORE_TAX, listOrder[position].priceBeforeTax)
-        sendIntent.putExtra(TAX, listOrder[position].orderTax)
-        sendIntent.putExtra(TOTAL_PRICE, listOrder[position].totalPrice)
+        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrder[position])
         startActivity(sendIntent)
     }
 
-    fun dataRefreshManagement() {
+    private fun dataRefreshManagement() {
         handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {

@@ -63,10 +63,6 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
         binding.btnPayNow.setOnClickListener {
             val customerId = sharePref.getPreference().roleID
 
-//            if (paymentMethod == "") {
-//                showToast("Please choose payment method!")
-//                return@setOnClickListener
-//            }
             dialog.dialog(this, "Are You Sure ?") { viewModel.createOrderDetailApi(customerId!!, "COD", "Unpaid") }
         }
 
@@ -131,8 +127,7 @@ class PaymentActivity : BaseActivityViewModel<ActivityPaymentBinding, PaymentVie
             if (it) {
                 viewModel.isUpdateSuccess.observe(this, Observer { update ->
                     if (update) {
-                        val intent = Intent(this, MainContentActivity::class.java)
-                        intent.putExtra("data", 0)
+                        val intent = Intent(this, SuccessOrderScreenActivity::class.java)
                         startActivity(intent)
                         finishAffinity()
                     }

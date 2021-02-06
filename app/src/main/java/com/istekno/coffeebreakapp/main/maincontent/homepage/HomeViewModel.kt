@@ -2,6 +2,8 @@ package com.istekno.coffeebreakapp.main.maincontent.homepage
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.istekno.coffeebreakapp.main.cart.CartResponse
+import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -10,14 +12,20 @@ class HomeViewModel : ViewModel(), CoroutineScope {
     val isLoading = MutableLiveData<Boolean>()
     val listFavorite = MutableLiveData<MutableList<GetProductResponse.DataProduct>>()
     val listPromo = MutableLiveData<MutableList<GetProductResponse.DataProduct>>()
+    val listCart = MutableLiveData<Int>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
     private lateinit var service: HomeService
+    private lateinit var sharedPref: SharedPreferenceUtil
 
     fun setService(service: HomeService) {
         this.service = service
+    }
+
+    fun setSharedPref(sharedPreferenceUtil: SharedPreferenceUtil) {
+        this.sharedPref = sharedPreferenceUtil
     }
 
     fun getAllProduct() {
@@ -153,8 +161,6 @@ class HomeViewModel : ViewModel(), CoroutineScope {
                         listFavorite.value = allFavorite
                     }
                 }
-
-                isLoading.value = false
             }
 
             if (resultProduct is GetProductResponse) {
@@ -180,7 +186,44 @@ class HomeViewModel : ViewModel(), CoroutineScope {
                 listProduct.removeIf { it.discountId < 2 }
 
                 listPromo.value = listProduct
-                isLoading.value = false
+            }
+
+            isLoading.value = false
+        }
+    }
+
+    fun getListCartByCsId() {
+        launch {
+            isLoading.value = true
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.getListCartByCsId(sharedPref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+                    }
+                }
+            }
+
+            if (result is CartResponse) {
+                val data = result.data.map {
+                    CartResponse.DataCart(
+                        it.orderId,
+                        it.productId,
+                        it.productName,
+                        it.productImage,
+                        it.customerId,
+                        it.orderStatus,
+                        it.orderAmount,
+                        it.orderPrice,
+                        it.orderCreated,
+                        it.orderUpdated
+                    )
+                }
+                listCart.value = data.size
             }
         }
     }

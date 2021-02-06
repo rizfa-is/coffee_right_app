@@ -24,7 +24,6 @@ import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class OrderHistoryFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentOrderHistoryBinding, OrderHistoryViewModel>(),
@@ -32,9 +31,6 @@ class OrderHistoryFragment(
 
     companion object {
         const val ORDER_HISTORY_KEY = "orID_KEY"
-        const val PRICE_BEFORE_TAX = "PRICE_BEFORE_TAX"
-        const val TAX = "TAX"
-        const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
     private lateinit var sharedPref: SharedPreferenceUtil
@@ -65,12 +61,13 @@ class OrderHistoryFragment(
 
         val customerId = sharedPref.getPreference().roleID
 
-        setRecyclerView()
         if (sharedPref.getPreference().level == 0) {
             viewModel.callOrderHistoryApi(customerId!!)
         } else {
             viewModel.callOrderHistoryByAdminApi()
         }
+
+        setRecyclerView(sharedPref.getPreference().level!!)
         subscribeLiveData()
         onClickListener(view)
     }
@@ -110,25 +107,23 @@ class OrderHistoryFragment(
 
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView(role: Int) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
         binding.rvOrderHistory.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this)
+        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this, role)
         binding.rvOrderHistory.adapter = adapter
     }
 
     override fun onOrderHistoryItemClicked(position: Int) {
         val sendIntent = Intent(context, DetailOrderHistoryActivity::class.java)
+        sendIntent.putExtra(ORDER_HISTORY_KEY, listOrderHistory[position])
         startActivity(sendIntent)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = false
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = false
-
         title.text = "Order History"
     }
 }

@@ -38,43 +38,39 @@ class OrderHistoryViewModel : ViewModel(), CoroutineScope {
             }
 
             if (result is OrderHistoryResponse) {
-                if (result.success) {
-                    val list = result.data.map {
-                        OrderHistoryResponse.Data(
-                            it.orderDetailId,
-                            it.customerId,
-                            it.customerName,
-                            it.customerEmail,
-                            it.customerPhone,
-                            it.deliveryType,
-                            it.deliveryAddress,
-                            it.priceBeforeTax,
-                            it.transactionId,
-                            it.totalPrice,
-                            it.orderDetailStatus,
-                            it.orderPayment,
-                            it.orderTax,
-                            it.orderCreated,
-                            it.orderUpdated,
-                            it.productOrder
-                        )
-                    }
-                    val mutable = list.toMutableList()
-                    mutable.removeIf { it.orderDetailStatus != "Done" }
-                    if (!mutable.isNullOrEmpty()) {
-                        isGetList.value = result.success
-                        listData.value = mutable
-                    } else {
-                        isGetList.value = false
-                    }
-                    isLoading.value = false
+                val list = result.data.map {
+                    OrderHistoryResponse.Data(
+                        it.orderDetailId,
+                        it.customerId,
+                        it.customerName,
+                        it.customerEmail,
+                        it.customerPhone,
+                        it.deliveryType,
+                        it.deliveryAddress,
+                        it.priceBeforeTax,
+                        it.transactionId,
+                        it.totalPrice,
+                        it.orderDetailStatus,
+                        it.orderPayment,
+                        it.orderTax,
+                        it.orderCreated,
+                        it.orderUpdated,
+                        it.productOrder
+                    )
+                }
+                val mutable = list.toMutableList()
+                mutable.removeIf { it.orderDetailStatus != "Done" }
+                mutable.sortByDescending { it.orderCreated }
+
+                if (!mutable.isNullOrEmpty()) {
+                    isGetList.value = result.success
+                    listData.value = mutable
                 } else {
                     isGetList.value = false
                 }
-            }
 
-//            isGetList.value = false
-//            isLoading.value = false
+                isLoading.value = false
+            }
         }
     }
 

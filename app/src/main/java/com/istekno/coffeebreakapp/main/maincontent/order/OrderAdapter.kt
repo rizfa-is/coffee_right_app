@@ -1,6 +1,7 @@
 package com.istekno.coffeebreakapp.main.maincontent.order
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.Placeholder
@@ -19,8 +20,9 @@ import kotlin.collections.ArrayList
 
 class OrderAdapter(
     private val listOrder: ArrayList<OrderResponse.Data>,
-    private val onListOrderClickListener: OnListOrderClickListenerr
-) : RecyclerView.Adapter<OrderAdapter.ListViewHolder>() {
+    private val onListOrderClickListener: OnListOrderClickListenerr,
+    private val role: Int
+) : RecyclerView.Adapter<OrderAdapter.ListViewHolder>(){
 
     companion object {
         const val img = "http://184.72.105.243:3000/images/"
@@ -57,8 +59,12 @@ class OrderAdapter(
         holder.binding.tvUpdated.text = dateFormatter(date)
         holder.binding.tvStatus.text = listOrder[position].orderDetailStatus
 
+        if (role != 0) {
+            holder.binding.tvTotalPriceOrder.text = item.customerName
+        }
+
         if (item.productOrder.size > 1) {
-            holder.binding.tvAmountAnotherProduct.text = "+${(item.productOrder.size) - 1}"
+            holder.binding.tvAmountAnotherProduct.text = "+ ${(item.productOrder.size) - 1}"
         } else {
             holder.binding.tvAmountAnotherProduct.text = ""
         }

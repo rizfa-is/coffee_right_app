@@ -1,12 +1,12 @@
 package com.istekno.coffeebreakapp.main.maincontent.order.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
@@ -14,10 +14,13 @@ import com.istekno.coffeebreakapp.base.BaseActivityViewModel
 import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderApiService
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryModel
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
+import com.istekno.coffeebreakapp.main.maincontent.order.OrderResponse
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class DetailOrderActivity :
     BaseActivityViewModel<ActivityDetailOrderBinding, DetailOrderViewModel>() {
@@ -29,7 +32,7 @@ class DetailOrderActivity :
         const val TOTAL_PRICE = "TOTAL_PRICE"
     }
 
-    private var listOrder = ArrayList<DetailOrderHistoryModel>()
+    private var listOrder = ArrayList<OrderResponse.Product>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_detail_order
@@ -42,7 +45,11 @@ class DetailOrderActivity :
             viewModel.setService(service)
         }
 
-        val id = intent.getIntExtra(ORDER_HISTORY_KEY, -1)
+        val data = intent.getParcelableExtra<OrderResponse.Data>(ORDER_HISTORY_KEY)
+
+        if (data != null) {
+            setDataBinding(data)
+        }
 
         if (sharedPref.getPreference().level == 0) {
             binding.btnUpdateDone.visibility = View.GONE
@@ -51,11 +58,51 @@ class DetailOrderActivity :
         }
 
         setRecyclerView()
-        viewModel.callOrderApiService(id)
-        subscribeLoadingLiveData()
-        subscribeGetListLiveData()
         subscribeUpdateLiveData()
-        onClickListener(id)
+        if (data != null) {
+            onClickListener(data.orderDetailId)
+            (binding.rvListOrder.adapter as DetailOrderRecyclerViewAdapter).addList(data.productOrder)
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setDataBinding(model: OrderResponse.Data) {
+        binding.model = model
+
+        val dateTimeFormatted = dateTimeFormatter(model.orderUpdated).split('T')
+        val dateUpdate = dateFormatter(dateTimeFormatted[0])
+        val timeUpdate = dateTimeFormatted[1].split('+')[0]
+
+        binding.tvOrderMethod.text = setDeliveryMethod(model.deliveryType)
+        binding.tvDate.text = "$dateUpdate  -  $timeUpdate"
+    }
+
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun dateFormatter(date: String): String {
+        val myDate = LocalDate.parse(date)
+        val formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
+        val dateFormatted = myDate.format(formatter)
+
+        return dateFormatted.replace("-".toRegex(), " ")
+    }
+
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun dateTimeFormatter(date: String): String {
+        val localZoneDateTime = ZonedDateTime.parse(date).withZoneSameInstant(ZoneId.systemDefault())
+
+        return localZoneDateTime.toString()
+    }
+
+    private fun setDeliveryMethod(method: String): String {
+        var delivery = ""
+        when(method) {
+            "DI" -> delivery = "Dine in"
+            "DD" -> delivery = "Door Delivery"
+            "PU" -> delivery = "Pick up"
+        }
+
+        return delivery
     }
 
     private fun subscribeUpdateLiveData() {
@@ -63,7 +110,6 @@ class DetailOrderActivity :
             if (it) {
                 Toast.makeText(this, "Updated successfully!", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainContentActivity::class.java)
-//                intent.putExtra("data", 0)
                 startActivity(intent)
                 finish()
             } else {
@@ -72,42 +118,11 @@ class DetailOrderActivity :
         })
     }
 
-    private fun subscribeLoadingLiveData() {
-        viewModel.isLoading.observe(this, {
-            if (it) {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.scrollView.visibility = View.GONE
-            } else {
-                binding.progressBar.visibility = View.GONE
-                binding.scrollView.visibility = View.VISIBLE
-            }
-        })
-    }
-
     private fun setRecyclerView() {
-        binding.rvListOrder.isNestedScrollingEnabled = false
         binding.rvListOrder.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        val adapter = DetailOrderHistoryRecyclerViewAdapter(listOrder)
+        val adapter = DetailOrderRecyclerViewAdapter(listOrder)
         binding.rvListOrder.adapter = adapter
-    }
-
-    private fun subscribeGetListLiveData() {
-        viewModel.isGetList.observe(this, {
-            if (it) {
-                viewModel.listData.observe(this, { list ->
-                    (binding.rvListOrder.adapter as DetailOrderHistoryRecyclerViewAdapter).addList(
-                        list
-                    )
-                    binding.tvTax.text = intent.getIntExtra(TAX, -1).toString()
-                    binding.tvSubtotal.text = intent.getIntExtra(PRICE_BEFORE_TAX, -1).toString()
-                    binding.tvTotal.text = intent.getIntExtra(TOTAL_PRICE, -1).toString()
-                })
-            } else {
-                Toast.makeText(this, "Something wrong ...", Toast.LENGTH_SHORT).show()
-            }
-        })
-
     }
 
     private fun onClickListener(odId: Int) {

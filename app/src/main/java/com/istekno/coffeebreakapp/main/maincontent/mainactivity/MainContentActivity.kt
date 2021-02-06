@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -63,6 +64,7 @@ class MainContentActivity :
         sharePref = SharedPreferenceUtil(this)
         viewModel.setService(service)
         viewModel.setSharePref(sharePref)
+        viewModel.getListCartByCsId()
 
         setNavHeaderData()
         setDrawer()
@@ -133,19 +135,20 @@ class MainContentActivity :
     }
 
     private fun initialHomePage() {
-        val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
         val navDrawer = binding.navView
         val data = intent.getIntExtra("data", -1)
 
         when (data) {
             0 -> {
-                fragmentProperties(OrderFragment(toolbar, title, navDrawer))
+                fragmentProperties(OrderFragment(title, navDrawer))
             }
             1 -> {
-                fragmentProperties(ProfileFragment(toolbar, title, navDrawer))
+                fragmentProperties(ProfileFragment(title, navDrawer))
             }
-            else -> fragmentProperties(HomeFragment(toolbar, title, navDrawer))
+            -1 -> {
+                fragmentProperties(HomeFragment(title, navDrawer))
+            }
         }
     }
 
@@ -237,6 +240,8 @@ class MainContentActivity :
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val data = intent.getIntExtra("data", -1)
+
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_toolbar, menu)
 
@@ -322,6 +327,28 @@ class MainContentActivity :
             }
         })
 
+        val cart = menu.findItem(R.id.toolbar_cart)
+        val actionView = cart.actionView
+        val id = actionView.findViewById<TextView>(R.id.cart_badge)
+
+        if (id != null) {
+            viewModel.listCart.observe(this, {
+                Log.e("it", it.toString())
+                if (it != 0) {
+                    id.visibility = View.VISIBLE
+                    id.text = it.toString()
+                }
+            })
+        }
+
+        actionView.setOnClickListener {
+            onOptionsItemSelected(cart)
+        }
+
+        if (data != -1) {
+            binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+        }
+
         return true
     }
 
@@ -348,25 +375,36 @@ class MainContentActivity :
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val toolbar = binding.tbMenuMaincontent
         val title = binding.toolbarTitle
         val navDrawer = binding.navView
 
         when (item.itemId) {
             R.id.nav_home -> {
-                fragmentProperties(HomeFragment(toolbar, title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, true)
+                    fragmentProperties(HomeFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_profile -> {
-                fragmentProperties(ProfileFragment(toolbar, title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(ProfileFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_order -> {
-                fragmentProperties(OrderFragment(toolbar, title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(OrderFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_order_history -> {
-                fragmentProperties(OrderHistoryFragment(toolbar, title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(OrderHistoryFragment(title, navDrawer))
+                }
             }
         }
         return false

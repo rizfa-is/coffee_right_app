@@ -1,63 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="20dp"
         android:layout_marginVertical="10dp"
         android:background="@drawable/bg_white_radius">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_product"
-            android:layout_width="85dp"
-            android:layout_height="86dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:elevation="3dp"
             android:src="@drawable/ic_bag"
             android:scaleType="centerCrop"
             android:layout_marginLeft="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:shapeAppearance="@style/rounded_image" />
 
         <TextView
             android:id="@+id/tv_product_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="22sp"
-            android:textAlignment="center"
-            android:lineSpacingExtra="-10dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins_bold"
+            android:maxLines="2"
+            android:text="Hazelnut Latte"
+            android:textAlignment="textStart"
             android:textColor="@color/black"
-            android:layout_marginLeft="30dp"
-            app:layout_constraintTop_toTopOf="@id/iv_product"
-            app:layout_constraintStart_toEndOf="@id/iv_product"/>
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_updated"
+            app:layout_constraintEnd_toStartOf="@+id/tv_amount_another_product"
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_product_price"
+            android:id="@+id/tv_amount_another_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text=""
+            android:layout_marginEnd="32dp"
             android:fontFamily="@font/poppins_regular"
+            android:lineSpacingExtra="-10dp"
+            android:text="+ 3"
+            android:textAlignment="center"
             android:textColor="@color/theme_choco"
             android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_product_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_product_name"
+            app:layout_constraintTop_toTopOf="@id/tv_product_name" />
+
+        <TextView
+            android:id="@+id/tv_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="3 Januari 2021"
+            android:textAlignment="center"
+            android:textColor="@color/theme_choco"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_total_price_order"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
         <TextView
-            android:id="@+id/tv_date"
-            android:text="Click to see details"
-            android:textSize="12sp"
-            android:textColor="@color/theme_choco"
-            android:fontFamily="@font/poppins_regular"
+            android:id="@+id/tv_total_price_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_price"
-            app:layout_constraintStart_toStartOf="@id/tv_product_price"/>
+            android:layout_marginBottom="11dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="IDR 213.000"
+            android:textAlignment="center"
+            android:textColor="@color/theme_choco"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_status"
+            app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_updated" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_bg_choco"
+            android:padding="8dp"
+            android:text="Unpaid"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_updated"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_price_order" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
