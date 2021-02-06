@@ -64,11 +64,10 @@ class OrderFragment(
             viewModel.callOrderCustomerApi()
         } else {
             viewModel.callOrderAdminApi()
-//            dataRefreshManagement()
             binding.btnStartOrder.visibility = View.GONE
         }
 
-        setRecyclerView(view)
+        setRecyclerView(view, sharedPref.getPreference().level!!)
         subscribeLiveData()
         subscribeLoadingLiveData()
         viewListener(view)
@@ -111,12 +110,12 @@ class OrderFragment(
         })
     }
 
-    private fun setRecyclerView(view: View) {
+    private fun setRecyclerView(view: View, role: Int) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
         binding.rvOrderHistory.layoutManager =
             LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
 
-        val adapter = OrderAdapter(listOrder, this)
+        val adapter = OrderAdapter(listOrder, this, role)
         binding.rvOrderHistory.adapter = adapter
     }
 

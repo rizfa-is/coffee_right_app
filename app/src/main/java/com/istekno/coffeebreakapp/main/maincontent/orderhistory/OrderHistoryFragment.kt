@@ -61,12 +61,13 @@ class OrderHistoryFragment(
 
         val customerId = sharedPref.getPreference().roleID
 
-        setRecyclerView()
         if (sharedPref.getPreference().level == 0) {
             viewModel.callOrderHistoryApi(customerId!!)
         } else {
             viewModel.callOrderHistoryByAdminApi()
         }
+
+        setRecyclerView(sharedPref.getPreference().level!!)
         subscribeLiveData()
         onClickListener(view)
     }
@@ -106,12 +107,12 @@ class OrderHistoryFragment(
 
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView(role: Int) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
         binding.rvOrderHistory.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this)
+        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this, role)
         binding.rvOrderHistory.adapter = adapter
     }
 

@@ -52,9 +52,7 @@ class MainContentActivity :
     private lateinit var mToggle: ActionBarDrawerToggle
     private lateinit var drawer: DrawerLayout
     private lateinit var sharePref: SharedPreferenceUtil
-    private lateinit var myMenu: Menu
     private var doubleBackToExitPressedOnce = false
-    private var navItemSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content
@@ -143,11 +141,9 @@ class MainContentActivity :
 
         when (data) {
             0 -> {
-                binding.tbMenuMaincontent.menu.removeGroup(R.id.group_toolbar)
                 fragmentProperties(OrderFragment(title, navDrawer))
             }
             1 -> {
-                binding.tbMenuMaincontent.menu.removeGroup(R.id.group_toolbar)
                 fragmentProperties(ProfileFragment(title, navDrawer))
             }
             -1 -> {
@@ -245,111 +241,112 @@ class MainContentActivity :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val data = intent.getIntExtra("data", -1)
-        myMenu = menu
 
-        if (data == -1 || navItemSelected) {
-            val inflater = menuInflater
-            inflater.inflate(R.menu.menu_toolbar, menu)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_toolbar, menu)
 
-            val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-            val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
-            val searchItem = menu.findItem(R.id.toolbar_search)
-            var checkedID = binding.cgFilter.checkedChipId
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.toolbar_search).actionView as SearchView
+        val searchItem = menu.findItem(R.id.toolbar_search)
+        var checkedID = binding.cgFilter.checkedChipId
 
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            searchView.queryHint = "ex: Hazelnut Latte"
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = "ex: Hazelnut Latte"
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (query != null) {
-                        binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
-                            val chip: Chip = findViewById(checkedId)
-                            val id = chip.id
-                            checkedID = id
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
 
-                            viewModel.getAllProductByQuery(1, query, id)
-                        }
-
-                        viewModel.getAllProductByQuery(1, query, checkedID)
-                    } else if (query == " ") {
-                        binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
-                            val chip: Chip = findViewById(checkedId)
-                            val id = chip.id
-                            checkedID = id
-
-                            viewModel.getAllProductByQuery(0, " ", id)
-                        }
-
-                        viewModel.getAllProductByQuery(0, "", checkedID)
-                    }
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText?.length!! >= 5) {
-                        binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
-                            val chip: Chip = findViewById(checkedId)
-                            val id = chip.id
-                            checkedID = id
-
-                            viewModel.getAllProductByQuery(1, newText, id)
-                        }
-
-                        viewModel.getAllProductByQuery(1, newText, checkedID)
-                    } else if (newText == "") {
-                        binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
-                            val chip: Chip = findViewById(checkedId)
-                            val id = chip.id
-                            checkedID = id
-
-                            viewModel.getAllProductByQuery(0, " ", id)
-                        }
-
-                        viewModel.getAllProductByQuery(0, "", checkedID)
+                        viewModel.getAllProductByQuery(1, query, id)
                     }
 
-                    return false
-                }
-            })
+                    viewModel.getAllProductByQuery(1, query, checkedID)
+                } else if (query == " ") {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
 
-            searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                    binding.cgFilter.check(0)
-
-                    binding.flMaincontent.visibility = View.GONE
-                    binding.toolbarTitle.visibility = View.GONE
-
-                    binding.clSearch.visibility = View.VISIBLE
-                    viewModel.getAllProductByQuery(0, "", 0)
-                    return true
-                }
-
-                override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                    binding.flMaincontent.visibility = View.VISIBLE
-                    binding.toolbarTitle.visibility = View.VISIBLE
-
-                    binding.clSearch.visibility = View.GONE
-                    return true
-                }
-            })
-
-            val cart = menu.findItem(R.id.toolbar_cart)
-            val actionView = cart.actionView
-            val id = actionView.findViewById<TextView>(R.id.cart_badge)
-
-            if (id != null) {
-                viewModel.listCart.observe(this, {
-                    Log.e("it", it.toString())
-                    if (it != 0) {
-                        id.visibility = View.VISIBLE
-                        id.text = it.toString()
+                        viewModel.getAllProductByQuery(0, " ", id)
                     }
-                })
+
+                    viewModel.getAllProductByQuery(0, "", checkedID)
+                }
+                return true
             }
 
-            actionView.setOnClickListener {
-                onOptionsItemSelected(cart)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.length!! >= 5) {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(1, newText, id)
+                    }
+
+                    viewModel.getAllProductByQuery(1, newText, checkedID)
+                } else if (newText == "") {
+                    binding.cgFilter.setOnCheckedChangeListener { _, checkedId ->
+                        val chip: Chip = findViewById(checkedId)
+                        val id = chip.id
+                        checkedID = id
+
+                        viewModel.getAllProductByQuery(0, " ", id)
+                    }
+
+                    viewModel.getAllProductByQuery(0, "", checkedID)
+                }
+
+                return false
             }
+        })
+
+        searchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                binding.cgFilter.check(0)
+
+                binding.flMaincontent.visibility = View.GONE
+                binding.toolbarTitle.visibility = View.GONE
+
+                binding.clSearch.visibility = View.VISIBLE
+                viewModel.getAllProductByQuery(0, "", 0)
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                binding.flMaincontent.visibility = View.VISIBLE
+                binding.toolbarTitle.visibility = View.VISIBLE
+
+                binding.clSearch.visibility = View.GONE
+                return true
+            }
+        })
+
+        val cart = menu.findItem(R.id.toolbar_cart)
+        val actionView = cart.actionView
+        val id = actionView.findViewById<TextView>(R.id.cart_badge)
+
+        if (id != null) {
+            viewModel.listCart.observe(this, {
+                Log.e("it", it.toString())
+                if (it != 0) {
+                    id.visibility = View.VISIBLE
+                    id.text = it.toString()
+                }
+            })
+        }
+
+        actionView.setOnClickListener {
+            onOptionsItemSelected(cart)
+        }
+
+        if (data != -1) {
+            binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
         }
 
         return true
@@ -383,24 +380,31 @@ class MainContentActivity :
 
         when (item.itemId) {
             R.id.nav_home -> {
-                navItemSelected = true
-                onCreateOptionsMenu(myMenu)
-                fragmentProperties(HomeFragment(title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, true)
+                    fragmentProperties(HomeFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_profile -> {
-                binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
-                fragmentProperties(ProfileFragment(title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(ProfileFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_order -> {
-                binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
-                fragmentProperties(OrderFragment(title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(OrderFragment(title, navDrawer))
+                }
             }
 
             R.id.nav_order_history -> {
-                binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
-                fragmentProperties(OrderHistoryFragment(title, navDrawer))
+                if (!item.isChecked) {
+                    binding.tbMenuMaincontent.menu.setGroupVisible(R.id.group_toolbar, false)
+                    fragmentProperties(OrderHistoryFragment(title, navDrawer))
+                }
             }
         }
         return false

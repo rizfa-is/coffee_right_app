@@ -47,6 +47,7 @@ class HomeFragment(
         setViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
         navDrawer.setCheckedItem(R.id.nav_home)
+
         val service = ApiClient.getApiClient(view.context)!!.create(HomeService::class.java)
         val sharedPref = SharedPreferenceUtil(view.context)
 

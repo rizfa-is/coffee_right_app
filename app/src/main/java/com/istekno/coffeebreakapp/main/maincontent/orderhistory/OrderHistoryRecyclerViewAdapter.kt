@@ -18,7 +18,8 @@ import kotlin.collections.ArrayList
 
 class OrderHistoryRecyclerViewAdapter(
     private val listOrderHistory: ArrayList<OrderHistoryResponse.Data>,
-    private val onListOrderHistoryClickListener: OnListOrderHistoryClickListener
+    private val onListOrderHistoryClickListener: OnListOrderHistoryClickListener,
+    private val role: Int
 ) : RecyclerView.Adapter<OrderHistoryRecyclerViewAdapter.OrderHistoryHolder>() {
 
     fun addList(list: List<OrderHistoryResponse.Data>) {
@@ -54,6 +55,10 @@ class OrderHistoryRecyclerViewAdapter(
         holder.binding.tvTotalPriceOrder.text = "IDR $price"
         holder.binding.tvUpdated.text = dateFormatter(date)
         holder.binding.tvStatus.text = listOrderHistory[position].orderDetailStatus
+
+        if (role != 0) {
+            holder.binding.tvTotalPriceOrder.text = item.customerName
+        }
 
         if (item.productOrder.size > 1) {
             holder.binding.tvAmountAnotherProduct.text = "+ ${(item.productOrder.size) - 1}"
