@@ -295,12 +295,15 @@ class EditProfileActivity :
     }
 
     private fun subscribeLiveData() {
-        viewModel.onSuccessLiveData.observe(this) {
+        viewModel.onSuccessLiveData.observe(this@EditProfileActivity) {
             if (it) {
+                showToast("Success update profile!")
                 setResult(RESULT_OK)
             }
         }
-
+        viewModel.onFailLiveData.observe(this@EditProfileActivity) {
+            showToast(it)
+        }
     }
 
     private fun showToast(msg: String) {
