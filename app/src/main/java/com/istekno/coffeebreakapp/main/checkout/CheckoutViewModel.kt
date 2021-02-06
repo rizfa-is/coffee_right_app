@@ -8,8 +8,7 @@ import kotlin.coroutines.CoroutineContext
 
 class CheckoutViewModel : ViewModel(), CoroutineScope {
 
-    val isError = MutableLiveData<Boolean>()
-    val isMessage = MutableLiveData<String>()
+    val isSuccess = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -41,15 +40,13 @@ class CheckoutViewModel : ViewModel(), CoroutineScope {
                     e.printStackTrace()
 
                     withContext(Job() + Dispatchers.Main) {
-                        isError.value = true
-                        isMessage.value = e.message
+                        isSuccess.value = false
                     }
                 }
             }
 
             if (result is CheckoutResponse) {
-                isError.value = true
-                isMessage.value = result.message
+                isSuccess.value = true
             }
         }
     }

@@ -186,18 +186,15 @@ class CheckoutActivity : BaseActivityViewModel<ActivityCheckoutBinding, Checkout
             } else if (setNow == "Y") {
                 etTimeReservation = "00:00:00"
             }
-
             viewModel.addDelivery(setDelivery, setNow, etTimeReservation)
-            intent<PaymentActivity>(this)
+
         }
     }
 
     private fun subscribeLiveData() {
-        viewModel.isError.observe(this, {
+        viewModel.isSuccess.observe(this, {
             if (it) {
-                viewModel.isMessage.observe(this, { str ->
-                    showToast(str)
-                })
+                intent<PaymentActivity>(this)
             }
         })
     }
