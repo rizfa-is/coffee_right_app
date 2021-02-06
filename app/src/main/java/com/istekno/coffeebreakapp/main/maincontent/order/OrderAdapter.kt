@@ -58,7 +58,7 @@ class OrderAdapter(
         holder.binding.tvStatus.text = listOrder[position].orderDetailStatus
 
         if (item.productOrder.size > 1) {
-            holder.binding.tvAmountAnotherProduct.text = "+${(item.productOrder.size) - 1}"
+            holder.binding.tvAmountAnotherProduct.text = "+ ${(item.productOrder.size) - 1}"
         } else {
             holder.binding.tvAmountAnotherProduct.text = ""
         }

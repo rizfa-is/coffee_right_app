@@ -56,7 +56,7 @@ class OrderHistoryRecyclerViewAdapter(
         holder.binding.tvStatus.text = listOrderHistory[position].orderDetailStatus
 
         if (item.productOrder.size > 1) {
-            holder.binding.tvAmountAnotherProduct.text = "+${(item.productOrder.size) - 1}"
+            holder.binding.tvAmountAnotherProduct.text = "+ ${(item.productOrder.size) - 1}"
         } else {
             holder.binding.tvAmountAnotherProduct.text = ""
         }

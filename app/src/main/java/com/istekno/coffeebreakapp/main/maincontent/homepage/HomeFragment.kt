@@ -20,6 +20,7 @@ import com.istekno.coffeebreakapp.main.detailproduct.DetailProductActivity
 import com.istekno.coffeebreakapp.main.favorite.FavoriteActivity
 import com.istekno.coffeebreakapp.main.promo.PromoActivity
 import com.istekno.coffeebreakapp.remote.ApiClient
+import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class HomeFragment(
     private val toolbar: MaterialToolbar,
@@ -48,8 +49,11 @@ class HomeFragment(
         super.onViewCreated(view, savedInstanceState)
         navDrawer.setCheckedItem(R.id.nav_home)
         val service = ApiClient.getApiClient(view.context)!!.create(HomeService::class.java)
+        val sharedPref = SharedPreferenceUtil(view.context)
 
         viewModel.setService(service)
+        viewModel.setSharedPref(sharedPref)
+        viewModel.getListCartByCsId()
         viewModel.getAllProduct()
 
         setRecyclerView(view)

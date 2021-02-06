@@ -1,12 +1,12 @@
 package com.istekno.coffeebreakapp.main.maincontent.order.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.istekno.coffeebreakapp.R
@@ -15,11 +15,12 @@ import com.istekno.coffeebreakapp.databinding.ActivityDetailOrderBinding
 import com.istekno.coffeebreakapp.main.maincontent.mainactivity.MainContentActivity
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderApiService
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderResponse
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.OrderHistoryResponse
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryModel
-import com.istekno.coffeebreakapp.main.maincontent.orderhistory.detail.DetailOrderHistoryRecyclerViewAdapter
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class DetailOrderActivity :
     BaseActivityViewModel<ActivityDetailOrderBinding, DetailOrderViewModel>() {
@@ -45,7 +46,10 @@ class DetailOrderActivity :
         }
 
         val data = intent.getParcelableExtra<OrderResponse.Data>(ORDER_HISTORY_KEY)
-        binding.model = data
+
+        if (data != null) {
+            setDataBinding(data)
+        }
 
         if (sharedPref.getPreference().level == 0) {
             binding.btnUpdateDone.visibility = View.GONE
@@ -60,6 +64,45 @@ class DetailOrderActivity :
             (binding.rvListOrder.adapter as DetailOrderRecyclerViewAdapter).addList(data.productOrder)
         }
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setDataBinding(model: OrderResponse.Data) {
+        binding.model = model
+
+        val dateTimeFormatted = dateTimeFormatter(model.orderUpdated).split('T')
+        val dateUpdate = dateFormatter(dateTimeFormatted[0])
+        val timeUpdate = dateTimeFormatted[1].split('+')[0]
+
+        binding.tvOrderMethod.text = setDeliveryMethod(model.deliveryType)
+        binding.tvDate.text = "$dateUpdate  -  $timeUpdate"
+    }
+
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun dateFormatter(date: String): String {
+        val myDate = LocalDate.parse(date)
+        val formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
+        val dateFormatted = myDate.format(formatter)
+
+        return dateFormatted.replace("-".toRegex(), " ")
+    }
+
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun dateTimeFormatter(date: String): String {
+        val localZoneDateTime = ZonedDateTime.parse(date).withZoneSameInstant(ZoneId.systemDefault())
+
+        return localZoneDateTime.toString()
+    }
+
+    private fun setDeliveryMethod(method: String): String {
+        var delivery = ""
+        when(method) {
+            "DI" -> delivery = "Dine in"
+            "DD" -> delivery = "Door Delivery"
+            "PU" -> delivery = "Pick up"
+        }
+
+        return delivery
     }
 
     private fun subscribeUpdateLiveData() {

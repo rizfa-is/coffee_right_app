@@ -87,7 +87,6 @@
 
                 <TextView
                     android:id="@+id/tv_order_method"
-                    android:text="@{model.deliveryType}"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="14sp"
                     android:textColor="@color/theme_choco"
@@ -176,7 +175,6 @@
 
                 <TextView
                     android:id="@+id/tv_date"
-                    android:text="@{model.orderUpdated}"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="14sp"
                     android:textColor="@color/theme_choco"
@@ -196,8 +194,7 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_calendar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/view_under_rv"
-                    tools:listitem="@layout/item_detail_order" />
+                    app:layout_constraintBottom_toBottomOf="@id/view_under_rv" />
 
                 <View
                     android:id="@+id/view_under_rv"
