@@ -3,15 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/toolbar_search"
-        android:icon="@drawable/ic_search"
-        android:title="@string/search"
-        app:showAsAction="collapseActionView|always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-    <item
-        android:id="@+id/toolbar_cart"
-        android:icon="@drawable/ic_order"
-        android:title="@string/cart"
-        app:showAsAction="ifRoom"/>
+    <group android:id="@+id/group_toolbar">
+        <item
+            android:id="@+id/toolbar_search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/search"
+            app:showAsAction="collapseActionView|always"
+            app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+        <item
+            android:id="@+id/toolbar_cart"
+            android:icon="@drawable/ic_order"
+            android:title="@string/cart"
+            app:actionLayout="@layout/item_menu_cart"
+            app:showAsAction="ifRoom"/>
+    </group>
 </menu>

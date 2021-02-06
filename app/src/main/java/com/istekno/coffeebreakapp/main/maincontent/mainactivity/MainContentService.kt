@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
+import com.istekno.coffeebreakapp.main.cart.CartResponse
 import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,4 +20,7 @@ interface MainContentService {
     suspend fun getProductFilter(
         @Query("filter") filter: String
     ): GetProductResponse
+
+    @GET("order/statusCart/{csId}")
+    suspend fun getListCartByCsId(@Path("csId") csId: Int): CartResponse
 }

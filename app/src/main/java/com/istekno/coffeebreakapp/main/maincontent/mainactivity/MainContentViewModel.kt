@@ -2,6 +2,7 @@ package com.istekno.coffeebreakapp.main.maincontent.mainactivity
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.istekno.coffeebreakapp.main.cart.CartResponse
 import com.istekno.coffeebreakapp.main.maincontent.homepage.GetProductResponse
 import com.istekno.coffeebreakapp.model.SharedPrefModel
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
@@ -11,6 +12,7 @@ import kotlin.coroutines.CoroutineContext
 class MainContentViewModel : ViewModel(), CoroutineScope {
 
     var listProduct = MutableLiveData<List<GetProductResponse.DataProduct>>()
+    val listCart = MutableLiveData<Int>()
     val productAction = MutableLiveData<Boolean>()
     val isFailedStatus = MutableLiveData<Boolean>()
 
@@ -119,6 +121,37 @@ class MainContentViewModel : ViewModel(), CoroutineScope {
 
                 listProduct.value = mutableList
                 productAction.value = false
+            }
+        }
+    }
+
+    fun getListCartByCsId() {
+        launch {
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.getListCartByCsId(sharePref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (result is CartResponse) {
+                val data = result.data.map {
+                    CartResponse.DataCart(
+                        it.orderId,
+                        it.productId,
+                        it.productName,
+                        it.productImage,
+                        it.customerId,
+                        it.orderStatus,
+                        it.orderAmount,
+                        it.orderPrice,
+                        it.orderCreated,
+                        it.orderUpdated
+                    )
+                }
+                listCart.value = data.size
             }
         }
     }

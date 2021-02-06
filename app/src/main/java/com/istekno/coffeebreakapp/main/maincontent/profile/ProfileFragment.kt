@@ -23,7 +23,6 @@ import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class ProfileFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentProfileBinding, ProfileViewModel>() {
@@ -103,9 +102,6 @@ class ProfileFragment(
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = false
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = false
-
         title.text = "My Profile"
     }
 }

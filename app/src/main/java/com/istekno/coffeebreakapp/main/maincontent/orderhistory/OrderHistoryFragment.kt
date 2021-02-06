@@ -24,7 +24,6 @@ import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 
 class OrderHistoryFragment(
-    private val toolbar: MaterialToolbar,
     private val title: TextView,
     private val navDrawer: NavigationView
 ) : BaseFragmentViewModel<FragmentOrderHistoryBinding, OrderHistoryViewModel>(),
@@ -62,12 +61,13 @@ class OrderHistoryFragment(
 
         val customerId = sharedPref.getPreference().roleID
 
-        setRecyclerView()
         if (sharedPref.getPreference().level == 0) {
             viewModel.callOrderHistoryApi(customerId!!)
         } else {
             viewModel.callOrderHistoryByAdminApi()
         }
+
+        setRecyclerView(sharedPref.getPreference().level!!)
         subscribeLiveData()
         onClickListener(view)
     }
@@ -107,12 +107,12 @@ class OrderHistoryFragment(
 
     }
 
-    private fun setRecyclerView() {
+    private fun setRecyclerView(role: Int) {
         binding.rvOrderHistory.isNestedScrollingEnabled = false
         binding.rvOrderHistory.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this)
+        val adapter = OrderHistoryRecyclerViewAdapter(listOrderHistory, this, role)
         binding.rvOrderHistory.adapter = adapter
     }
 
@@ -124,9 +124,6 @@ class OrderHistoryFragment(
 
     @SuppressLint("SetTextI18n")
     private fun setView() {
-        toolbar.menu.findItem(R.id.toolbar_cart).isVisible = false
-        toolbar.menu.findItem(R.id.toolbar_search).isVisible = false
-
         title.text = "Order History"
     }
 }
