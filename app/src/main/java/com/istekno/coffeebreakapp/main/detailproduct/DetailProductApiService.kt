@@ -1,5 +1,6 @@
 package com.istekno.coffeebreakapp.main.detailproduct
 
+import com.istekno.coffeebreakapp.main.cart.CartResponse
 import com.istekno.coffeebreakapp.main.payment.PaymentResponse
 import retrofit2.http.*
 
@@ -20,5 +21,8 @@ interface DetailProductApiService {
 
     @GET("order/statusCart/{csId}")
     suspend fun getAllOrderByCsIdNCart(@Path("csId") csId: Int): ListOrderByCsIdResponse
+
+    @GET("order/statusCart/{csId}")
+    suspend fun getListCartByCsId(@Path("csId") csId: Int): CartResponse
 
 }
