@@ -301,6 +301,9 @@ class EditProfileActivity :
                 setResult(RESULT_OK)
             }
         }
+        viewModel.onMessageLiveData.observe(this@EditProfileActivity) {
+            showToast(it)
+        }
         viewModel.onFailLiveData.observe(this@EditProfileActivity) {
             showToast(it)
         }
