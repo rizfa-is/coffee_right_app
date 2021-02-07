@@ -2,7 +2,9 @@ package com.istekno.coffeebreakapp.main.detailproduct
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.istekno.coffeebreakapp.main.cart.CartResponse
 import com.istekno.coffeebreakapp.main.payment.PaymentResponse
+import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -14,14 +16,20 @@ class DetailProductViewModel : ViewModel(), CoroutineScope {
     val isUpdateSuccess = MutableLiveData<Boolean>()
     val isCheckProduct = MutableLiveData<Boolean>()
     val orderId = MutableLiveData<Int>()
+    val listCart = MutableLiveData<Int>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
     private lateinit var service: DetailProductApiService
+    private lateinit var sharePref: SharedPreferenceUtil
 
     fun setService(service: DetailProductApiService) {
         this.service = service
+    }
+
+    fun setSharePref(sharePref: SharedPreferenceUtil) {
+        this.sharePref = sharePref
     }
 
     fun getProductDetail(productId: Int) {
@@ -140,4 +148,36 @@ class DetailProductViewModel : ViewModel(), CoroutineScope {
 
         }
     }
+
+    fun getListCartByCsId() {
+        launch {
+
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service.getListCartByCsId(sharePref.getPreference().roleID!!)
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (result is CartResponse) {
+                val data = result.data.map {
+                    CartResponse.DataCart(
+                        it.orderId,
+                        it.productId,
+                        it.productName,
+                        it.productImage,
+                        it.customerId,
+                        it.orderStatus,
+                        it.orderAmount,
+                        it.orderPrice,
+                        it.orderCreated,
+                        it.orderUpdated
+                    )
+                }
+                listCart.value = data.size
+            }
+        }
+    }
+
 }

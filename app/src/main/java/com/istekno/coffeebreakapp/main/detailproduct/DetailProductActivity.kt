@@ -2,7 +2,9 @@ package com.istekno.coffeebreakapp.main.detailproduct
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -38,6 +40,8 @@ class DetailProductActivity :
         if (service != null) {
             viewModel.setService(service)
         }
+        viewModel.setSharePref(sharePref)
+        viewModel.getListCartByCsId()
 
         prID = intent.getIntExtra(HOME_KEY, -1)
         viewModel.getProductDetail(prID)
@@ -45,6 +49,21 @@ class DetailProductActivity :
 
         subscribeLiveData()
         onClickListener()
+        setBadgeCart()
+    }
+
+    private fun setBadgeCart() {
+        val id = binding.cartBadge
+
+            viewModel.listCart.observe(this, {
+                Log.e("itCart", it.toString())
+                if (it != 0) {
+                    id.visibility = View.VISIBLE
+                    id.text = it.toString()
+                }
+            })
+
+
     }
 
     private fun onClickListener() {
