@@ -1,4 +1,4 @@
-# coffee_right_app
+# Coffe Right App
 
 > This is a ReadMe to help understand about this repository
 
