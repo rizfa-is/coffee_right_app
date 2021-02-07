@@ -333,7 +333,6 @@ class MainContentActivity :
 
         if (id != null) {
             viewModel.listCart.observe(this, {
-                Log.e("it", it.toString())
                 if (it != 0) {
                     id.visibility = View.VISIBLE
                     id.text = it.toString()
