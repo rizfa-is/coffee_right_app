@@ -7,13 +7,10 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -298,12 +295,15 @@ class EditProfileActivity :
     }
 
     private fun subscribeLiveData() {
-        viewModel.onSuccessLiveData.observe(this) {
+        viewModel.onSuccessLiveData.observe(this@EditProfileActivity) {
             if (it) {
+                showToast("Success update profile!")
                 setResult(RESULT_OK)
             }
         }
-
+        viewModel.onFailLiveData.observe(this@EditProfileActivity) {
+            showToast(it)
+        }
     }
 
     private fun showToast(msg: String) {

@@ -74,8 +74,6 @@ class EditPasswordActivity :
                             acId = sharedPref.getPreference().acID!!,
                             acPassword = acPassword
                         )
-                    } else {
-                        showToast("Wrong Current Password!")
                     }
                 })
             }
@@ -92,11 +90,15 @@ class EditPasswordActivity :
     }
 
     private fun subscribeLiveData() {
-        viewModel.onSuccessLiveDataPassword.observe(this) {
+        viewModel.onSuccessLiveDataPassword.observe(this@EditPasswordActivity) {
             if (it) {
+                showToast("Change password success!")
                 setResult(RESULT_OK)
                 this.finish()
             }
+        }
+        viewModel.onFailLiveData.observe(this@EditPasswordActivity) {
+            showToast(it)
         }
 
     }

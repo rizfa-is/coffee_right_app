@@ -3,10 +3,8 @@ package com.istekno.coffeebreakapp.main.editpassword
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.istekno.coffeebreakapp.main.editprofile.EditProfileApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.istekno.coffeebreakapp.main.editprofile.EditProfileResponse
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
@@ -15,6 +13,9 @@ class EditPasswordViewModel : ViewModel(), CoroutineScope {
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     val onSuccessLiveDataPassword = MutableLiveData<Boolean>()
+    val onMessageLiveData = MutableLiveData<String>()
+    val onFailLiveData = MutableLiveData<String>()
+    val isLoading = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -28,15 +29,42 @@ class EditPasswordViewModel : ViewModel(), CoroutineScope {
         acPassword: String
     ) {
         launch {
-            try {
-                service.checkPassword(
-                    acId = acId,
-                    acPassword = acPassword
-                )
-                onSuccessLiveData.value = true
-            } catch (e: HttpException) {
-                e.printStackTrace()
+            isLoading.value = true
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    service.checkPassword(
+                        acId = acId,
+                        acPassword = acPassword
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        onSuccessLiveData.value = false
+
+                        when {
+                            e.code() == 400 -> {
+                                onFailLiveData.value = "Wrong current password!"
+                            }
+                            e.code() == 404 -> {
+                                onFailLiveData.value = "Image to large!"
+                            }
+                            else -> {
+                                onFailLiveData.value = "Internal Server Error!"
+                            }
+                        }
+                    }
+                }
             }
+            if (response is VerifyPasswordResponse) {
+                isLoading.value = false
+
+                if (response.success) {
+                    onSuccessLiveData.value = true
+                    onMessageLiveData.value = response.message
+                } else {
+                    onFailLiveData.value = response.message
+                }
+            }
+
         }
     }
 
@@ -45,15 +73,42 @@ class EditPasswordViewModel : ViewModel(), CoroutineScope {
         acPassword: String
     ) {
         launch {
-            try {
-                service.changePassword(
-                    acId = acId,
-                    acPassword = acPassword
-                )
-                onSuccessLiveDataPassword.value = true
-            } catch (e: HttpException) {
-                e.printStackTrace()
+            isLoading.value = true
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    service.changePassword(
+                        acId = acId,
+                        acPassword = acPassword
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        onSuccessLiveDataPassword.value = false
+
+                        when {
+                            e.code() == 400 -> {
+                                onFailLiveData.value = "Fail to add data!"
+                            }
+                            e.code() == 404 -> {
+                                onFailLiveData.value = "Image to large!"
+                            }
+                            else -> {
+                                onFailLiveData.value = "Internal Server Error!"
+                            }
+                        }
+                    }
+                }
             }
+            if (response is VerifyPasswordResponse) {
+                isLoading.value = false
+
+                if (response.success) {
+                    onSuccessLiveDataPassword.value = true
+                    onMessageLiveData.value = response.message
+                } else {
+                    onFailLiveData.value = response.message
+                }
+            }
+
         }
     }
 }
