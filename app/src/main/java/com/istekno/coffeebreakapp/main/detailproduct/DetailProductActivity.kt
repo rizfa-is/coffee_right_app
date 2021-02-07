@@ -56,7 +56,6 @@ class DetailProductActivity :
         val id = binding.cartBadge
 
             viewModel.listCart.observe(this, {
-                Log.e("itCart", it.toString())
                 if (it != 0) {
                     id.visibility = View.VISIBLE
                     id.text = it.toString()
