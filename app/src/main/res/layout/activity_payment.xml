@@ -21,18 +21,120 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:text="Payment"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/iv_back"
-            app:layout_constraintBottom_toBottomOf="@id/iv_back"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+                    android:id="@+id/view_order"
+                    android:background="@drawable/shape_bg_choco_circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="50dp"
+                    app:layout_constraintStart_toEndOf="@id/iv_back"
+                    app:layout_constraintTop_toTopOf="@id/iv_back"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+                <View
+                    android:background="@drawable/shape_bg_white_circle"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    app:layout_constraintTop_toTopOf="@id/view_order"
+                    app:layout_constraintBottom_toBottomOf="@id/view_order"
+                    app:layout_constraintStart_toStartOf="@id/view_order"
+                    app:layout_constraintEnd_toEndOf="@id/view_order"
+                    />
+
+                <TextView
+                    android:text="Order"
+                    android:textColor="@color/theme_choco"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/view_order"
+                    app:layout_constraintStart_toStartOf="@id/view_order"
+                    app:layout_constraintEnd_toEndOf="@id/view_order"/>
+
+                <View
+                    android:background="@color/theme_choco"
+                    android:layout_width="50dp"
+                    android:layout_height="2dp"
+                    app:layout_constraintStart_toEndOf="@id/view_order"
+                    app:layout_constraintTop_toTopOf="@id/view_order"
+                    app:layout_constraintBottom_toBottomOf="@id/view_order"/>
+
+                <View
+                    android:id="@+id/view_checkout"
+                    android:background="@drawable/shape_bg_choco_circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="50dp"
+                    app:layout_constraintStart_toEndOf="@id/view_order"
+                    app:layout_constraintTop_toTopOf="@id/iv_back"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+                <View
+                    android:background="@drawable/shape_bg_white_circle"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    app:layout_constraintTop_toTopOf="@id/view_checkout"
+                    app:layout_constraintBottom_toBottomOf="@id/view_checkout"
+                    app:layout_constraintStart_toStartOf="@id/view_checkout"
+                    app:layout_constraintEnd_toEndOf="@id/view_checkout" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Checkout"
+                    android:textColor="@color/theme_choco"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_checkout"
+                    app:layout_constraintStart_toStartOf="@id/view_checkout"
+                    app:layout_constraintEnd_toEndOf="@id/view_checkout"
+                    />
+
+                <View
+                    android:background="@color/theme_choco"
+                    android:layout_width="50dp"
+                    android:layout_height="2dp"
+                    app:layout_constraintStart_toEndOf="@id/view_checkout"
+                    app:layout_constraintTop_toTopOf="@id/view_checkout"
+                    app:layout_constraintBottom_toBottomOf="@id/view_checkout"
+                    />
+
+                <View
+                    android:id="@+id/view_payment"
+                    android:background="@drawable/shape_bg_choco_circle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="50dp"
+                    app:layout_constraintStart_toEndOf="@id/view_checkout"
+                    app:layout_constraintTop_toTopOf="@id/iv_back"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_back"/>
+
+                <View
+                    android:background="@drawable/shape_bg_white_circle"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    app:layout_constraintTop_toTopOf="@id/view_payment"
+                    app:layout_constraintBottom_toBottomOf="@id/view_payment"
+                    app:layout_constraintStart_toStartOf="@id/view_payment"
+                    app:layout_constraintEnd_toEndOf="@id/view_payment"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment"
+                    android:textColor="@color/theme_choco"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_payment"
+                    app:layout_constraintStart_toStartOf="@id/view_payment"
+                    app:layout_constraintEnd_toEndOf="@id/view_payment"
+                    />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -49,7 +151,8 @@
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginVertical="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="70dp"
             android:background="@color/theme_grey"
             android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@id/iv_back"
