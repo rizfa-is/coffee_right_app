@@ -17,6 +17,7 @@ import com.istekno.coffeebreakapp.main.maincontent.order.OrderApiService
 import com.istekno.coffeebreakapp.main.maincontent.order.OrderResponse
 import com.istekno.coffeebreakapp.remote.ApiClient
 import com.istekno.coffeebreakapp.utilities.SharedPreferenceUtil
+import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -73,9 +74,13 @@ class DetailOrderActivity :
         val dateTimeFormatted = dateTimeFormatter(model.orderUpdated).split('T')
         val dateUpdate = dateFormatter(dateTimeFormatted[0])
         val timeUpdate = dateTimeFormatted[1].split('+')[0]
+        val priceFormatter = DecimalFormat("#,###")
 
         binding.tvOrderMethod.text = setDeliveryMethod(model.deliveryType)
         binding.tvDate.text = "$dateUpdate  -  $timeUpdate"
+        binding.tvSubtotal.text = "IDR ${priceFormatter.format(model.priceBeforeTax)}"
+        binding.tvTax.text = "IDR  ${priceFormatter.format(model.orderTax)}"
+        binding.tvTotal.text = "IDR  ${priceFormatter.format(model.totalPrice)}"
     }
 
     @SuppressLint("SimpleDateFormat", "NewApi")

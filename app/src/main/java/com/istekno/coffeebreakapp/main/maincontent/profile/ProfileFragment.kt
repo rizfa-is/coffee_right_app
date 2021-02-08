@@ -82,9 +82,6 @@ class ProfileFragment(
 
         viewModel.isGetData.observe(viewLifecycleOwner) {
             if (it) {
-                viewModel.isMessage.observe(viewLifecycleOwner) { msg ->
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                }
                 viewModel.listData.observe(viewLifecycleOwner) { list ->
                     binding.model = list[0]
                     listData.add(list[0])
