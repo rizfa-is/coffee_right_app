@@ -57,7 +57,8 @@ class DetailOrderHistoryActivity :
         val priceFormatter = DecimalFormat("#,###")
 
         binding.tvOrderMethod.text = setDeliveryMethod(model.deliveryType)
-        binding.tvDate.text = "$dateUpdate  -  $timeUpdate"
+        val timee = timeUpdate.split('Z')[0]
+        binding.tvDate.text = "$dateUpdate  -  $timee"
         binding.tvSubtotal.text = "IDR ${priceFormatter.format(model.priceBeforeTax)}"
         binding.tvTax.text = "IDR  ${priceFormatter.format(model.orderTax)}"
         binding.tvTotal.text = "IDR  ${priceFormatter.format(model.totalPrice)}"
